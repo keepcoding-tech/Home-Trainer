@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "261471341992",
+    "project_id": "home-trainer-v10",
+    "storage_bucket": "home-trainer-v10.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:261471341992:android:855f14352bf42d19e5619d",
+        "android_client_info": {
+          "package_name": "com.keepCoding.home_trainer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "261471341992-jaftaujgo8tarefje54rf7ojh3e9mg4a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANV33y3tEx7W-jxSTXEkoOTK82ud3nGvs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "261471341992-jaftaujgo8tarefje54rf7ojh3e9mg4a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
