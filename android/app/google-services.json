@@ -29,6 +29,13 @@
             {
               "client_id": "261471341992-jaftaujgo8tarefje54rf7ojh3e9mg4a.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "261471341992-53ajr0r3jgn8gq39ll8dhn00krjo9btu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.keepCoding.home-trainer"
+              }
             }
           ]
         }
