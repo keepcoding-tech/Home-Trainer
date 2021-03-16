@@ -5,6 +5,7 @@ import 'package:home_trainer/authentication/screens/signIn/utilities/signInInter
 import 'package:home_trainer/authentication/services/authenticationController.dart';
 import 'package:home_trainer/authentication/screens/signIn/utilities/signInButtons.dart';
 import 'package:home_trainer/authentication/screens/signIn/utilities/signInForm.dart';
+import 'package:home_trainer/app/utilities/validation.dart';
 
 class SignInController extends StatelessWidget {
   final SignInTexts _signInTexts = new SignInTexts();
@@ -13,29 +14,14 @@ class SignInController extends StatelessWidget {
     labelText: 'email',
     inputType: TextInputType.emailAddress,
     obscureText: false,
-    validator: (value) {
-      if (value.isEmpty) {
-        return 'An email is required';
-      }
-      if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+" +
-              "-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(value)) {
-        return 'Enter a valid email';
-      }
-      return null;
-    },
+    validator: Validation().emailValidator(),
   );
 
   final SignInForm _passwordForm = new SignInForm(
     labelText: 'password',
     inputType: TextInputType.text,
     obscureText: true,
-    validator: (value) {
-      if (value.isEmpty) {
-        return 'A password is required';
-      }
-      return null;
-    },
+    validator: Validation().passwordValidator(),
   );
 
   @override

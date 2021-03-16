@@ -7,39 +7,23 @@ import 'package:home_trainer/authentication/screens/signUp/utilities/emailVerifi
 import 'package:home_trainer/authentication/screens/signUp/utilities/termsAndConditions.dart';
 import 'package:home_trainer/authentication/screens/signUp/utilities/createAccountButton.dart';
 import 'package:home_trainer/authentication/screens/signUp/utilities/signUpForm.dart';
+import 'package:home_trainer/app/utilities/validation.dart';
 
 class SignUpController extends StatelessWidget {
   final SignUpForm _emailForm = new SignUpForm(
     labelText: 'email',
     inputType: TextInputType.emailAddress,
     obscureText: false,
-    validator: (value) {
-      if (value.isEmpty) {
-        return 'An email is required';
-      }
-      if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+" +
-              "-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(value)) {
-        return 'Enter a valid email';
-      }
-      return null;
-    },
+    validator: Validation().emailValidator(),
   );
 
   final SignUpForm _passwordForm = new SignUpForm(
     labelText: 'password',
     inputType: TextInputType.text,
     obscureText: true,
-    validator: (value) {
-      if (value.isEmpty) {
-        return 'A password is required';
-      }
-      if (value.length < 6) {
-        return 'Password must be at least 6 characters';
-      }
-      return null;
-    },
+    validator: Validation().passwordValidator(),
   );
+
   @override
   Widget build(BuildContext context) {
     final TermsAndConditions _checkboxTerms = new TermsAndConditions();
@@ -48,12 +32,8 @@ class SignUpController extends StatelessWidget {
       labelText: 'confirm password',
       inputType: TextInputType.text,
       obscureText: true,
-      validator: (value) {
-        if (value != _passwordForm.controller.text) {
-          return 'The passwords doesn\'t mach';
-        }
-        return null;
-      },
+      validator: Validation()
+          .confirmPasswordValidator(_passwordForm.controller.text.trim()),
     );
 
     return Column(

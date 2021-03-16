@@ -13,19 +13,20 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(child: Text('Profile')),
+        title: Center(child: Text('Profile Page!')),
       ),
       body: SafeArea(
-          child: Center(
-        // ignore: deprecated_member_use
-        child: FlatButton(
-          color: Colors.white,
-          child: Text('sign Out'),
-          onPressed: () {
-            context.read<AuthenticationController>().signOut();
-          },
+        child: Center(
+          // ignore: deprecated_member_use
+          child: FlatButton(
+            color: Colors.white,
+            child: Text('sign Out'),
+            onPressed: () {
+              context.read<AuthenticationController>().signOut();
+            },
+          ),
         ),
-      )),
+      ),
     );
   }
 }
