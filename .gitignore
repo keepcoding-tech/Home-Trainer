@@ -23,7 +23,11 @@
 # Flutter/Dart/Pub related
 **/doc/api/
 **/ios/Flutter/.last_build_id
+<<<<<<< HEAD
 **/ios/GoogleService-Info.plist
+=======
+**ios/GoogleService-Info.plist
+>>>>>>> fdce7a2 (Update .gitignore)
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
