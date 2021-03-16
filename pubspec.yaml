@@ -11,8 +11,22 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  
+  #Testing
+  mockito: ^5.0.0
 
+  #Firebase
+  firebase_auth: ^1.0.0
+  firebase_core: ^1.0.0
+  cloud_firestore: ^1.0.0
+
+  #Authentication
+  flutter_facebook_login: ^3.0.0
+  google_sign_in: ^5.0.0
+
+  #Staff
   cupertino_icons: ^1.0.0
+  provider: ^5.0.0
 
 dev_dependencies:
   flutter_test:
