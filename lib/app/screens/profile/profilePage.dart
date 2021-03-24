@@ -11,7 +11,9 @@ class _ProfilePageState extends State<ProfilePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: ProfileController(),
+        child: SingleChildScrollView(
+          child: ProfileController(),
+        ),
       ),
     );
   }
