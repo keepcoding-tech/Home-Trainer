@@ -1,4 +1,13 @@
 class Validation {
+  String Function(String) nameValidator() {
+    return (String value) {
+      if (value.isEmpty) {
+        return 'A name is required';
+      }
+      return null;
+    };
+  }
+
   String Function(String) emailValidator() {
     return (String value) {
       if (value.isEmpty) {
@@ -25,15 +34,16 @@ class Validation {
     };
   }
 
-  String Function(String) confirmPasswordValidator(String password) {
-    return (String value) {
-      if (value.isEmpty) {
-        return 'A password is required';
-      }
-      if (value != password) {
-        return 'The passwords doesn\'t mach';
-      }
-      return null;
-    };
-  }
+  // String Function(String) confirmPasswordValidator(String password) {
+  //   print(password);
+  //   return (String value) {
+  //     if (value.isEmpty) {
+  //       return 'A password is required';
+  //     }
+  //     if (value != password) {
+  //       return 'The passwords doesn\'t mach';
+  //     }
+  //     return null;
+  //   };
+  // }
 }

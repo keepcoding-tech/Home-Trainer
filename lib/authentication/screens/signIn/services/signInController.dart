@@ -5,7 +5,7 @@ import 'package:home_trainer/authentication/screens/signIn/utilities/signInInter
 import 'package:home_trainer/authentication/services/authenticationController.dart';
 import 'package:home_trainer/authentication/screens/signIn/utilities/signInButtons.dart';
 import 'package:home_trainer/authentication/screens/signIn/utilities/signInForm.dart';
-import 'package:home_trainer/app/utilities/validation.dart';
+import 'package:home_trainer/authentication/utilities/validation.dart';
 
 class SignInController extends StatelessWidget {
   final SignInTexts _signInTexts = new SignInTexts();

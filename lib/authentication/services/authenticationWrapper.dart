@@ -4,8 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:home_trainer/app/services/navigationController.dart';
 import 'package:home_trainer/authentication/screens/signIn/signInPage.dart';
-import 'package:home_trainer/app/screens/profile/profilePage.dart';
 
 class AuthenticationWrapper extends StatefulWidget {
   @override
@@ -51,7 +51,7 @@ class AuthenticationWrapperState extends State<AuthenticationWrapper> {
 
     if (firebaseUser != null) {
       if (firebaseUser.emailVerified) {
-        return ProfilePage();
+        return NavigationController();
       }
     }
     return SignInPage();

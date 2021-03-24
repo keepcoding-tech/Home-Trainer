@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CreateAccountButton extends StatelessWidget {
-  CreateAccountButton({this.onPressed});
+class CreateRoutineButton extends StatelessWidget {
+  final String labelName;
   final Function onPressed;
+  CreateRoutineButton({this.onPressed, this.labelName});
 
   @override
   Widget build(BuildContext context) {
     return MaterialButton(
       color: Colors.white,
       child: Text(
-        'CREATE ACCOUNT',
+        labelName,
         style: TextStyle(
           color: Colors.black,
           fontWeight: FontWeight.bold,

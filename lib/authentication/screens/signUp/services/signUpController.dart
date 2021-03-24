@@ -7,9 +7,16 @@ import 'package:home_trainer/authentication/screens/signUp/utilities/emailVerifi
 import 'package:home_trainer/authentication/screens/signUp/utilities/termsAndConditions.dart';
 import 'package:home_trainer/authentication/screens/signUp/utilities/createAccountButton.dart';
 import 'package:home_trainer/authentication/screens/signUp/utilities/signUpForm.dart';
-import 'package:home_trainer/app/utilities/validation.dart';
+import 'package:home_trainer/authentication/utilities/validation.dart';
 
 class SignUpController extends StatelessWidget {
+  final SignUpForm _nameForm = new SignUpForm(
+    labelText: 'name',
+    inputType: TextInputType.text,
+    obscureText: false,
+    validator: Validation().nameValidator(),
+  );
+
   final SignUpForm _emailForm = new SignUpForm(
     labelText: 'email',
     inputType: TextInputType.emailAddress,
@@ -26,18 +33,23 @@ class SignUpController extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TermsAndConditions _checkboxTerms = new TermsAndConditions();
+    final TermsAndConditions _termsAndConditions = new TermsAndConditions();
 
     final SignUpForm _confirmPasswordForm = new SignUpForm(
-      labelText: 'confirm password',
-      inputType: TextInputType.text,
-      obscureText: true,
-      validator: Validation()
-          .confirmPasswordValidator(_passwordForm.controller.text.trim()),
-    );
+        labelText: 'confirm password',
+        inputType: TextInputType.text,
+        obscureText: true,
+        validator: (value) {
+          if (value != _passwordForm.controller.text) {
+            return 'The passwords doesn\'t mach';
+          }
+          return null;
+        });
 
     return Column(
       children: <Widget>[
+        // name textTormField
+        _nameForm,
         // email textTormField
         _emailForm,
         // password textTormField
@@ -45,42 +57,46 @@ class SignUpController extends StatelessWidget {
         // confirm password textTormField
         _confirmPasswordForm,
         // agree to terms and conditions
-        _checkboxTerms,
-        SizedBox(height: 20.0),
+        _termsAndConditions,
         // create account button
+        SizedBox(height: 20.0),
         CreateAccountButton(
           onPressed: () async {
-            if (_emailForm.formKey.currentState.validate()) {
-              if (_passwordForm.formKey.currentState.validate()) {
-                if (_confirmPasswordForm.formKey.currentState.validate()) {
-                  UserCredential userCredential =
-                      await context.read<AuthenticationController>().signUp(
-                            email: _emailForm.controller.text.trim(),
-                            password: _passwordForm.controller.text.trim(),
-                            context: context,
-                          );
+            if (_nameForm.formKey.currentState.validate()) {
+              if (_emailForm.formKey.currentState.validate()) {
+                if (_passwordForm.formKey.currentState.validate()) {
+                  if (_confirmPasswordForm.formKey.currentState.validate()) {
+                    UserCredential userCredential =
+                        await context.read<AuthenticationController>().signUp(
+                              name: _nameForm.controller.text.trim(),
+                              email: _emailForm.controller.text.trim(),
+                              password: _passwordForm.controller.text.trim(),
+                              context: context,
+                            );
 
-                  context
-                      .read<AuthenticationController>()
-                      .signUp(
-                        email: _emailForm.controller.text.trim(),
-                        password: _passwordForm.controller.text.trim(),
-                        context: context,
-                      )
-                      .then((_) {
-                    if (userCredential != null) {
-                      Navigator.of(context).pop();
-                      showEmailVerificationMessage(
-                          context, _emailForm.controller.text.trim());
-                    }
-                  });
+                    context
+                        .read<AuthenticationController>()
+                        .signUp(
+                          name: _nameForm.controller.text.trim(),
+                          email: _emailForm.controller.text.trim(),
+                          password: _passwordForm.controller.text.trim(),
+                          context: context,
+                        )
+                        .then((_) {
+                      if (userCredential != null) {
+                        Navigator.of(context).pop();
+                        showEmailVerificationMessage(
+                            context, _emailForm.controller.text.trim());
+                      }
+                    });
+                  }
                 }
               }
             }
           },
         ),
-        SizedBox(height: 10.0),
         // go back to sign in page
+        SizedBox(height: 10.0),
         Container(
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
