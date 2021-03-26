@@ -1,13 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-final User _currentUser = FirebaseAuth.instance.currentUser;
-final CollectionReference _routineColection =
-    FirebaseFirestore.instance.collection(_currentUser.uid);
-
 Future<void> deleteRoutienMessage(
-    BuildContext context, String routineTitle) async {
+    BuildContext context, String uid, String routineTitle) async {
+  final CollectionReference _routineColection =
+      FirebaseFirestore.instance.collection(uid);
   return showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -19,8 +16,7 @@ Future<void> deleteRoutienMessage(
         actions: [
           TextButton(
             onPressed: () {
-              _currentUser.reload();
-              print(_currentUser.uid);
+              print(uid);
               _routineColection.doc(routineTitle).delete();
               Navigator.of(context).pop();
             },
