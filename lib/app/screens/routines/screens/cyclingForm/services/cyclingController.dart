@@ -31,6 +31,33 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
 
   List<Map> routines = <Map>[];
 
+  // add new exercise to the routine
+  bool addExercise() {
+    if (_titleForm.formKey.currentState.validate()) {
+      if (_exerciseForm.formKey.currentState.validate()) {
+        if (_muscleForm.formKey.currentState.validate()) {
+          if (_setsForm.formKey.currentState.validate()) {
+            if (_repsForm.formKey.currentState.validate()) {
+              if (_weightForm.formKey.currentState.validate()) {
+                Map newRoutine = {
+                  "exercise": _exerciseForm.controller.text.trim(),
+                  "muscle": _muscleForm.controller.text.trim(),
+                  "sets": _setsForm.controller.text.trim(),
+                  "reps": _repsForm.controller.text.trim(),
+                  "kg": _weightForm.controller.text.trim(),
+                };
+                routines.add(newRoutine);
+
+                return true;
+              }
+            }
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   @override
   Widget build(BuildContext context) {
     final String sport = 'CYCLING';
@@ -59,22 +86,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
         CreateRoutineButton(
           labelName: 'ADD NEW EXERCISE',
           onPressed: () async {
-            if (_titleForm.formKey.currentState.validate() &&
-                _exerciseForm.formKey.currentState.validate() &&
-                _muscleForm.formKey.currentState.validate() &&
-                _setsForm.formKey.currentState.validate() &&
-                _repsForm.formKey.currentState.validate() &&
-                _weightForm.formKey.currentState.validate()) {
-              // add new exercise to routine
-              Map newRoutine = {
-                "exercise": _exerciseForm.controller.text.trim(),
-                "muscle": _muscleForm.controller.text.trim(),
-                "sets": _setsForm.controller.text.trim(),
-                "reps": _repsForm.controller.text.trim(),
-                "kg": _weightForm.controller.text.trim(),
-              };
-              routines.add(newRoutine);
-
+            if (addExercise()) {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Exercise added to routine')));
 
@@ -90,22 +102,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
         CreateRoutineButton(
           labelName: 'CREATE ROUTINE',
           onPressed: () async {
-            if (_titleForm.formKey.currentState.validate() &&
-                _exerciseForm.formKey.currentState.validate() &&
-                _muscleForm.formKey.currentState.validate() &&
-                _setsForm.formKey.currentState.validate() &&
-                _repsForm.formKey.currentState.validate() &&
-                _weightForm.formKey.currentState.validate()) {
-              // add new exercise to routine
-              Map newRoutine = {
-                "exercise": _exerciseForm.controller.text.trim(),
-                "muscle": _muscleForm.controller.text.trim(),
-                "sets": _setsForm.controller.text.trim(),
-                "reps": _repsForm.controller.text.trim(),
-                "kg": _weightForm.controller.text.trim(),
-              };
-
-              routines.add(newRoutine);
+            if (addExercise()) {
               // create new routine
               await RoutineDatabaseController().updateRoutineData(
                 title: _titleForm.controller.text.trim(),

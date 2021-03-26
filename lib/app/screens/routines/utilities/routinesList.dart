@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -28,6 +29,7 @@ class _RoutinesListState extends State<RoutinesList> {
 }
 
 class RoutineTile extends StatelessWidget {
+  final currentUser = FirebaseAuth.instance.currentUser;
   final Routine routine;
   RoutineTile({this.routine});
 
@@ -41,7 +43,7 @@ class RoutineTile extends StatelessWidget {
         trailing: IconButton(
           icon: Icon(Icons.delete),
           onPressed: () {
-            deleteRoutienMessage(context, routine.title);
+            deleteRoutienMessage(context, currentUser.uid, routine.title);
           },
         ),
       ),

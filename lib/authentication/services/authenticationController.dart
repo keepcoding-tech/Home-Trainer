@@ -72,11 +72,7 @@ class AuthenticationController {
   }
 
   Future<void> signOut() async {
-    try {
-      await _firebaseAuth.signOut();
-    } catch (e) {
-      return e.message;
-    }
+    await _firebaseAuth.signOut();
   }
 
   // Authentification with Facebook
