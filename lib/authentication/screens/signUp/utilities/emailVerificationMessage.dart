@@ -12,12 +12,12 @@ Future<void> showEmailVerificationMessage(
               'Click the link provided to complete registration.',
         ),
         actions: [
-          // ignore: deprecated_member_use
-          FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK')),
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text('OK'),
+          ),
         ],
       );
     },

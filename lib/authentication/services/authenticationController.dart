@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:home_trainer/database/usersDatabaseController.dart';
 
 class AuthenticationController {
   final FirebaseAuth _firebaseAuth;
@@ -35,14 +36,21 @@ class AuthenticationController {
     }
   }
 
-  Future<UserCredential> signUp(
-      {String email, String password, BuildContext context}) async {
+  Future<UserCredential> signUp({
+    String name,
+    String email,
+    String password,
+    BuildContext context,
+  }) async {
     try {
       UserCredential userCredential =
           await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      await UserDatabaseController(uid: userCredential.user.uid)
+          .updateUserData(name, email);
 
       _firebaseAuth.currentUser.sendEmailVerification();
       return userCredential;
@@ -80,6 +88,12 @@ class AuthenticationController {
       final FacebookAuthCredential facebookAuthCredential =
           FacebookAuthProvider.credential(result.accessToken.token);
 
+      final UserCredential _userCrediential = await FirebaseAuth.instance
+          .signInWithCredential(facebookAuthCredential);
+
+      await UserDatabaseController(uid: _userCrediential.user.uid)
+          .updateUserData('ceva', 'ceva');
+
       return await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
     } on FirebaseAuthException catch (e) {
@@ -106,6 +120,12 @@ class AuthenticationController {
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
+
+    final UserCredential _userCrediential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    await UserDatabaseController(uid: _userCrediential.user.uid)
+        .updateUserData(googleUser.email, googleUser.email);
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }

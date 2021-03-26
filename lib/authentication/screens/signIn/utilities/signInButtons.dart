@@ -9,8 +9,7 @@ class SignInButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ignore: deprecated_member_use
-    return FlatButton(
+    return MaterialButton(
       color: buttonColor,
       child: Text(
         buttonText,
