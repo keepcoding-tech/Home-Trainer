@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class ProgramsPage extends StatefulWidget {
+class AnalyticsPage extends StatefulWidget {
   final String pageName = 'Programs page';
 
   @override
-  _ProgramsPageState createState() => _ProgramsPageState();
+  _AnalyticsPageState createState() => _AnalyticsPageState();
 }
 
-class _ProgramsPageState extends State<ProgramsPage> {
+class _AnalyticsPageState extends State<AnalyticsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Programs page'),
+        title: Text('Analytics page'),
       ),
     );
   }

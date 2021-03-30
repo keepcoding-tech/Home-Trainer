@@ -4,14 +4,17 @@ class UserDatabaseController {
   final String uid;
   UserDatabaseController({this.uid});
 
-  Future updateUserData(String name, String email) async {
-    final CollectionReference usersColection =
-        FirebaseFirestore.instance.collection(uid);
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
 
-    return await usersColection.doc('user data').set({
+  Future createUserData(String name, String email) async {
+    return await usersCollection.doc(uid).set({
       'name': name,
       'email': email,
-      'title': 'user data',
     });
+  }
+
+  Stream<QuerySnapshot> get userData {
+    return usersCollection.snapshots();
   }
 }

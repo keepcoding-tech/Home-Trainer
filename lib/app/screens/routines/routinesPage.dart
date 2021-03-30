@@ -21,7 +21,9 @@ class _RoutinesPageState extends State<RoutinesPage> {
         appBar: AppBar(
           title: Text('Routines page'),
         ),
-        body: SafeArea(child: RoutinesList()),
+        body: SafeArea(
+          child: RoutinesList(),
+        ),
       ),
     );
   }

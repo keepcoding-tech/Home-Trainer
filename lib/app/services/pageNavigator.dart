@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+
+import 'package:home_trainer/app/screens/analytics/analyticsPage.dart';
 import 'package:home_trainer/app/screens/profile/profilePage.dart';
-import 'package:home_trainer/app/screens/programs/programsPage.dart';
 import 'package:home_trainer/app/screens/routines/routinesPage.dart';
-import 'package:home_trainer/app/screens/scheduale/schedulePage.dart';
+import 'package:home_trainer/app/screens/schedule/schedulePage.dart';
 
 class PageNavigator extends StatelessWidget {
   final GlobalKey<NavigatorState> navigatorKey;
@@ -19,7 +20,7 @@ class PageNavigator extends StatelessWidget {
     } else if (pageItem == 'shedule') {
       child = SchedulePage();
     } else if (pageItem == 'analytics') {
-      child = ProgramsPage();
+      child = AnalyticsPage();
     } else if (pageItem == 'profile') {
       child = ProfilePage();
     }

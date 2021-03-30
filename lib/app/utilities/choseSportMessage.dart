@@ -5,7 +5,7 @@ import 'package:home_trainer/app/screens/routines/screens/gymForm/gymFormPage.da
 import 'package:home_trainer/app/screens/routines/screens/runForm/runFormPage.dart';
 import 'package:home_trainer/app/screens/routines/screens/swimForm/swimFormPage.dart';
 
-Future<void> showChoseSportMessage(BuildContext context) {
+Future<void> choseSportMessage(BuildContext context) {
   return showDialog(
       context: context,
       builder: (BuildContext context) {

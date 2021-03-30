@@ -1,27 +1,33 @@
 import 'package:flutter/material.dart';
 
-class RoutineTextFormField extends StatelessWidget {
-  final TextEditingController controller = new TextEditingController();
+class EditTextFormField extends StatefulWidget {
+  final String labelText, defaultData;
   final formKey = GlobalKey<FormState>();
-
-  final String labelText;
-  RoutineTextFormField({this.labelText});
+  final TextEditingController controller = TextEditingController();
+  EditTextFormField({this.labelText, this.defaultData});
 
   @override
+  _EditTextFormFieldState createState() => _EditTextFormFieldState();
+}
+
+class _EditTextFormFieldState extends State<EditTextFormField> {
+  @override
   Widget build(BuildContext context) {
+    widget.controller.text = widget.defaultData;
+
     return Container(
       margin: EdgeInsets.all(15.0),
       child: Form(
-        key: formKey,
+        key: widget.formKey,
         child: TextFormField(
-          controller: controller,
+          controller: widget.controller,
           style: TextStyle(
             color: Colors.black,
             fontSize: 20.0,
           ),
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 10.0),
-            labelText: labelText,
+            labelText: widget.labelText,
             labelStyle: TextStyle(
               color: Colors.white,
               fontSize: 20.0,
@@ -29,7 +35,7 @@ class RoutineTextFormField extends StatelessWidget {
           ),
           validator: (value) {
             if (value.isEmpty) {
-              return 'a $labelText is requaierd';
+              return 'a $widget.labelText is requaierd';
             }
             return null;
           },

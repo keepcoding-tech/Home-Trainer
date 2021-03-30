@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/screens/runForm/services/runController.dart';
-import 'package:home_trainer/app/screens/routines/utilities/cancelRoutineMessage.dart';
+import 'package:home_trainer/app/screens/routines/utilities/routineAppBar.dart';
 
 class RunFormPage extends StatefulWidget {
   @override
@@ -12,14 +12,9 @@ class _RunFormPageState extends State<RunFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            cancelRoutineMessage(context);
-          },
-        ),
-        title: Center(child: Text('create run routine')),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: RoutineAppBar(title: 'RUN'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

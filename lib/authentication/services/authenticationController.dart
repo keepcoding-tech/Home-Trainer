@@ -21,12 +21,16 @@ class AuthenticationController {
       );
       return userCredential;
     } on FirebaseAuthException catch (e) {
+      // show no user found message
       if (e.code == 'user-not-found') {
-        // show no user found message
+        print('No user found for that email.');
+
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('No user found with this email')));
-      } else if (e.code == 'wrong-password') {
         // show wrong password message
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Wrong password provided for that user')));
       }
@@ -42,32 +46,36 @@ class AuthenticationController {
     String password,
     BuildContext context,
   }) async {
+    UserCredential userCredential;
     try {
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
+      userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
       await UserDatabaseController(uid: userCredential.user.uid)
-          .updateUserData(name, email);
+          .createUserData(name, email);
 
       _firebaseAuth.currentUser.sendEmailVerification();
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      // show email already in use message
-      if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('The account already exists for that email')));
+      // show weak password message
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
 
-        // show weak password message
-      } else if (e.code == 'weak-password') {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('The password provided is too weak')));
+        // show email already in use message
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('The account already exists for that email')));
       }
-      return null;
+      return userCredential;
     } catch (e) {
-      return null;
+      return userCredential;
     }
   }
 
@@ -88,7 +96,7 @@ class AuthenticationController {
           .signInWithCredential(facebookAuthCredential);
 
       await UserDatabaseController(uid: _userCrediential.user.uid)
-          .updateUserData('ceva', 'ceva');
+          .createUserData('ceva', 'ceva');
 
       return await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
@@ -121,7 +129,7 @@ class AuthenticationController {
         await FirebaseAuth.instance.signInWithCredential(credential);
 
     await UserDatabaseController(uid: _userCrediential.user.uid)
-        .updateUserData(googleUser.email, googleUser.email);
+        .createUserData(googleUser.email, googleUser.email);
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }

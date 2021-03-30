@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/screens/swimForm/services/swimController.dart';
-import 'package:home_trainer/app/screens/routines/utilities/cancelRoutineMessage.dart';
+import 'package:home_trainer/app/screens/routines/utilities/routineAppBar.dart';
 
 class SwimFormPage extends StatefulWidget {
   @override
@@ -12,14 +12,9 @@ class _SwimFormPageState extends State<SwimFormPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            cancelRoutineMessage(context);
-          },
-        ),
-        title: Center(child: Text('create swim routine')),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: RoutineAppBar(title: 'SWIM'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

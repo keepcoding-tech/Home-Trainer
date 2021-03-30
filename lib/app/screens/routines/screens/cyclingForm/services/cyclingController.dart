@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
+import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
+import 'package:home_trainer/database/utilities/exercise.dart';
 
 class CyclingFormController extends StatefulWidget {
   @override
@@ -29,7 +31,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
     labelText: 'kg',
   );
 
-  List<Map> routines = <Map>[];
+  List<Exercise> routine = <Exercise>[];
 
   // add new exercise to the routine
   bool addExercise() {
@@ -39,14 +41,14 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
           if (_setsForm.formKey.currentState.validate()) {
             if (_repsForm.formKey.currentState.validate()) {
               if (_weightForm.formKey.currentState.validate()) {
-                Map newRoutine = {
-                  "exercise": _exerciseForm.controller.text.trim(),
-                  "muscle": _muscleForm.controller.text.trim(),
-                  "sets": _setsForm.controller.text.trim(),
-                  "reps": _repsForm.controller.text.trim(),
-                  "kg": _weightForm.controller.text.trim(),
-                };
-                routines.add(newRoutine);
+                Exercise newRoutine = new Exercise(
+                  exercise: _exerciseForm.controller.text.trim(),
+                  muscle: _muscleForm.controller.text.trim(),
+                  sets: _setsForm.controller.text.trim(),
+                  reps: _repsForm.controller.text.trim(),
+                  weight: _weightForm.controller.text.trim(),
+                );
+                routine.add(newRoutine);
 
                 return true;
               }
@@ -104,14 +106,25 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
           onPressed: () async {
             if (addExercise()) {
               // create new routine
-              await RoutineDatabaseController().updateRoutineData(
+              await RoutineDatabaseController().createRoutineData(
                 title: _titleForm.controller.text.trim(),
-                routines: routines,
                 sport: sport,
               );
 
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
+              for (int i = 0; i < routine.length; i++) {
+                await ExerciseDatabaseController(
+                  routineTitle: _titleForm.controller.text.trim(),
+                ).createExerciseData(
+                  exerciseTitle: routine[i].exercise,
+                  muscle: routine[i].muscle,
+                  sets: routine[i].sets,
+                  reps: routine[i].reps,
+                  weight: routine[i].weight,
+                );
+              }
+
+              Navigator.pop(context);
+              Navigator.pop(context);
             }
           },
         ),

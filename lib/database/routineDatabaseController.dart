@@ -7,17 +7,18 @@ class RoutineDatabaseController {
   CollectionReference routineCollection() {
     final _currentUser = FirebaseAuth.instance.currentUser;
 
-    final CollectionReference _routineCollection =
-        FirebaseFirestore.instance.collection(_currentUser.uid);
+    final CollectionReference _routineCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(_currentUser.uid)
+        .collection('routines');
 
     return _routineCollection;
   }
 
-  Future updateRoutineData({String title, String sport, List routines}) async {
+  Future createRoutineData({String title, String sport}) async {
     return await routineCollection().doc(title).set({
       'title': title,
       'sport': sport,
-      'routines': routines,
     });
   }
 

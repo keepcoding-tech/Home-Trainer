@@ -6,11 +6,10 @@ class UserName extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _currentUser = FirebaseAuth.instance.currentUser;
-    CollectionReference user =
-        FirebaseFirestore.instance.collection(_currentUser.uid);
+    CollectionReference user = FirebaseFirestore.instance.collection('users');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: user.doc('user data').get(),
+      future: user.doc(_currentUser.uid).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
@@ -34,11 +33,10 @@ class UserEmail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final _currentUser = FirebaseAuth.instance.currentUser;
-    CollectionReference user =
-        FirebaseFirestore.instance.collection(_currentUser.uid);
+    CollectionReference user = FirebaseFirestore.instance.collection('users');
 
     return FutureBuilder<DocumentSnapshot>(
-      future: user.doc('user data').get(),
+      future: user.doc(_currentUser.uid).get(),
       builder:
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {

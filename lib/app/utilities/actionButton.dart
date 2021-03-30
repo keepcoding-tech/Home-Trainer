@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:home_trainer/app/utilities/createRoutineList.dart';
+import 'package:home_trainer/app/utilities/choseSportMessage.dart';
 
 class ActionButton extends StatelessWidget {
   @override
@@ -8,7 +8,7 @@ class ActionButton extends StatelessWidget {
       child: Icon(Icons.add),
       backgroundColor: Colors.blueGrey[900],
       onPressed: () {
-        showChoseSportMessage(context);
+        choseSportMessage(context);
       },
     );
   }
