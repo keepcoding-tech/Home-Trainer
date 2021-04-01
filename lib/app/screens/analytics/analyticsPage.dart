@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class AnalyticsPage extends StatefulWidget {
-  final String pageName = 'Programs page';
-
   @override
   _AnalyticsPageState createState() => _AnalyticsPageState();
 }

@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:home_trainer/app/screens/routines/utilities/deleteRoutineMessage.dart';
+import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessage.dart';
 
 class DetailsPageAppBar extends StatelessWidget {
   const DetailsPageAppBar({this.routineTitle});
@@ -29,7 +29,8 @@ class DetailsPageAppBar extends StatelessWidget {
             showAlertDialogMessage(
               context: context,
               messageTitle: 'Delete Routine',
-              messageDetails: 'Are you sure?',
+              messageDetails:
+                  'Are you sure you want to delete the whole routine?',
               onPressed: () {
                 _routineColection
                     .doc(_currentUser.uid)

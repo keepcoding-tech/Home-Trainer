@@ -43,7 +43,10 @@ class RoutineTile extends StatelessWidget {
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (context) => DetailPage(title: routine.title),
+                builder: (context) => DetailPage(
+                  title: routine.title,
+                  sport: routine.sport,
+                ),
               ),
             );
           },
@@ -52,72 +55,3 @@ class RoutineTile extends StatelessWidget {
     );
   }
 }
-
-// class _RoutinesListState extends State<RoutinesList> {
-//   @override
-//   Widget build(BuildContext context) {
-//     final currentUser = FirebaseAuth.instance.currentUser;
-//     final routineData = FirebaseFirestore.instance.collection(currentUser.uid);
-
-//     return Container(
-//       child: StreamBuilder(
-//         stream: routineData.snapshots(),
-//         builder: (context, snapshot) {
-//           if (!snapshot.hasData) {
-//             return Text('loading . . .');
-//           }
-
-//           return ListView.builder(
-//             itemCount: snapshot.data.docs.length,
-//             itemBuilder: (context, index) {
-//               if (snapshot.data.docs[index].data()['title'] != 'user data') {
-//                 final list = snapshot.data.docs[index].data()['routines'];
-
-//                 return RoutineTile(
-//                   title: snapshot.data.docs[index].data()['title'],
-//                   sport: snapshot.data.docs[index].data()['sport'],
-//                   documentSnapshot: snapshot.data.docs[index],
-//                   listLength: list.length,
-//                 );
-//               }
-//               return null;
-//             },
-//           );
-//         },
-//       ),
-//     );
-//   }
-// }
-
-// class RoutineTile extends StatelessWidget {
-//   final DocumentSnapshot documentSnapshot;
-//   final int listLength;
-//   final String title, sport;
-//   RoutineTile({this.title, this.sport, this.documentSnapshot, this.listLength});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Card(
-//       color: Colors.blueGrey[400],
-//       child: ListTile(
-//         title: Text(title),
-//         subtitle: Text(sport),
-//         trailing: IconButton(
-//           icon: Icon(Icons.arrow_forward),
-//           onPressed: () {
-//             Navigator.push(
-//               context,
-//               MaterialPageRoute(
-//                 builder: (context) => DetailPage(
-//                   documentSnapshot: documentSnapshot,
-//                   listLength: listLength,
-//                   title: title,
-//                 ),
-//               ),
-//             );
-//           },
-//         ),
-//       ),
-//     );
-//   }
-// }

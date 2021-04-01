@@ -10,10 +10,11 @@ class ProfileImage extends StatelessWidget {
       width: MediaQuery.of(context).size.width / 2.5,
       height: MediaQuery.of(context).size.width / 2.5,
       decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          image: DecorationImage(
-            image: AssetImage('assets/images/defaultUser.png'),
-          )),
+        shape: BoxShape.circle,
+        image: DecorationImage(
+          image: AssetImage('assets/images/defaultUser.png'),
+        ),
+      ),
     );
   }
 }

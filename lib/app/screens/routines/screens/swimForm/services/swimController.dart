@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
+import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
-import 'package:home_trainer/database/utilities/exercise.dart';
+import 'package:home_trainer/database/utilities/exercises.dart';
+
+enum UnitInput { distance, intervals, restTime }
 
 class SwimFormController extends StatefulWidget {
   @override
@@ -13,52 +16,77 @@ class SwimFormController extends StatefulWidget {
 
 class _SwimFormControllerState extends State<SwimFormController> {
   RoutineTextFormField _titleForm = new RoutineTextFormField(
-    labelText: 'title',
+    labelText: 'Routie title',
   );
-  RoutineTextFormField _exerciseForm = new RoutineTextFormField(
-    labelText: 'exercise',
-  );
-  RoutineTextFormField _muscleForm = new RoutineTextFormField(
-    labelText: 'muscle group',
-  );
-  RoutineTextFormField _setsForm = new RoutineTextFormField(
-    labelText: 'sets',
-  );
-  RoutineTextFormField _repsForm = new RoutineTextFormField(
-    labelText: 'reps',
-  );
-  RoutineTextFormField _weightForm = new RoutineTextFormField(
-    labelText: 'kg',
+  RoutineTextFormField _swimStyleForm = new RoutineTextFormField(
+    labelText: 'Swim style',
   );
 
-  List<Exercise> routine = <Exercise>[];
+  List<ShortDistanceExercise> routine = <ShortDistanceExercise>[];
 
   // add new exercise to the routine
   bool addExercise() {
     if (_titleForm.formKey.currentState.validate()) {
-      if (_exerciseForm.formKey.currentState.validate()) {
-        if (_muscleForm.formKey.currentState.validate()) {
-          if (_setsForm.formKey.currentState.validate()) {
-            if (_repsForm.formKey.currentState.validate()) {
-              if (_weightForm.formKey.currentState.validate()) {
-                Exercise newRoutine = new Exercise(
-                  exercise: _exerciseForm.controller.text.trim(),
-                  muscle: _muscleForm.controller.text.trim(),
-                  sets: _setsForm.controller.text.trim(),
-                  reps: _repsForm.controller.text.trim(),
-                  weight: _weightForm.controller.text.trim(),
-                );
-                routine.add(newRoutine);
+      if (_swimStyleForm.formKey.currentState.validate()) {
+        ShortDistanceExercise newRoutine = new ShortDistanceExercise(
+          distance: distance.toString(),
+          style: _swimStyleForm.controller.text.trim(),
+          sessions: sessions.toString(),
+          restTimeMin: restTimeMin.toString(),
+          restTimeSec: restTimeSec.toString(),
+        );
+        routine.add(newRoutine);
 
-                return true;
-              }
-            }
-          }
-        }
+        return true;
       }
     }
     return false;
   }
+
+  Function increase(UnitInput input) {
+    return () {
+      setState(() {
+        if (input == UnitInput.distance) {
+          distance += 5;
+        } else if (input == UnitInput.intervals) {
+          sessions++;
+        } else if (input == UnitInput.restTime && restTimeMin < 60) {
+          if (restTimeSec == 30) {
+            restTimeSec = 0;
+            restTimeMin++;
+          } else {
+            restTimeSec = 30;
+          }
+        }
+      });
+    };
+  }
+
+  Function decrease(UnitInput input) {
+    return () {
+      setState(() {
+        if (input == UnitInput.distance && distance > 1) {
+          distance -= 5;
+        } else if (input == UnitInput.intervals && sessions > 1) {
+          sessions--;
+        } else if (input == UnitInput.restTime &&
+            (restTimeMin > 0 || restTimeSec > 0)) {
+          if (restTimeSec == 0) {
+            restTimeSec = 30;
+            restTimeMin--;
+          } else {
+            restTimeSec = 0;
+          }
+        }
+      });
+    };
+  }
+
+  int sessions = 1;
+  int swimSession = 1;
+  int restTimeMin = 0;
+  int restTimeSec = 0;
+  int distance = 25;
 
   @override
   Widget build(BuildContext context) {
@@ -67,66 +95,111 @@ class _SwimFormControllerState extends State<SwimFormController> {
     return Column(
       children: <Widget>[
         // title text form filed
-        _titleForm,
-        // exercise text form field
-        _exerciseForm,
-        // muscle text form field
-        _muscleForm,
-        // sets, reps and weight fields
-        Container(
-          margin: EdgeInsets.all(10.0),
-          color: Colors.blueGrey[600],
+        Expanded(child: _titleForm),
+        // swim style form field
+        Expanded(child: _swimStyleForm),
+        // distance and intervals unit inputs
+        Expanded(
+          flex: 2,
           child: Row(
-            children: <Widget>[
-              Expanded(child: _setsForm),
-              Expanded(child: _repsForm),
-              Expanded(child: _weightForm),
+            children: [
+              Expanded(
+                child: UnitInputCard(
+                  labelText: 'Distance',
+                  inputText: Text(
+                    '${distance.toString()} m',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                    ),
+                  ),
+                  onPressedMinus: decrease(UnitInput.distance),
+                  onPressedPlus: increase(UnitInput.distance),
+                ),
+              ),
+              Expanded(
+                child: UnitInputCard(
+                  labelText: 'Sessions',
+                  inputText: Text(
+                    sessions.toString(),
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 25.0,
+                    ),
+                  ),
+                  onPressedMinus: decrease(UnitInput.intervals),
+                  onPressedPlus: increase(UnitInput.intervals),
+                ),
+              ),
             ],
           ),
         ),
-        // add new exercise button
-        CreateRoutineButton(
-          labelName: 'ADD NEW EXERCISE',
-          onPressed: () async {
-            if (addExercise()) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Exercise added to routine')));
-
-              _exerciseForm.controller.clear();
-              _muscleForm.controller.clear();
-              _setsForm.controller.clear();
-              _repsForm.controller.clear();
-              _weightForm.controller.clear();
-            }
-          },
+        Expanded(
+          flex: 2,
+          child: UnitInputCard(
+            labelText: 'Rest time',
+            inputText: Text(
+              restTimeMin > 9
+                  ? '$restTimeMin : $restTimeSec'
+                  : '0$restTimeMin : $restTimeSec',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 30.0,
+              ),
+            ),
+            onPressedMinus: decrease(UnitInput.restTime),
+            onPressedPlus: increase(UnitInput.restTime),
+          ),
         ),
-        // create routine button
-        CreateRoutineButton(
-          labelName: 'CREATE ROUTINE',
-          onPressed: () async {
-            if (addExercise()) {
-              // create new routine
-              await RoutineDatabaseController().createRoutineData(
-                title: _titleForm.controller.text.trim(),
-                sport: sport,
-              );
+        // add new exercise button
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: RoutineButton(
+                  labelName: 'ADD NEW EXERCISE',
+                  onPressed: () async {
+                    if (addExercise()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Exercise added to routine')));
+                    }
+                  },
+                ),
+              ),
+              // create routine button
+              Expanded(
+                child: RoutineButton(
+                  labelName: 'CREATE ROUTINE',
+                  onPressed: () async {
+                    if (addExercise()) {
+                      // create new routine
+                      await RoutineDatabaseController().createRoutineData(
+                        title: _titleForm.controller.text.trim(),
+                        sport: sport,
+                      );
 
-              for (int i = 0; i < routine.length; i++) {
-                await ExerciseDatabaseController(
-                  routineTitle: _titleForm.controller.text.trim(),
-                ).createExerciseData(
-                  exerciseTitle: routine[i].exercise,
-                  muscle: routine[i].muscle,
-                  sets: routine[i].sets,
-                  reps: routine[i].reps,
-                  weight: routine[i].weight,
-                );
-              }
+                      for (int i = 0; i < routine.length; i++) {
+                        await ExerciseDatabaseController(
+                          routineTitle: _titleForm.controller.text.trim(),
+                        ).createShortDistanceExerciseData(
+                          exerciseTitle: 'swim session $swimSession',
+                          distance: routine[i].distance,
+                          style: routine[i].style,
+                          sessions: routine[i].sessions,
+                          restTimeMin: routine[i].restTimeMin,
+                          restTimeSec: routine[i].restTimeSec,
+                        );
+                        swimSession++;
+                      }
 
-              Navigator.pop(context);
-              Navigator.pop(context);
-            }
-          },
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

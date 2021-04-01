@@ -21,10 +21,16 @@ class ProfileController extends StatelessWidget {
             ProfileImage(),
             // user name
             SizedBox(height: 25.0),
-            UserCredentialData(userCredentialData: UserName()),
+            UserCredentialData(
+              userCredentialData: UserName(),
+              icon: Icons.person,
+            ),
             // user email
             SizedBox(height: 15.0),
-            UserCredentialData(userCredentialData: UserEmail()),
+            UserCredentialData(
+              userCredentialData: UserEmail(),
+              icon: Icons.email,
+            ),
           ],
         ),
         // sign out button

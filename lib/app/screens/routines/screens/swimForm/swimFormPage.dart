@@ -18,7 +18,15 @@ class _SwimFormPageState extends State<SwimFormPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: SwimFormController(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: IntrinsicHeight(
+              child: SwimFormController(),
+            ),
+          ),
         ),
       ),
     );

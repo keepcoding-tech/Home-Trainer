@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:home_trainer/app/screens/routines/utilities/deleteRoutineMessage.dart';
+import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessage.dart';
 
 class RoutineAppBar extends StatelessWidget {
   final String title;
@@ -16,7 +16,7 @@ class RoutineAppBar extends StatelessWidget {
           showAlertDialogMessage(
             context: context,
             messageTitle: 'Dismis Routine',
-            messageDetails: 'Are you sure? All the changes will be deleted.',
+            messageDetails: 'All the changes will be deleted!',
             onPressed: () {
               Navigator.pop(context);
               Navigator.pop(context);

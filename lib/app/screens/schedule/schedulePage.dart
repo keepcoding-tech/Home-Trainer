@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class SchedulePage extends StatefulWidget {
-  final String pageName = 'Schedule page';
-
   @override
   _SchedulePageState createState() => _SchedulePageState();
 }

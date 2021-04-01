@@ -18,7 +18,15 @@ class _GymFormPageState extends State<GymFormPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: GymFormController(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: IntrinsicHeight(
+              child: GymFormController(),
+            ),
+          ),
         ),
       ),
     );

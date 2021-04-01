@@ -4,8 +4,8 @@ import 'package:home_trainer/app/screens/routines/services/detailPageList.dart';
 import 'package:home_trainer/app/screens/routines/utilities/detailsPageAppBar.dart';
 
 class DetailPage extends StatefulWidget {
-  final String title;
-  DetailPage({this.title});
+  final String title, sport;
+  DetailPage({this.title, this.sport});
 
   @override
   _DetailPageState createState() => _DetailPageState();
@@ -20,7 +20,10 @@ class _DetailPageState extends State<DetailPage> {
         child: DetailsPageAppBar(routineTitle: widget.title),
       ),
       body: SafeArea(
-        child: DetailPageList(routineTitle: widget.title),
+        child: DetailPageList(
+          routineTitle: widget.title,
+          sport: widget.sport,
+        ),
       ),
     );
   }

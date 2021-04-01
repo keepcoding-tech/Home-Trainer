@@ -18,13 +18,25 @@ Future<void> showAlertDialogMessage({
               Navigator.pop(context);
               onPressed();
             },
-            child: Text('YES'),
+            child: Text(
+              'YES',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15.0,
+              ),
+            ),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text('NO'),
+            child: Text(
+              'NO',
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 15.0,
+              ),
+            ),
           ),
         ],
       );

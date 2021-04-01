@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 class UserCredentialData extends StatelessWidget {
   final userCredentialData;
-  UserCredentialData({this.userCredentialData});
+  final IconData icon;
+  UserCredentialData({this.userCredentialData, this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -11,7 +12,7 @@ class UserCredentialData extends StatelessWidget {
       color: Colors.blueGrey[600],
       margin: EdgeInsets.only(left: MediaQuery.of(context).size.width / 4.5),
       child: ListTile(
-        leading: Icon(Icons.person, color: Colors.blueGrey[800]),
+        leading: Icon(icon, color: Colors.blueGrey[800]),
         title: userCredentialData,
       ),
     );

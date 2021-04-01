@@ -18,7 +18,15 @@ class _CyclingFormPageState extends State<CyclingFormPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: CyclingFormController(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: IntrinsicHeight(
+              child: CyclingFormController(),
+            ),
+          ),
         ),
       ),
     );

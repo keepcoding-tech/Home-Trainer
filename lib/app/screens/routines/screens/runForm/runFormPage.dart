@@ -18,7 +18,15 @@ class _RunFormPageState extends State<RunFormPage> {
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          child: RunFormController(),
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minWidth: MediaQuery.of(context).size.width,
+              minHeight: MediaQuery.of(context).size.height,
+            ),
+            child: IntrinsicHeight(
+              child: RunFormController(),
+            ),
+          ),
         ),
       ),
     );

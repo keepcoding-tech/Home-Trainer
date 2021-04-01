@@ -1,42 +1,58 @@
 import 'package:flutter/material.dart';
 
-import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
 import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
-import 'package:home_trainer/database/routineDatabaseController.dart';
-import 'package:home_trainer/database/utilities/exercises.dart';
 
 enum UnitInput { distance, intervals, restTime }
 
-class CyclingFormController extends StatefulWidget {
+class EditLongDistanceExerciseController extends StatefulWidget {
+  final String routine,
+      exercise,
+      distance,
+      intervals,
+      intensity,
+      restTimeMin,
+      restTimeSec,
+      intensityTextLabel;
+  EditLongDistanceExerciseController({
+    this.routine,
+    this.exercise,
+    this.distance,
+    this.intervals,
+    this.intensity,
+    this.restTimeMin,
+    this.restTimeSec,
+    this.intensityTextLabel,
+  });
+
   @override
-  _CyclingFormControllerState createState() => _CyclingFormControllerState();
+  _EditLongDistanceExerciseControllerState createState() =>
+      _EditLongDistanceExerciseControllerState(
+        distance: double.parse(distance),
+        intervals: int.parse(intervals),
+        intensity: intensity,
+        restTimeMin: int.parse(restTimeMin),
+        restTimeSec: int.parse(restTimeSec),
+      );
 }
 
-class _CyclingFormControllerState extends State<CyclingFormController> {
-  RoutineTextFormField _titleForm = new RoutineTextFormField(
-    labelText: 'Routie title',
-  );
+class _EditLongDistanceExerciseControllerState
+    extends State<EditLongDistanceExerciseController> {
+  double distance;
+  int intervals;
+  int runSession;
+  String intensity;
+  int restTimeMin;
+  int restTimeSec;
 
-  List<LongDistanceExercise> routine = <LongDistanceExercise>[];
-
-  // add new exercise to the routine
-  bool addExercise() {
-    if (_titleForm.formKey.currentState.validate()) {
-      LongDistanceExercise newRoutine = new LongDistanceExercise(
-        distance: distance.toString(),
-        intervals: intervals.toString(),
-        intensity: intensity,
-        restTimeMin: restTimeMin.toString(),
-        restTimeSec: restTimeSec.toString(),
-      );
-      routine.add(newRoutine);
-
-      return true;
-    }
-    return false;
-  }
+  _EditLongDistanceExerciseControllerState({
+    this.distance,
+    this.intervals,
+    this.intensity,
+    this.restTimeMin,
+    this.restTimeSec,
+  });
 
   Function increase(UnitInput input) {
     return () {
@@ -61,7 +77,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
     return () {
       setState(() {
         if (input == UnitInput.distance && distance > 0) {
-          distance -= 0.5;
+          distance--;
         } else if (input == UnitInput.intervals && intervals > 1) {
           intervals--;
         } else if (input == UnitInput.restTime &&
@@ -77,22 +93,10 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
     };
   }
 
-  int intervals = 1;
-  int runSession = 1;
-  int restTimeMin = 0;
-  int restTimeSec = 0;
-  double distance = 0.0;
-  String intensity = 'Normal run';
-
   @override
   Widget build(BuildContext context) {
-    final String sport = 'CYCLING';
-
     return Column(
       children: <Widget>[
-        // title text form filed
-        Expanded(child: _titleForm),
-        // distance and intervals unit inputs
         Expanded(
           flex: 2,
           child: Row(
@@ -104,7 +108,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
                     distance.toString(),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20.0,
+                      fontSize: 30.0,
                     ),
                   ),
                   onPressedMinus: decrease(UnitInput.distance),
@@ -118,7 +122,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
                     intervals.toString(),
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20.0,
+                      fontSize: 30.0,
                     ),
                   ),
                   onPressedMinus: decrease(UnitInput.intervals),
@@ -138,7 +142,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
                   : '0$restTimeMin : $restTimeSec',
               style: TextStyle(
                 color: Colors.white,
-                fontSize: 20.0,
+                fontSize: 30.0,
               ),
             ),
             onPressedMinus: decrease(UnitInput.restTime),
@@ -150,25 +154,25 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
             children: [
               Expanded(
                 child: RoutineButton(
-                  labelName: 'EASY CYCLING',
+                  labelName: 'EASY ${widget.intensityTextLabel}',
                   onPressed: () {
-                    intensity = 'EASY CYCLING';
+                    intensity = 'EASY ${widget.intensityTextLabel}';
                   },
                 ),
               ),
               Expanded(
                 child: RoutineButton(
-                  labelName: 'NORMAL CYCLING',
+                  labelName: 'NORMAL ${widget.intensityTextLabel}',
                   onPressed: () {
-                    intensity = 'NORMAL CYCLING';
+                    intensity = 'NORMAL ${widget.intensityTextLabel}';
                   },
                 ),
               ),
               Expanded(
                 child: RoutineButton(
-                  labelName: 'INTENSE CYCLING',
+                  labelName: 'INTENS ${widget.intensityTextLabel}',
                   onPressed: () {
-                    intensity = 'INTENSE CYCLING';
+                    intensity = 'INTENS ${widget.intensityTextLabel}';
                   },
                 ),
               ),
@@ -177,53 +181,22 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
         ),
         // add new exercise button
         Expanded(
-          child: Row(
-            children: [
-              Expanded(
-                child: RoutineButton(
-                  labelName: 'ADD NEW EXERCISE',
-                  onPressed: () async {
-                    if (addExercise()) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Exercise added to routine')));
-                    }
-                  },
-                ),
-              ),
-              // create routine button
-              Expanded(
-                child: RoutineButton(
-                  labelName: 'CREATE ROUTINE',
-                  onPressed: () async {
-                    if (addExercise()) {
-                      // create new routine
-                      await RoutineDatabaseController().createRoutineData(
-                        title: _titleForm.controller.text.trim(),
-                        sport: sport,
-                      );
+          child: RoutineButton(
+              labelName: 'SAVE',
+              onPressed: () async {
+                await ExerciseDatabaseController(
+                  routineTitle: widget.routine,
+                ).updateLongDistanceExerciseData(
+                  exerciseTitle: widget.exercise,
+                  distance: distance.toString(),
+                  intervals: intervals.toString(),
+                  restTimeMin: restTimeMin.toString(),
+                  restTimeSec: restTimeSec.toString(),
+                  intensity: intensity.toString(),
+                );
 
-                      for (int i = 0; i < routine.length; i++) {
-                        await ExerciseDatabaseController(
-                          routineTitle: _titleForm.controller.text.trim(),
-                        ).createLongDistanceExerciseData(
-                          exerciseTitle: 'cycling session $runSession',
-                          distance: routine[i].distance.toString(),
-                          intervals: routine[i].intervals.toString(),
-                          restTimeMin: routine[i].restTimeMin,
-                          restTimeSec: routine[i].restTimeSec,
-                          intensity: routine[i].intensity,
-                        );
-                        runSession++;
-                      }
-
-                      Navigator.pop(context);
-                      Navigator.pop(context);
-                    }
-                  },
-                ),
-              ),
-            ],
-          ),
+                Navigator.pop(context);
+              }),
         ),
       ],
     );
