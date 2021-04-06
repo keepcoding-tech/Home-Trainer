@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
-import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:home_trainer/database/utilities/exercises.dart';
@@ -105,28 +106,24 @@ class _SwimFormControllerState extends State<SwimFormController> {
             children: [
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Distance',
+                  labelText: 'DISTANCE',
                   inputText: Text(
                     '${distance.toString()} m',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
                   onPressedMinus: decrease(UnitInput.distance),
                   onPressedPlus: increase(UnitInput.distance),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Sessions',
-                  inputText: Text(
-                    sessions.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25.0,
-                    ),
-                  ),
+                  labelText: 'SESSIONS',
+                  inputText:
+                      Text(sessions.toString(), style: kTitleLabelTextStyle),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
                   onPressedMinus: decrease(UnitInput.intervals),
                   onPressedPlus: increase(UnitInput.intervals),
                 ),
@@ -137,16 +134,14 @@ class _SwimFormControllerState extends State<SwimFormController> {
         Expanded(
           flex: 2,
           child: UnitInputCard(
-            labelText: 'Rest time',
+            labelText: 'REST TIME',
             inputText: Text(
-              restTimeMin > 9
-                  ? '$restTimeMin : $restTimeSec'
-                  : '0$restTimeMin : $restTimeSec',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-              ),
-            ),
+                restTimeMin > 9
+                    ? '$restTimeMin : $restTimeSec'
+                    : '0$restTimeMin : $restTimeSec',
+                style: kTitleLabelTextStyle),
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 20.0,
             onPressedMinus: decrease(UnitInput.restTime),
             onPressedPlus: increase(UnitInput.restTime),
           ),
@@ -158,6 +153,7 @@ class _SwimFormControllerState extends State<SwimFormController> {
               Expanded(
                 child: RoutineButton(
                   labelName: 'ADD NEW EXERCISE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -170,6 +166,7 @@ class _SwimFormControllerState extends State<SwimFormController> {
               Expanded(
                 child: RoutineButton(
                   labelName: 'CREATE ROUTINE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       // create new routine
@@ -182,7 +179,7 @@ class _SwimFormControllerState extends State<SwimFormController> {
                         await ExerciseDatabaseController(
                           routineTitle: _titleForm.controller.text.trim(),
                         ).createShortDistanceExerciseData(
-                          exerciseTitle: 'swim session $swimSession',
+                          exercise: 'swim session $swimSession',
                           distance: routine[i].distance,
                           style: routine[i].style,
                           sessions: routine[i].sessions,

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class NavigationBar extends StatelessWidget {
   final int currentIndex;
@@ -12,27 +14,31 @@ class NavigationBar extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       notchMargin: 5,
       child: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.blueGrey[800],
-        unselectedItemColor: Colors.white,
-        fixedColor: Colors.blue,
+        unselectedItemColor: kIconColor,
+        fixedColor: kBottomNavigationIconColor,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         currentIndex: currentIndex,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.directions_run),
-            label: 'routines',
+            icon: Icon(FontAwesomeIcons.running),
+            backgroundColor: kPrimariColor,
+            label: 'ROUTINES',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.today),
-            label: 'shedule',
+            icon: Icon(FontAwesomeIcons.calendarDay),
+            backgroundColor: kPrimariColor,
+            label: 'SCHEDULE',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.analytics_outlined),
-            label: 'analytics',
+            icon: Icon(FontAwesomeIcons.chartPie),
+            backgroundColor: kPrimariColor,
+            label: 'ANALYTICS',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'profile',
+            icon: Icon(FontAwesomeIcons.userAlt),
+            backgroundColor: kPrimariColor,
+            label: 'PROFILE',
           ),
         ],
         onTap: selectTab,

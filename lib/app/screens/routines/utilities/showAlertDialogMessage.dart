@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 Future<void> showAlertDialogMessage({
   BuildContext context,
@@ -10,33 +11,22 @@ Future<void> showAlertDialogMessage({
     context: context,
     builder: (BuildContext context) {
       return AlertDialog(
-        title: Text(messageTitle),
-        content: Text(messageDetails),
+        backgroundColor: kInactiveCardColor,
+        title: Text(messageTitle, style: kTitleLabelTextStyle),
+        content: Text(messageDetails, style: kSubtitleLabelTextStyle),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.pop(context);
               onPressed();
             },
-            child: Text(
-              'YES',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 15.0,
-              ),
-            ),
+            child: Text('YES', style: kButtonLabelTextStyle),
           ),
           TextButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            child: Text(
-              'NO',
-              style: TextStyle(
-                color: Colors.black,
-                fontSize: 15.0,
-              ),
-            ),
+            child: Text('NO', style: kButtonLabelTextStyle),
           ),
         ],
       );

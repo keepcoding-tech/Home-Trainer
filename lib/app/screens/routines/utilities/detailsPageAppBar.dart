@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessage.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class DetailsPageAppBar extends StatelessWidget {
   const DetailsPageAppBar({this.routineTitle});
@@ -15,16 +17,22 @@ class DetailsPageAppBar extends StatelessWidget {
         FirebaseFirestore.instance.collection('users');
 
     return AppBar(
-      title: Text(routineTitle),
+      title: Text(
+        routineTitle,
+        style: kTitleLabelTextStyle,
+      ),
       leading: IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: Icon(
+          FontAwesomeIcons.arrowLeft,
+          color: kIconColor,
+        ),
         onPressed: () {
           Navigator.of(context).pop();
         },
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.delete),
+          icon: Icon(FontAwesomeIcons.trash),
           onPressed: () {
             showAlertDialogMessage(
               context: context,

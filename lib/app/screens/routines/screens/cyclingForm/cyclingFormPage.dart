@@ -14,7 +14,7 @@ class _CyclingFormPageState extends State<CyclingFormPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
-        child: RoutineAppBar(title: 'CYCLING'),
+        child: DismissAppBar(messageTitle: 'Dismiss routine', title: 'CYCLING'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

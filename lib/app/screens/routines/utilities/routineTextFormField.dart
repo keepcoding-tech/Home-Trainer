@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-const kTextFormFieldColor = Colors.blueGrey;
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class RoutineTextFormField extends StatelessWidget {
   final TextEditingController controller = new TextEditingController();
@@ -12,36 +11,32 @@ class RoutineTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(5.0),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[600],
+        color: kActiveCardColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Center(
         child: Form(
           key: formKey,
           child: Padding(
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(5.0),
             child: TextFormField(
               controller: controller,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-              ),
+              style: kRoutineTextFormFieldStyle,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 15.0),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide:
+                      BorderSide(color: kTextFieldBorderColor, width: 2),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10.0),
-                  borderSide: BorderSide(color: Colors.white),
+                  borderSide:
+                      BorderSide(color: kTextFieldBorderColor, width: 2),
                 ),
-                labelStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                ),
+                labelStyle: kRoutineTextFormFieldStyle,
                 labelText: labelText,
               ),
               validator: (value) {

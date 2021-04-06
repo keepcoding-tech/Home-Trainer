@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+
 class RoundIconButton extends StatelessWidget {
   final Function onPressed;
   final IconData icon;
@@ -14,8 +16,8 @@ class RoundIconButton extends StatelessWidget {
       ),
       elevation: 6.0,
       shape: CircleBorder(),
-      fillColor: Colors.blueGrey[700],
-      child: Icon(icon, color: Colors.white),
+      fillColor: kButtonColor,
+      child: Icon(icon, color: kIconColor),
       onPressed: onPressed,
     );
   }

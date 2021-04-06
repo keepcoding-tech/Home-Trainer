@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class UserCredentialData extends StatelessWidget {
   final userCredentialData;
@@ -8,11 +9,9 @@ class UserCredentialData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
-      color: Colors.blueGrey[600],
-      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width / 4.5),
+      color: kActiveCardColor,
       child: ListTile(
-        leading: Icon(icon, color: Colors.blueGrey[800]),
+        leading: Icon(icon, color: kIconColor),
         title: userCredentialData,
       ),
     );

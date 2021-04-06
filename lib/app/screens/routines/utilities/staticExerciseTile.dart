@@ -1,9 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'package:home_trainer/app/screens/routines/editStaticExercisePage.dart';
+import 'package:home_trainer/app/screens/routines/utilities/detailExerciseCard.dart';
 import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessage.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class StaticExerciseTile extends StatelessWidget {
   final String routine,
@@ -33,7 +36,7 @@ class StaticExerciseTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
-      color: Colors.blueGrey[600],
+      color: kInactiveCardColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -41,26 +44,19 @@ class StaticExerciseTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Muscle: $muscle',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'MUSCLE:  $muscle',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),
-              Card(
-                color: Colors.blueGrey[400],
-                child: IconButton(
-                  icon: Icon(Icons.edit),
+              DetailExerciseCard(
+                cardChild: IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.pencilAlt,
+                    color: kIconColor,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -80,10 +76,12 @@ class StaticExerciseTile extends StatelessWidget {
                   },
                 ),
               ),
-              Card(
-                color: Colors.blueGrey[400],
-                child: IconButton(
-                  icon: Icon(Icons.delete),
+              DetailExerciseCard(
+                cardChild: IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.trash,
+                    color: kIconColor,
+                  ),
                   onPressed: () {
                     showAlertDialogMessage(
                       context: context,
@@ -105,54 +103,27 @@ class StaticExerciseTile extends StatelessWidget {
               ),
             ],
           ),
-          Container(
-            height: 56.0,
-            child: Card(
-              color: Colors.blueGrey[400],
-              child: Center(
-                child: Text(
-                  'Exercise: $exercise',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+          DetailExerciseCard(
+            cardChild: Text(
+              'EXERCISE:  $exercise',
+              style: kSubtitleLabelTextStyle,
             ),
           ),
           Row(
             children: <Widget>[
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Sets: $sets',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'SETS:  $sets',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Reps: $reps',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'REPS:  $reps',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),
@@ -161,36 +132,18 @@ class StaticExerciseTile extends StatelessWidget {
           Row(
             children: <Widget>[
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Weight: $weight',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'WEIGHT:  $weight Kg',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Rest: $restTimeMin : $restTimeSec',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'REST TIME:  $restTimeMin:$restTimeSec',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),

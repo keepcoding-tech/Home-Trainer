@@ -1,9 +1,12 @@
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/editLongDistanceExercisePage.dart';
+import 'package:home_trainer/app/screens/routines/utilities/detailExerciseCard.dart';
 import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessage.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class LongDistanceExerciseTile extends StatelessWidget {
   final String routine,
@@ -33,7 +36,7 @@ class LongDistanceExerciseTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
-      color: Colors.blueGrey[600],
+      color: kInactiveCardColor,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -41,26 +44,19 @@ class LongDistanceExerciseTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Distance: $distance km',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'DISTANCE:  $distance Km',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),
-              Card(
-                color: Colors.blueGrey[400],
-                child: IconButton(
-                  icon: Icon(Icons.edit),
+              DetailExerciseCard(
+                cardChild: IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.pencilAlt,
+                    color: kIconColor,
+                  ),
                   onPressed: () {
                     Navigator.push(
                       context,
@@ -80,15 +76,18 @@ class LongDistanceExerciseTile extends StatelessWidget {
                   },
                 ),
               ),
-              Card(
-                color: Colors.blueGrey[400],
-                child: IconButton(
-                  icon: Icon(Icons.delete),
+              DetailExerciseCard(
+                cardChild: IconButton(
+                  icon: Icon(
+                    FontAwesomeIcons.trash,
+                    color: kIconColor,
+                  ),
                   onPressed: () {
                     showAlertDialogMessage(
                       context: context,
-                      messageTitle: 'Delete Routine',
-                      messageDetails: 'Are you sure?',
+                      messageTitle: 'Delete exercise',
+                      messageDetails:
+                          'Are you sure you want to delete the exercise?',
                       onPressed: () {
                         _routineColection
                             .doc(_currentUser.uid)
@@ -107,55 +106,25 @@ class LongDistanceExerciseTile extends StatelessWidget {
           Row(
             children: <Widget>[
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Intervals: $intervals',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'INTERVALS: $intervals',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),
               Expanded(
-                child: Container(
-                  height: 56.0,
-                  child: Card(
-                    color: Colors.blueGrey[400],
-                    child: Center(
-                      child: Text(
-                        'Rest time: $restTimeMin : $restTimeSec',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
+                child: DetailExerciseCard(
+                  cardChild: Text(
+                    'REST TIME: $restTimeMin : $restTimeSec',
+                    style: kSubtitleLabelTextStyle,
                   ),
                 ),
               ),
             ],
           ),
-          Container(
-            height: 56.0,
-            child: Card(
-              color: Colors.blueGrey[400],
-              child: Center(
-                child: Text(
-                  '$intensity',
-                  style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
-            ),
+          DetailExerciseCard(
+            cardChild: Text('$intensity', style: kSubtitleLabelTextStyle),
           ),
         ],
       ),

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/editTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
-import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 
 enum UnitInput { sets, reps, weight, restTime }
@@ -124,28 +125,26 @@ class _EditStaticExerciseControllerState
             children: <Widget>[
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Sets',
+                  labelText: 'SETS',
                   inputText: Text(
                     sets.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.sets),
                   onPressedPlus: increase(UnitInput.sets),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Reps',
+                  labelText: 'REPS',
                   inputText: Text(
                     reps.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.reps),
                   onPressedPlus: increase(UnitInput.reps),
                 ),
@@ -159,30 +158,28 @@ class _EditStaticExerciseControllerState
             children: <Widget>[
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Weight',
+                  labelText: 'WEIGHT',
                   inputText: Text(
                     weight.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.weight),
                   onPressedPlus: increase(UnitInput.weight),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Rest time',
+                  labelText: 'REST TIME',
                   inputText: Text(
                     restTimeMin > 9
                         ? '$restTimeMin : $restTimeSec'
                         : '0$restTimeMin : $restTimeSec',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.restTime),
                   onPressedPlus: increase(UnitInput.restTime),
                 ),
@@ -193,6 +190,7 @@ class _EditStaticExerciseControllerState
         Expanded(
           child: RoutineButton(
             labelName: 'SAVE',
+            color: kButtonColor,
             onPressed: () async {
               if (_exerciseForm.formKey.currentState.validate()) {
                 if (_muscleForm.formKey.currentState.validate()) {
@@ -206,7 +204,7 @@ class _EditStaticExerciseControllerState
 
                   await ExerciseDatabaseController(
                     routineTitle: widget.routineTitle,
-                  ).updateStaticExerciseData(
+                  ).createStaticExerciseData(
                     exercise: _exerciseForm.controller.text.trim(),
                     muscle: _muscleForm.controller.text.trim(),
                     sets: sets.toString(),

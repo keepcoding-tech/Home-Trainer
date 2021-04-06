@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
-import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/selectableCard.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 
 enum UnitInput { distance, intervals, restTime }
+enum Intensity { easy, normal, intens }
 
 class EditLongDistanceExerciseController extends StatefulWidget {
   final String routine,
@@ -93,6 +96,10 @@ class _EditLongDistanceExerciseControllerState
     };
   }
 
+  Intensity selectedGender = Intensity.normal;
+  final Color activeColor = Colors.blueGrey[700];
+  final Color inactiveColor = Colors.blueGrey[600];
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -103,28 +110,26 @@ class _EditLongDistanceExerciseControllerState
             children: [
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Distance',
+                  labelText: 'DISTANCE',
                   inputText: Text(
                     distance.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 15.0,
                   onPressedMinus: decrease(UnitInput.distance),
                   onPressedPlus: increase(UnitInput.distance),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Intervals',
+                  labelText: 'INTERVALS',
                   inputText: Text(
                     intervals.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 15.0,
                   onPressedMinus: decrease(UnitInput.intervals),
                   onPressedPlus: increase(UnitInput.intervals),
                 ),
@@ -135,16 +140,15 @@ class _EditLongDistanceExerciseControllerState
         Expanded(
           flex: 2,
           child: UnitInputCard(
-            labelText: 'Rest time',
+            labelText: 'REST TIME',
             inputText: Text(
               restTimeMin > 9
                   ? '$restTimeMin : $restTimeSec'
                   : '0$restTimeMin : $restTimeSec',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-              ),
+              style: kTitleLabelTextStyle,
             ),
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 15.0,
             onPressedMinus: decrease(UnitInput.restTime),
             onPressedPlus: increase(UnitInput.restTime),
           ),
@@ -153,26 +157,59 @@ class _EditLongDistanceExerciseControllerState
           child: Row(
             children: [
               Expanded(
-                child: RoutineButton(
-                  labelName: 'EASY ${widget.intensityTextLabel}',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      ' EASY\n  ${widget.intensityTextLabel}',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.easy
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'EASY ${widget.intensityTextLabel}';
+                    setState(() {
+                      selectedGender = Intensity.easy;
+                      intensity = 'EASY\n  ${widget.intensityTextLabel}';
+                    });
                   },
                 ),
               ),
               Expanded(
-                child: RoutineButton(
-                  labelName: 'NORMAL ${widget.intensityTextLabel}',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      '  NORMAL\n     ${widget.intensityTextLabel}',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.normal
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'NORMAL ${widget.intensityTextLabel}';
+                    setState(() {
+                      selectedGender = Intensity.normal;
+                      intensity = 'NORMAL ${widget.intensityTextLabel}';
+                    });
                   },
                 ),
               ),
               Expanded(
-                child: RoutineButton(
-                  labelName: 'INTENS ${widget.intensityTextLabel}',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      ' INTENS\n    ${widget.intensityTextLabel}',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.intens
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'INTENS ${widget.intensityTextLabel}';
+                    setState(() {
+                      selectedGender = Intensity.intens;
+                      intensity = 'INTENS ${widget.intensityTextLabel}';
+                    });
                   },
                 ),
               ),
@@ -182,21 +219,23 @@ class _EditLongDistanceExerciseControllerState
         // add new exercise button
         Expanded(
           child: RoutineButton(
-              labelName: 'SAVE',
-              onPressed: () async {
-                await ExerciseDatabaseController(
-                  routineTitle: widget.routine,
-                ).updateLongDistanceExerciseData(
-                  exerciseTitle: widget.exercise,
-                  distance: distance.toString(),
-                  intervals: intervals.toString(),
-                  restTimeMin: restTimeMin.toString(),
-                  restTimeSec: restTimeSec.toString(),
-                  intensity: intensity.toString(),
-                );
+            labelName: 'SAVE',
+            color: kButtonColor,
+            onPressed: () async {
+              await ExerciseDatabaseController(
+                routineTitle: widget.routine,
+              ).createLongDistanceExerciseData(
+                exercise: widget.exercise,
+                distance: distance.toString(),
+                intervals: intervals.toString(),
+                restTimeMin: restTimeMin.toString(),
+                restTimeSec: restTimeSec.toString(),
+                intensity: intensity.toString(),
+              );
 
-                Navigator.pop(context);
-              }),
+              Navigator.pop(context);
+            },
+          ),
         ),
       ],
     );

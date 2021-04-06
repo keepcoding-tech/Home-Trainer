@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class TermsAndConditions extends StatefulWidget {
   @override
@@ -11,27 +12,51 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Terms & Conditions'),
+            backgroundColor: kActiveCardColor,
+            title: Text(
+              'Terms & Conditions',
+              style: kSubtitleLabelTextStyle,
+            ),
             content: SingleChildScrollView(
               child: ListBody(
                 children: <Widget>[
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
-                  Text('This are the terms and conditions'),
+                  Text(
+                    'This are the terms and conditions',
+                    style: kContentLabelTextStyle,
+                  ),
+                  Text(
+                    'This are the terms and conditions',
+                    style: kContentLabelTextStyle,
+                  ),
+                  Text(
+                    'This are the terms and conditions',
+                    style: kContentLabelTextStyle,
+                  ),
+                  Text(
+                    'This are the terms and conditions',
+                    style: kContentLabelTextStyle,
+                  ),
+                  Text(
+                    'This are the terms and conditions',
+                    style: kContentLabelTextStyle,
+                  ),
+                  Text(
+                    'This are the terms and conditions',
+                    style: kContentLabelTextStyle,
+                  ),
+                  Text(
+                    'This are the terms and conditions',
+                    style: kContentLabelTextStyle,
+                  ),
                 ],
               ),
             ),
             actions: <Widget>[
               TextButton(
-                child: Text('OK'),
+                child: Text(
+                  'OK',
+                  style: kButtonLabelTextStyle,
+                ),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
@@ -50,17 +75,12 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
           children: <Widget>[
             Text(
               'By proceeding, you agree to the ',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              style: kContentLabelTextStyle,
             ),
             GestureDetector(
               child: Text(
                 'Terms',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kBoldContentLabelTextStyle,
               ),
               onTap: () {
                 _showTermsAndCondition();
@@ -74,10 +94,7 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
             GestureDetector(
               child: Text(
                 'of Services',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kBoldContentLabelTextStyle,
               ),
               onTap: () {
                 _showTermsAndCondition();
@@ -85,17 +102,12 @@ class _TermsAndConditionsState extends State<TermsAndConditions> {
             ),
             Text(
               ' and ',
-              style: TextStyle(
-                color: Colors.white,
-              ),
+              style: kContentLabelTextStyle,
             ),
             GestureDetector(
               child: Text(
                 'Privacy Notice.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
+                style: kBoldContentLabelTextStyle,
               ),
               onTap: () {
                 _showTermsAndCondition();

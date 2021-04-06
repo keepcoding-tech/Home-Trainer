@@ -14,7 +14,7 @@ class _GymFormPageState extends State<GymFormPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
-        child: RoutineAppBar(title: 'GYM'),
+        child: DismissAppBar(messageTitle: 'Dismiss routine', title: 'GYM'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

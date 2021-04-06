@@ -1,4 +1,5 @@
 class Routine {
   final String title, sport;
-  Routine({this.title, this.sport});
+  bool isSelected;
+  Routine({this.title, this.sport, this.isSelected});
 }

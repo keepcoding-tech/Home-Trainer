@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
-import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/selectableCard.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:home_trainer/database/utilities/exercises.dart';
 
 enum UnitInput { distance, intervals, restTime }
+enum Intensity { easy, normal, intens }
 
 class RunFormController extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class RunFormController extends StatefulWidget {
 
 class _RunFormControllerState extends State<RunFormController> {
   RoutineTextFormField _titleForm = new RoutineTextFormField(
-    labelText: 'Routie title',
+    labelText: 'Routine title',
   );
 
   List<LongDistanceExercise> routine = <LongDistanceExercise>[];
@@ -81,8 +84,11 @@ class _RunFormControllerState extends State<RunFormController> {
   int runSession = 1;
   int restTimeMin = 0;
   int restTimeSec = 0;
+
   double distance = 0.0;
   String intensity = 'NORMAL RUN';
+
+  Intensity selectedGender = Intensity.normal;
 
   @override
   Widget build(BuildContext context) {
@@ -99,28 +105,24 @@ class _RunFormControllerState extends State<RunFormController> {
             children: [
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Distance:',
+                  labelText: 'DISTANCE',
                   inputText: Text(
                     distance.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
                   onPressedMinus: decrease(UnitInput.distance),
                   onPressedPlus: increase(UnitInput.distance),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Intervals',
-                  inputText: Text(
-                    intervals.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
+                  labelText: 'INTERVALS',
+                  inputText:
+                      Text(intervals.toString(), style: kTitleLabelTextStyle),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
                   onPressedMinus: decrease(UnitInput.intervals),
                   onPressedPlus: increase(UnitInput.intervals),
                 ),
@@ -131,16 +133,15 @@ class _RunFormControllerState extends State<RunFormController> {
         Expanded(
           flex: 2,
           child: UnitInputCard(
-            labelText: 'Rest time:',
+            labelText: 'REST TIME',
             inputText: Text(
               restTimeMin > 9
                   ? '$restTimeMin : $restTimeSec'
                   : '0$restTimeMin : $restTimeSec',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-              ),
+              style: kTitleLabelTextStyle,
             ),
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 20.0,
             onPressedMinus: decrease(UnitInput.restTime),
             onPressedPlus: increase(UnitInput.restTime),
           ),
@@ -149,26 +150,59 @@ class _RunFormControllerState extends State<RunFormController> {
           child: Row(
             children: [
               Expanded(
-                child: RoutineButton(
-                  labelName: 'EASY RUN',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      'EASY RUN',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.easy
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'EASY RUN';
+                    setState(() {
+                      selectedGender = Intensity.easy;
+                      intensity = 'EASY RUN';
+                    });
                   },
                 ),
               ),
               Expanded(
-                child: RoutineButton(
-                  labelName: 'NORMAL RUN',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      ' NORMAL\n    RUN',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.normal
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'NORMAL RUN';
+                    setState(() {
+                      selectedGender = Intensity.normal;
+                      intensity = 'NORMAL RUN';
+                    });
                   },
                 ),
               ),
               Expanded(
-                child: RoutineButton(
-                  labelName: 'INTENSE RUN',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      ' INTENSE\n    RUN',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.intens
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'INTENSE RUN';
+                    setState(() {
+                      selectedGender = Intensity.intens;
+                      intensity = 'INTENSE RUN';
+                    });
                   },
                 ),
               ),
@@ -182,6 +216,7 @@ class _RunFormControllerState extends State<RunFormController> {
               Expanded(
                 child: RoutineButton(
                   labelName: 'ADD NEW EXERCISE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -194,6 +229,7 @@ class _RunFormControllerState extends State<RunFormController> {
               Expanded(
                 child: RoutineButton(
                   labelName: 'CREATE ROUTINE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       // create new routine
@@ -206,7 +242,7 @@ class _RunFormControllerState extends State<RunFormController> {
                         await ExerciseDatabaseController(
                           routineTitle: _titleForm.controller.text.trim(),
                         ).createLongDistanceExerciseData(
-                          exerciseTitle: 'run session $runSession',
+                          exercise: 'run session $runSession',
                           distance: routine[i].distance.toString(),
                           intervals: routine[i].intervals.toString(),
                           restTimeMin: routine[i].restTimeMin,

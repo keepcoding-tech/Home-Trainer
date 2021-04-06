@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class UserName extends StatelessWidget {
   @override
@@ -14,14 +15,7 @@ class UserName extends StatelessWidget {
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data.data();
-          return Text(
-            data['name'],
-            style: TextStyle(
-              color: Colors.grey.shade200,
-              fontSize: 20.0,
-              fontWeight: FontWeight.bold,
-            ),
-          );
+          return Text(data['name'], style: kSubtitleLabelTextStyle);
         }
         return Text('');
       },
@@ -41,14 +35,7 @@ class UserEmail extends StatelessWidget {
           (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.done) {
           Map<String, dynamic> data = snapshot.data.data();
-          return Text(
-            data['email'],
-            style: TextStyle(
-              color: Colors.grey.shade200,
-              fontSize: 15.0,
-              fontWeight: FontWeight.bold,
-            ),
-          );
+          return Text(data['email'], style: kSubtitleLabelTextStyle);
         }
         return Text('');
       },

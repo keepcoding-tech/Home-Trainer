@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
-import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:home_trainer/database/utilities/exercises.dart';
@@ -16,7 +17,7 @@ class GymFormController extends StatefulWidget {
 
 class _GymFormControllerState extends State<GymFormController> {
   RoutineTextFormField _titleForm = new RoutineTextFormField(
-    labelText: 'Routie title',
+    labelText: 'Routine title',
   );
   RoutineTextFormField _exerciseForm = new RoutineTextFormField(
     labelText: 'Exercise title',
@@ -119,28 +120,23 @@ class _GymFormControllerState extends State<GymFormController> {
             children: <Widget>[
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Sets',
+                  labelText: 'SETS',
                   inputText: Text(
                     sets.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.sets),
                   onPressedPlus: increase(UnitInput.sets),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Reps',
-                  inputText: Text(
-                    reps.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
+                  labelText: 'REPS',
+                  inputText: Text(reps.toString(), style: kTitleLabelTextStyle),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.reps),
                   onPressedPlus: increase(UnitInput.reps),
                 ),
@@ -154,30 +150,27 @@ class _GymFormControllerState extends State<GymFormController> {
             children: <Widget>[
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Weight',
+                  labelText: 'WEIGHT',
                   inputText: Text(
                     weight.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.weight),
                   onPressedPlus: increase(UnitInput.weight),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Rest time',
+                  labelText: 'REST TIME',
                   inputText: Text(
-                    restTimeMin > 9
-                        ? '$restTimeMin : $restTimeSec'
-                        : '0$restTimeMin : $restTimeSec',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
+                      restTimeMin > 9
+                          ? '$restTimeMin : $restTimeSec'
+                          : '0$restTimeMin : $restTimeSec',
+                      style: kTitleLabelTextStyle),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.restTime),
                   onPressedPlus: increase(UnitInput.restTime),
                 ),
@@ -192,6 +185,7 @@ class _GymFormControllerState extends State<GymFormController> {
                 // add new exercise button
                 child: RoutineButton(
                   labelName: 'ADD NEW EXERCISE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -212,6 +206,7 @@ class _GymFormControllerState extends State<GymFormController> {
                 // create routine button
                 child: RoutineButton(
                   labelName: 'CREATE ROUTINE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       // create new routine
@@ -224,7 +219,7 @@ class _GymFormControllerState extends State<GymFormController> {
                         await ExerciseDatabaseController(
                           routineTitle: _titleForm.controller.text.trim(),
                         ).createStaticExerciseData(
-                          exerciseTitle: routine[i].exercise,
+                          exercise: routine[i].exercise,
                           muscle: routine[i].muscle,
                           sets: routine[i].sets,
                           reps: routine[i].reps,

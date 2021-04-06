@@ -40,12 +40,8 @@ class AuthenticationController {
     }
   }
 
-  Future<UserCredential> signUp({
-    String name,
-    String email,
-    String password,
-    BuildContext context,
-  }) async {
+  Future<UserCredential> signUp(
+      {String email, String password, BuildContext context}) async {
     UserCredential userCredential;
     try {
       userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -54,7 +50,7 @@ class AuthenticationController {
       );
 
       await UserDatabaseController(uid: userCredential.user.uid)
-          .createUserData(name, email);
+          .createUserData(email);
 
       _firebaseAuth.currentUser.sendEmailVerification();
 
@@ -96,7 +92,7 @@ class AuthenticationController {
           .signInWithCredential(facebookAuthCredential);
 
       await UserDatabaseController(uid: _userCrediential.user.uid)
-          .createUserData('ceva', 'ceva');
+          .createUserData('ceva');
 
       return await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
@@ -129,7 +125,7 @@ class AuthenticationController {
         await FirebaseAuth.instance.signInWithCredential(credential);
 
     await UserDatabaseController(uid: _userCrediential.user.uid)
-        .createUserData(googleUser.email, googleUser.email);
+        .createUserData(googleUser.email);
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }

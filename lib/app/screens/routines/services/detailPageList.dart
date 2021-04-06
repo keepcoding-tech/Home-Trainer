@@ -49,7 +49,7 @@ class _DetailPageListState extends State<DetailPageList> {
                 );
               } else if (widget.sport == 'SWIM') {
                 return ShortDistanceExerciseTile(
-                  routineTitle: widget.routineTitle,
+                  routine: widget.routineTitle,
                   exerciseTitle: snapshot.data.docs[index].data()['exercise'],
                   distance: snapshot.data.docs[index].data()['distance'],
                   style: snapshot.data.docs[index].data()['style'],

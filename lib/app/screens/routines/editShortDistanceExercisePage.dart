@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/services/editShortDistanceExerciseController.dart';
+import 'package:home_trainer/app/screens/routines/utilities/routineAppBar.dart';
 
 class EditShortDistanceExercisePage extends StatelessWidget {
   final String routineTitle,
@@ -23,13 +24,11 @@ class EditShortDistanceExercisePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('EDIT'),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            Navigator.pop(context);
-          },
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(50),
+        child: DismissAppBar(
+          messageTitle: 'Dismiss changes',
+          title: 'EDIT',
         ),
       ),
       body: SafeArea(

@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:home_trainer/app/screens/routines/utilities/editTextFormField.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
-import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 
 enum UnitInput { distance, sessions, restTime }
@@ -93,6 +94,8 @@ class _EditShortDistanceExerciseControllerState
     };
   }
 
+  final Color activeColor = Colors.blueGrey[700];
+
   @override
   Widget build(BuildContext context) {
     final _currentUser = FirebaseAuth.instance.currentUser;
@@ -115,28 +118,26 @@ class _EditShortDistanceExerciseControllerState
             children: <Widget>[
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Distance',
+                  labelText: 'DISTANCE',
                   inputText: Text(
                     '${distance.toString()} m',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.distance),
                   onPressedPlus: increase(UnitInput.distance),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Sessions',
+                  labelText: 'SESSIONS',
                   inputText: Text(
                     sessions.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 30.0,
-                    ),
+                    style: kTitleLabelTextStyle,
                   ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 10.0,
                   onPressedMinus: decrease(UnitInput.sessions),
                   onPressedPlus: increase(UnitInput.sessions),
                 ),
@@ -147,16 +148,15 @@ class _EditShortDistanceExerciseControllerState
         Expanded(
           flex: 2,
           child: UnitInputCard(
-            labelText: 'Rest time',
+            labelText: 'REST TIME',
             inputText: Text(
               restTimeMin > 9
                   ? '$restTimeMin : $restTimeSec'
                   : '0$restTimeMin : $restTimeSec',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30.0,
-              ),
+              style: kTitleLabelTextStyle,
             ),
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 10.0,
             onPressedMinus: decrease(UnitInput.restTime),
             onPressedPlus: increase(UnitInput.restTime),
           ),
@@ -164,6 +164,7 @@ class _EditShortDistanceExerciseControllerState
         Expanded(
           child: RoutineButton(
             labelName: 'SAVE',
+            color: kButtonColor,
             onPressed: () async {
               if (_styleForm.formKey.currentState.validate()) {
                 _routineColection
@@ -176,8 +177,8 @@ class _EditShortDistanceExerciseControllerState
 
                 await ExerciseDatabaseController(
                   routineTitle: widget.routineTitle,
-                ).updateShortDistanceExerciseData(
-                  exerciseTitle: widget.exerciseTitle,
+                ).createShortDistanceExerciseData(
+                  exercise: widget.exerciseTitle,
                   distance: distance.toString(),
                   style: _styleForm.controller.text.trim(),
                   sessions: sessions.toString(),

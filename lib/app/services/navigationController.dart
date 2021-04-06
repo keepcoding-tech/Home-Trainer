@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:home_trainer/app/utilities/actionButton.dart';
 
 import 'package:home_trainer/app/services/pageNavigator.dart';
 import 'package:home_trainer/app/utilities/navigationBar.dart';
@@ -66,8 +65,6 @@ class NavigationControllerState extends State<NavigationController> {
             _buildOffstageNavigator('profile'),
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        floatingActionButton: ActionButton(),
         bottomNavigationBar: NavigationBar(
           currentIndex: currentIndex,
           selectTab: (index) {

@@ -1,6 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/actionButton.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter/material.dart';
 
+import 'package:home_trainer/app/screens/routines/utilities/choseSportMessage.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routinesList.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:home_trainer/database/utilities/routine.dart';
@@ -19,7 +22,14 @@ class _RoutinesPageState extends State<RoutinesPage> {
       initialData: List(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Routines page'),
+          title: Center(
+            child: Text('ROUTINES', style: kTitleLabelTextStyle),
+          ),
+        ),
+        floatingActionButton: ActionButton(
+          onPressed: () {
+            choseSportMessage(context);
+          },
         ),
         body: SafeArea(
           child: RoutinesList(),

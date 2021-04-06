@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
-import 'package:home_trainer/app/screens/routines/utilities/unitInputCard.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/selectableCard.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:home_trainer/database/utilities/exercises.dart';
 
 enum UnitInput { distance, intervals, restTime }
+enum Intensity { easy, normal, intens }
 
 class CyclingFormController extends StatefulWidget {
   @override
@@ -16,7 +19,7 @@ class CyclingFormController extends StatefulWidget {
 
 class _CyclingFormControllerState extends State<CyclingFormController> {
   RoutineTextFormField _titleForm = new RoutineTextFormField(
-    labelText: 'Routie title',
+    labelText: 'Routine title',
   );
 
   List<LongDistanceExercise> routine = <LongDistanceExercise>[];
@@ -81,8 +84,11 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
   int runSession = 1;
   int restTimeMin = 0;
   int restTimeSec = 0;
+
   double distance = 0.0;
   String intensity = 'Normal run';
+
+  Intensity selectedGender = Intensity.normal;
 
   @override
   Widget build(BuildContext context) {
@@ -99,28 +105,22 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
             children: [
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Distance',
-                  inputText: Text(
-                    distance.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
+                  labelText: 'DISTANCE',
+                  inputText:
+                      Text(distance.toString(), style: kTitleLabelTextStyle),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
                   onPressedMinus: decrease(UnitInput.distance),
                   onPressedPlus: increase(UnitInput.distance),
                 ),
               ),
               Expanded(
                 child: UnitInputCard(
-                  labelText: 'Intervals',
-                  inputText: Text(
-                    intervals.toString(),
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20.0,
-                    ),
-                  ),
+                  labelText: 'INTERVALS',
+                  inputText:
+                      Text(intervals.toString(), style: kTitleLabelTextStyle),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
                   onPressedMinus: decrease(UnitInput.intervals),
                   onPressedPlus: increase(UnitInput.intervals),
                 ),
@@ -131,16 +131,14 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
         Expanded(
           flex: 2,
           child: UnitInputCard(
-            labelText: 'Rest time',
+            labelText: 'REST TIME',
             inputText: Text(
-              restTimeMin > 9
-                  ? '$restTimeMin : $restTimeSec'
-                  : '0$restTimeMin : $restTimeSec',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-              ),
-            ),
+                restTimeMin > 9
+                    ? '$restTimeMin : $restTimeSec'
+                    : '0$restTimeMin : $restTimeSec',
+                style: kTitleLabelTextStyle),
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 20.0,
             onPressedMinus: decrease(UnitInput.restTime),
             onPressedPlus: increase(UnitInput.restTime),
           ),
@@ -149,26 +147,59 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
           child: Row(
             children: [
               Expanded(
-                child: RoutineButton(
-                  labelName: 'EASY CYCLING',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      '   EASY\nCYCLING',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.easy
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'EASY CYCLING';
+                    setState(() {
+                      selectedGender = Intensity.easy;
+                      intensity = 'EASY CYCLING';
+                    });
                   },
                 ),
               ),
               Expanded(
-                child: RoutineButton(
-                  labelName: 'NORMAL CYCLING',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      ' NORMAL\n CYCLING',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.normal
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'NORMAL CYCLING';
+                    setState(() {
+                      selectedGender = Intensity.normal;
+                      intensity = 'NORMAL CYCLING';
+                    });
                   },
                 ),
               ),
               Expanded(
-                child: RoutineButton(
-                  labelName: 'INTENSE CYCLING',
+                child: SelectableCard(
+                  cardChild: Center(
+                    child: Text(
+                      ' INTENSE\n CYCLING',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
+                  color: selectedGender == Intensity.intens
+                      ? kActiveCardColor
+                      : kInactiveCardColor,
                   onPressed: () {
-                    intensity = 'INTENSE CYCLING';
+                    setState(() {
+                      selectedGender = Intensity.intens;
+                      intensity = 'INTENSE CYCLING';
+                    });
                   },
                 ),
               ),
@@ -182,6 +213,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
               Expanded(
                 child: RoutineButton(
                   labelName: 'ADD NEW EXERCISE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -194,6 +226,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
               Expanded(
                 child: RoutineButton(
                   labelName: 'CREATE ROUTINE',
+                  color: kButtonColor,
                   onPressed: () async {
                     if (addExercise()) {
                       // create new routine
@@ -206,7 +239,7 @@ class _CyclingFormControllerState extends State<CyclingFormController> {
                         await ExerciseDatabaseController(
                           routineTitle: _titleForm.controller.text.trim(),
                         ).createLongDistanceExerciseData(
-                          exerciseTitle: 'cycling session $runSession',
+                          exercise: 'cycling session $runSession',
                           distance: routine[i].distance.toString(),
                           intervals: routine[i].intervals.toString(),
                           restTimeMin: routine[i].restTimeMin,

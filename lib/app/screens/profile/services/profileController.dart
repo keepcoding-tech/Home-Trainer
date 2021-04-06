@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
+import 'package:home_trainer/app/screens/profile/utilities/headerCurvedContainer.dart';
 import 'package:home_trainer/app/screens/profile/utilities/profileImage.dart';
-import 'package:home_trainer/app/screens/profile/utilities/signOutButton.dart';
 import 'package:home_trainer/app/screens/profile/utilities/userCredentialData.dart';
 import 'package:home_trainer/app/screens/profile/utilities/userData.dart';
 
@@ -10,33 +11,34 @@ class ProfileController extends StatelessWidget {
   Widget build(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Container(
-          height: MediaQuery.of(context).size.height / 5.0,
-          color: Colors.blueGrey[800],
+        CustomPaint(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+          ),
+          painter: HeaderCurvedContainer(),
         ),
         Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             // profiel image
-            ProfileImage(),
-            // user name
+            Padding(
+              padding: EdgeInsets.only(top: 50.0),
+              child: ProfileImage(imageWidth: 2),
+            ),
             SizedBox(height: 25.0),
+            // user name
             UserCredentialData(
               userCredentialData: UserName(),
-              icon: Icons.person,
+              icon: FontAwesomeIcons.user,
             ),
             // user email
             SizedBox(height: 15.0),
             UserCredentialData(
               userCredentialData: UserEmail(),
-              icon: Icons.email,
+              icon: FontAwesomeIcons.envelope,
             ),
           ],
-        ),
-        // sign out button
-        Align(
-          alignment: Alignment.bottomRight,
-          child: SignOutButton(),
         ),
       ],
     );

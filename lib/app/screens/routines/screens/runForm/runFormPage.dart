@@ -14,7 +14,7 @@ class _RunFormPageState extends State<RunFormPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
-        child: RoutineAppBar(title: 'RUN'),
+        child: DismissAppBar(messageTitle: 'Dismiss routine', title: 'RUN'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

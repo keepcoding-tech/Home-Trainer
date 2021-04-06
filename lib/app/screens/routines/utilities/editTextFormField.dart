@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class EditTextFormField extends StatefulWidget {
   final String labelText, defaultData;
@@ -18,7 +19,7 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
     return Container(
       margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Colors.blueGrey[600],
+        color: kActiveCardColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Form(
@@ -27,24 +28,18 @@ class _EditTextFormFieldState extends State<EditTextFormField> {
           padding: EdgeInsets.all(10.0),
           child: TextFormField(
             controller: widget.controller,
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
-            ),
+            style: kRoutineTextFormFieldStyle,
             decoration: InputDecoration(
               contentPadding: EdgeInsets.only(left: 15.0),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.white),
+                borderSide: BorderSide(color: kTextFieldBorderColor, width: 2),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10.0),
-                borderSide: BorderSide(color: Colors.white),
+                borderSide: BorderSide(color: kTextFieldBorderColor, width: 2),
               ),
-              labelStyle: TextStyle(
-                color: Colors.white,
-                fontSize: 20.0,
-              ),
+              labelStyle: kRoutineTextFormFieldStyle,
               labelText: widget.labelText,
             ),
             validator: (value) {
