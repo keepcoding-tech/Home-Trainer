@@ -19,7 +19,9 @@ class _SchedulePageState extends State<SchedulePage> {
           ),
         ),
       ),
-      body: ScheduleController(),
+      body: SafeArea(
+        child: ScheduleController(),
+      ),
     );
   }
 }

@@ -19,27 +19,32 @@ class RoutineDatabaseController {
     return await routineCollection().doc(title).set({
       'title': title,
       'sport': sport,
+      'isSelected': false,
     });
   }
 
-  CollectionReference weekDaysCollection(String weekDay) {
-    final CollectionReference _weekDaysCollection = FirebaseFirestore.instance
-        .collection('users')
-        .doc(_currentUser.uid)
-        .collection('week days')
-        .doc(weekDay)
-        .collection(weekDay);
-
-    return _weekDaysCollection;
-  }
-
-  Future createScheduleRoutine(
-      {String weekDay, String routineTitle, String sport}) async {
-    return await weekDaysCollection(weekDay).doc(routineTitle).set({
-      'title': routineTitle,
-      'sport': sport,
+  Future updateIsSelectedRoutine({String title, bool isSelected}) async {
+    return await routineCollection().doc(title).update({
+      'isSelected': isSelected,
     });
   }
+
+  // CollectionReference weekDaysCollection() {
+  //   final CollectionReference _weekDaysCollection = FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc(_currentUser.uid)
+  //       .collection('week days');
+
+  //   return _weekDaysCollection;
+  // }
+
+  // Future createScheduleRoutine(
+  //     {String weekDay, String routineTitle, String sport}) async {
+  //   return await weekDaysCollection().doc(routineTitle).set({
+  //     'title': routineTitle,
+  //     'sport': sport,
+  //   });
+  // }
 
   List<Routine> _routinesList(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {

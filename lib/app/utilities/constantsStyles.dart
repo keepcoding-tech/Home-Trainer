@@ -29,6 +29,11 @@ const kBoldContentLabelTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const kTimerLabelTextStyle = TextStyle(
+  fontSize: 40.0,
+  color: Color(0xFFCBD7F6),
+);
+
 // button style
 const kBottomNavigationIconColor = Color(0xFF02BDFB);
 const kButtonColor = Color(0xFF02BDFB);

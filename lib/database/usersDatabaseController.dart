@@ -24,8 +24,6 @@ class UserDatabaseController {
           .doc(uid)
           .collection('weekdays')
           .doc(weekDays[i])
-          .collection(weekDays[i])
-          .doc(weekDays[i])
           .set({
         'title': weekDays[i],
         'scheduledRoutines': scheduledRoutines,
@@ -37,6 +35,7 @@ class UserDatabaseController {
     createWeekDaysDatabase();
     return await usersCollection.doc(uid).set({
       'email': email,
+      'info': false,
     });
   }
 

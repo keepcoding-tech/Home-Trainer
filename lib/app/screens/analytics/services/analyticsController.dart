@@ -80,7 +80,7 @@ class _AnalyticsControllerState extends State<AnalyticsController> {
                         ),
                         Expanded(
                           child: Text(
-                            'MALE',
+                            'FEMALE',
                             style: kTitleLabelTextStyle,
                           ),
                         ),

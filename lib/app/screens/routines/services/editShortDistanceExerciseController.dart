@@ -5,10 +5,11 @@ import 'package:home_trainer/app/screens/routines/utilities/editTextFormField.da
 
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/restTimeCard.dart';
 import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 
-enum UnitInput { distance, sessions, restTime }
+enum UnitInput { distance, sessions, restTime, minutes, seconds }
 
 class EditShortDistanceExerciseController extends StatefulWidget {
   final String routineTitle,
@@ -34,8 +35,8 @@ class EditShortDistanceExerciseController extends StatefulWidget {
         distance: int.parse(distance),
         style: style,
         sessions: int.parse(sessions),
-        restTimeMin: int.parse(restTimeMin),
-        restTimeSec: int.parse(restTimeSec),
+        minutesLabelText: int.parse(restTimeMin),
+        secondsLabelText: int.parse(restTimeSec),
       );
 }
 
@@ -44,15 +45,15 @@ class _EditShortDistanceExerciseControllerState
   int distance;
   String style;
   int sessions;
-  int restTimeMin;
-  int restTimeSec;
+  int minutesLabelText;
+  int secondsLabelText;
 
   _EditShortDistanceExerciseControllerState({
     this.distance,
     this.style,
     this.sessions,
-    this.restTimeMin,
-    this.restTimeSec,
+    this.minutesLabelText,
+    this.secondsLabelText,
   });
 
   Function increase(UnitInput input) {
@@ -62,12 +63,17 @@ class _EditShortDistanceExerciseControllerState
           distance += 5;
         } else if (input == UnitInput.sessions) {
           sessions++;
-        } else if (input == UnitInput.restTime && restTimeMin < 60) {
-          if (restTimeSec == 30) {
-            restTimeSec = 0;
-            restTimeMin++;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText < 59) {
+            minutesLabelText++;
           } else {
-            restTimeSec = 30;
+            minutesLabelText = 0;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText < 59) {
+            secondsLabelText++;
+          } else {
+            secondsLabelText = 0;
           }
         }
       });
@@ -81,13 +87,17 @@ class _EditShortDistanceExerciseControllerState
           distance -= 5;
         } else if (input == UnitInput.sessions && sessions > 1) {
           sessions--;
-        } else if (input == UnitInput.restTime &&
-            (restTimeMin > 0 || restTimeSec > 0)) {
-          if (restTimeSec == 0) {
-            restTimeSec = 30;
-            restTimeMin--;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText > 0) {
+            minutesLabelText--;
           } else {
-            restTimeSec = 0;
+            minutesLabelText = 59;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText > 0) {
+            secondsLabelText--;
+          } else {
+            secondsLabelText = 59;
           }
         }
       });
@@ -124,7 +134,7 @@ class _EditShortDistanceExerciseControllerState
                     style: kTitleLabelTextStyle,
                   ),
                   cardColor: kActiveCardColor,
-                  sizedBoxHeight: 10.0,
+                  sizedBoxHeight: 15.0,
                   onPressedMinus: decrease(UnitInput.distance),
                   onPressedPlus: increase(UnitInput.distance),
                 ),
@@ -137,7 +147,7 @@ class _EditShortDistanceExerciseControllerState
                     style: kTitleLabelTextStyle,
                   ),
                   cardColor: kActiveCardColor,
-                  sizedBoxHeight: 10.0,
+                  sizedBoxHeight: 15.0,
                   onPressedMinus: decrease(UnitInput.sessions),
                   onPressedPlus: increase(UnitInput.sessions),
                 ),
@@ -147,18 +157,16 @@ class _EditShortDistanceExerciseControllerState
         ),
         Expanded(
           flex: 2,
-          child: UnitInputCard(
+          child: RestTimeCard(
             labelText: 'REST TIME',
-            inputText: Text(
-              restTimeMin > 9
-                  ? '$restTimeMin : $restTimeSec'
-                  : '0$restTimeMin : $restTimeSec',
-              style: kTitleLabelTextStyle,
-            ),
             cardColor: kActiveCardColor,
-            sizedBoxHeight: 10.0,
-            onPressedMinus: decrease(UnitInput.restTime),
-            onPressedPlus: increase(UnitInput.restTime),
+            sizedBoxHeight: 5.0,
+            minutesLabelText: minutesLabelText,
+            secondsLabelText: secondsLabelText,
+            onPressedMinusMin: decrease(UnitInput.minutes),
+            onPressedPlusMin: increase(UnitInput.minutes),
+            onPressedMinusSec: decrease(UnitInput.seconds),
+            onPressedPlusSec: increase(UnitInput.seconds),
           ),
         ),
         Expanded(
@@ -182,8 +190,8 @@ class _EditShortDistanceExerciseControllerState
                   distance: distance.toString(),
                   style: _styleForm.controller.text.trim(),
                   sessions: sessions.toString(),
-                  restTimeMin: restTimeMin.toString(),
-                  restTimeSec: restTimeSec.toString(),
+                  restTimeMin: minutesLabelText.toString(),
+                  restTimeSec: secondsLabelText.toString(),
                 );
 
                 Navigator.pop(context);

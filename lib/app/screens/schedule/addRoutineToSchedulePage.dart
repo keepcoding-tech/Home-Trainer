@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 import 'package:provider/provider.dart';
 
 import 'package:home_trainer/app/screens/schedule/services/addRoutineToScheduleController.dart';
@@ -23,10 +25,24 @@ class _AddRoutineToSchedulePageState extends State<AddRoutineToSchedulePage> {
       initialData: List(),
       child: Scaffold(
         appBar: AppBar(
-          title: Text('Add routine to youe schedule'),
+          title: Text(
+            'ADD ROUTINE TO SCHEDULE',
+            style: kTitleLabelTextStyle,
+          ),
+          leading: IconButton(
+            icon: Icon(
+              FontAwesomeIcons.arrowLeft,
+              color: kIconColor,
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
         ),
         body: SafeArea(
-          child: AddRoutineToScheduleController(weekday: widget.weekDay),
+          child: AddRoutineToScheduleController(
+            weekday: widget.weekDay,
+          ),
         ),
       ),
     );

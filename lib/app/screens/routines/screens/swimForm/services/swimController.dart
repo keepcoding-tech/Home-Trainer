@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/restTimeCard.dart';
 import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:home_trainer/database/utilities/exercises.dart';
 
-enum UnitInput { distance, intervals, restTime }
+enum UnitInput { distance, sessions, restTime, minutes, seconds }
 
 class SwimFormController extends StatefulWidget {
   @override
@@ -33,8 +34,8 @@ class _SwimFormControllerState extends State<SwimFormController> {
           distance: distance.toString(),
           style: _swimStyleForm.controller.text.trim(),
           sessions: sessions.toString(),
-          restTimeMin: restTimeMin.toString(),
-          restTimeSec: restTimeSec.toString(),
+          restTimeMin: minutesLabelText.toString(),
+          restTimeSec: secondsLabelText.toString(),
         );
         routine.add(newRoutine);
 
@@ -49,14 +50,19 @@ class _SwimFormControllerState extends State<SwimFormController> {
       setState(() {
         if (input == UnitInput.distance) {
           distance += 5;
-        } else if (input == UnitInput.intervals) {
+        } else if (input == UnitInput.sessions) {
           sessions++;
-        } else if (input == UnitInput.restTime && restTimeMin < 60) {
-          if (restTimeSec == 30) {
-            restTimeSec = 0;
-            restTimeMin++;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText < 59) {
+            minutesLabelText++;
           } else {
-            restTimeSec = 30;
+            minutesLabelText = 0;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText < 59) {
+            secondsLabelText++;
+          } else {
+            secondsLabelText = 0;
           }
         }
       });
@@ -68,26 +74,27 @@ class _SwimFormControllerState extends State<SwimFormController> {
       setState(() {
         if (input == UnitInput.distance && distance > 1) {
           distance -= 5;
-        } else if (input == UnitInput.intervals && sessions > 1) {
+        } else if (input == UnitInput.sessions && sessions > 1) {
           sessions--;
-        } else if (input == UnitInput.restTime &&
-            (restTimeMin > 0 || restTimeSec > 0)) {
-          if (restTimeSec == 0) {
-            restTimeSec = 30;
-            restTimeMin--;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText > 0) {
+            minutesLabelText--;
           } else {
-            restTimeSec = 0;
+            minutesLabelText = 59;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText > 0) {
+            secondsLabelText--;
+          } else {
+            secondsLabelText = 59;
           }
         }
       });
     };
   }
 
-  int sessions = 1;
-  int swimSession = 1;
-  int restTimeMin = 0;
-  int restTimeSec = 0;
-  int distance = 25;
+  int swimSession = 1, sessions = 1, distance = 25;
+  int minutesLabelText = 0, secondsLabelText = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -96,9 +103,9 @@ class _SwimFormControllerState extends State<SwimFormController> {
     return Column(
       children: <Widget>[
         // title text form filed
-        Expanded(child: _titleForm),
+        _titleForm,
         // swim style form field
-        Expanded(child: _swimStyleForm),
+        _swimStyleForm,
         // distance and intervals unit inputs
         Expanded(
           flex: 2,
@@ -124,8 +131,8 @@ class _SwimFormControllerState extends State<SwimFormController> {
                       Text(sessions.toString(), style: kTitleLabelTextStyle),
                   cardColor: kActiveCardColor,
                   sizedBoxHeight: 20.0,
-                  onPressedMinus: decrease(UnitInput.intervals),
-                  onPressedPlus: increase(UnitInput.intervals),
+                  onPressedMinus: decrease(UnitInput.sessions),
+                  onPressedPlus: increase(UnitInput.sessions),
                 ),
               ),
             ],
@@ -133,17 +140,16 @@ class _SwimFormControllerState extends State<SwimFormController> {
         ),
         Expanded(
           flex: 2,
-          child: UnitInputCard(
+          child: RestTimeCard(
             labelText: 'REST TIME',
-            inputText: Text(
-                restTimeMin > 9
-                    ? '$restTimeMin : $restTimeSec'
-                    : '0$restTimeMin : $restTimeSec',
-                style: kTitleLabelTextStyle),
             cardColor: kActiveCardColor,
-            sizedBoxHeight: 20.0,
-            onPressedMinus: decrease(UnitInput.restTime),
-            onPressedPlus: increase(UnitInput.restTime),
+            sizedBoxHeight: 15.0,
+            minutesLabelText: minutesLabelText,
+            secondsLabelText: secondsLabelText,
+            onPressedMinusMin: decrease(UnitInput.minutes),
+            onPressedPlusMin: increase(UnitInput.minutes),
+            onPressedMinusSec: decrease(UnitInput.seconds),
+            onPressedPlusSec: increase(UnitInput.seconds),
           ),
         ),
         // add new exercise button

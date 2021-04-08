@@ -5,10 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:home_trainer/app/screens/routines/utilities/editTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/restTimeCard.dart';
 import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 
-enum UnitInput { sets, reps, weight, restTime }
+enum UnitInput { sets, reps, weight, minutes, seconds }
 
 class EditStaticExerciseController extends StatefulWidget {
   final String routineTitle,
@@ -36,22 +37,22 @@ class EditStaticExerciseController extends StatefulWidget {
         sets: int.parse(sets),
         reps: int.parse(reps),
         weight: double.parse(weight),
-        restTimeMin: int.parse(restTimeMin),
-        restTimeSec: int.parse(restTimeSec),
+        minutesLabelText: int.parse(restTimeMin),
+        secondsLabelText: int.parse(restTimeSec),
       );
 }
 
 class _EditStaticExerciseControllerState
     extends State<EditStaticExerciseController> {
-  int sets, reps, restTimeMin, restTimeSec;
+  int sets, reps, minutesLabelText, secondsLabelText;
   double weight;
 
   _EditStaticExerciseControllerState({
     this.sets,
     this.reps,
     this.weight,
-    this.restTimeMin,
-    this.restTimeSec,
+    this.minutesLabelText,
+    this.secondsLabelText,
   });
 
   Function increase(UnitInput input) {
@@ -63,12 +64,17 @@ class _EditStaticExerciseControllerState
           reps++;
         } else if (input == UnitInput.weight) {
           weight += 0.5;
-        } else if (input == UnitInput.restTime && restTimeMin < 60) {
-          if (restTimeSec == 30) {
-            restTimeSec = 0;
-            restTimeMin++;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText < 59) {
+            minutesLabelText++;
           } else {
-            restTimeSec = 30;
+            minutesLabelText = 0;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText < 59) {
+            secondsLabelText++;
+          } else {
+            secondsLabelText = 0;
           }
         }
       });
@@ -84,13 +90,17 @@ class _EditStaticExerciseControllerState
           reps--;
         } else if (input == UnitInput.weight && weight > 0) {
           weight -= 0.5;
-        } else if (input == UnitInput.restTime &&
-            (restTimeMin > 0 || restTimeSec > 0)) {
-          if (restTimeSec == 0) {
-            restTimeSec = 30;
-            restTimeMin--;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText > 0) {
+            minutesLabelText--;
           } else {
-            restTimeSec = 0;
+            minutesLabelText = 59;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText > 0) {
+            secondsLabelText--;
+          } else {
+            secondsLabelText = 59;
           }
         }
       });
@@ -154,37 +164,30 @@ class _EditStaticExerciseControllerState
         ),
         Expanded(
           flex: 2,
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: UnitInputCard(
-                  labelText: 'WEIGHT',
-                  inputText: Text(
-                    weight.toString(),
-                    style: kTitleLabelTextStyle,
-                  ),
-                  cardColor: kActiveCardColor,
-                  sizedBoxHeight: 10.0,
-                  onPressedMinus: decrease(UnitInput.weight),
-                  onPressedPlus: increase(UnitInput.weight),
-                ),
-              ),
-              Expanded(
-                child: UnitInputCard(
-                  labelText: 'REST TIME',
-                  inputText: Text(
-                    restTimeMin > 9
-                        ? '$restTimeMin : $restTimeSec'
-                        : '0$restTimeMin : $restTimeSec',
-                    style: kTitleLabelTextStyle,
-                  ),
-                  cardColor: kActiveCardColor,
-                  sizedBoxHeight: 10.0,
-                  onPressedMinus: decrease(UnitInput.restTime),
-                  onPressedPlus: increase(UnitInput.restTime),
-                ),
-              ),
-            ],
+          child: UnitInputCard(
+            labelText: 'WEIGHT',
+            inputText: Text(
+              weight.toString(),
+              style: kTitleLabelTextStyle,
+            ),
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 10.0,
+            onPressedMinus: decrease(UnitInput.weight),
+            onPressedPlus: increase(UnitInput.weight),
+          ),
+        ),
+        Expanded(
+          flex: 2,
+          child: RestTimeCard(
+            labelText: 'REST TIME',
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 8.0,
+            minutesLabelText: minutesLabelText,
+            secondsLabelText: secondsLabelText,
+            onPressedMinusMin: decrease(UnitInput.minutes),
+            onPressedPlusMin: increase(UnitInput.minutes),
+            onPressedMinusSec: decrease(UnitInput.seconds),
+            onPressedPlusSec: increase(UnitInput.seconds),
           ),
         ),
         Expanded(
@@ -210,8 +213,8 @@ class _EditStaticExerciseControllerState
                     sets: sets.toString(),
                     reps: reps.toString(),
                     weight: weight.toString(),
-                    restTimeMin: restTimeMin.toString(),
-                    restTimeSec: restTimeSec.toString(),
+                    restTimeMin: minutesLabelText.toString(),
+                    restTimeSec: secondsLabelText.toString(),
                   );
 
                   Navigator.pop(context);

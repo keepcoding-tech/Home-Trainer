@@ -14,7 +14,7 @@ class _SwimFormPageState extends State<SwimFormPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(50),
-        child: DismissAppBar(title: 'SWIM'),
+        child: DismissAppBar(messageTitle: 'Dismiss routine', title: 'SWIM'),
       ),
       body: SafeArea(
         child: SingleChildScrollView(

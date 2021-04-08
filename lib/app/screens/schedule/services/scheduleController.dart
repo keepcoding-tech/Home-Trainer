@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:home_trainer/app/screens/schedule/screens/monday/%20mondayScheduleDayPage.dart';
+import 'package:home_trainer/app/screens/schedule/screens/monday/scheduledRoutinesPage.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class ScheduleController extends StatefulWidget {
@@ -22,7 +22,7 @@ class _ScheduleControllerState extends State<ScheduleController> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => MondayScheduleDayPage(
+                    builder: (context) => ScheduledRoutinesPage(
                       weekday: 'Monday',
                     ),
                   ),
@@ -33,37 +33,91 @@ class _ScheduleControllerState extends State<ScheduleController> {
           Expanded(
             child: DayCard(
               labelText: 'Tuesday',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScheduledRoutinesPage(
+                      weekday: 'Tuesday',
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
             child: DayCard(
               labelText: 'Wednesday',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScheduledRoutinesPage(
+                      weekday: 'Wednesday',
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
             child: DayCard(
               labelText: 'Thursday',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScheduledRoutinesPage(
+                      weekday: 'Thursday',
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
             child: DayCard(
               labelText: 'Friday',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScheduledRoutinesPage(
+                      weekday: 'Friday',
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
             child: DayCard(
               labelText: 'Saturday',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScheduledRoutinesPage(
+                      weekday: 'Saturday',
+                    ),
+                  ),
+                );
+              },
             ),
           ),
           Expanded(
             child: DayCard(
               labelText: 'Sunday',
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => ScheduledRoutinesPage(
+                      weekday: 'Sunday',
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],

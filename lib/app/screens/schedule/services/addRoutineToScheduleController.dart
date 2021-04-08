@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
@@ -26,9 +27,7 @@ class _AddRoutineToScheduleControllerState
     final _scheduledRoutinesCollection = FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser.uid)
-        .collection('weekdays')
-        .doc(widget.weekday)
-        .collection(widget.weekday);
+        .collection('weekdays');
 
     return Container(
       child: Stack(
@@ -40,35 +39,33 @@ class _AddRoutineToScheduleControllerState
               itemBuilder: (context, index) {
                 return RoutineSelectableTile(
                   routine: routines[index],
-                  weekday: widget.weekday,
                 );
               },
             ),
           ),
           Align(
             alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 20.0),
-              child: MaterialButton(
-                color: Colors.blueGrey[600],
-                child: Text('add routines'),
-                onPressed: () async {
-                  for (int i = 0; i < routines.length; i++) {
-                    if (routines[i].isSelected) {
-                      _scheduledRoutines.add(routines[i].title);
-                      await RoutineDatabaseController().createScheduleRoutine(
-                        weekDay: widget.weekday,
-                        routineTitle: routines[i].title,
-                        sport: routines[i].sport,
-                      );
-                    }
-                  }
-                  _scheduledRoutinesCollection.doc(widget.weekday).update({
-                    'scheduledRoutines': _scheduledRoutines,
-                  });
-                  Navigator.pop(context);
-                },
+            child: RawMaterialButton(
+              constraints: BoxConstraints.tightFor(
+                height: 75.0,
+                width: double.infinity,
               ),
+              fillColor: kButtonColor,
+              child: Text(
+                '+ADD ROUTINE',
+                style: kButtonLabelTextStyle,
+              ),
+              onPressed: () async {
+                for (int i = 0; i < routines.length; i++) {
+                  if (routines[i].isSelected) {
+                    _scheduledRoutines.add(routines[i].title);
+                  }
+                }
+                _scheduledRoutinesCollection.doc(widget.weekday).update({
+                  'scheduledRoutines': _scheduledRoutines,
+                });
+                Navigator.pop(context);
+              },
             ),
           ),
         ],
@@ -79,8 +76,7 @@ class _AddRoutineToScheduleControllerState
 
 class RoutineSelectableTile extends StatefulWidget {
   final Routine routine;
-  final String weekday;
-  RoutineSelectableTile({this.routine, this.weekday});
+  RoutineSelectableTile({this.routine});
 
   @override
   _RoutineSelectableTileState createState() =>
@@ -94,17 +90,31 @@ class _RoutineSelectableTileState extends State<RoutineSelectableTile> {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.blueGrey[400],
+      color: kActiveCardColor,
       child: ListTile(
-        title: Text(routine.title),
-        subtitle: Text(routine.sport),
-        trailing: Checkbox(
-          value: routine.isSelected ?? false,
-          onChanged: (value) {
-            setState(() {
-              routine.isSelected = !routine.isSelected;
-            });
-          },
+        title: Text(
+          routine.title,
+          style: kTitleLabelTextStyle,
+        ),
+        subtitle: Text(
+          routine.sport,
+          style: kSubtitleLabelTextStyle,
+        ),
+        trailing: Transform.scale(
+          scale: 2.0,
+          child: Checkbox(
+            activeColor: kButtonColor,
+            value: routine.isSelected ?? false,
+            onChanged: (value) {
+              setState(() {
+                routine.isSelected = !routine.isSelected;
+                RoutineDatabaseController().updateIsSelectedRoutine(
+                  title: routine.title,
+                  isSelected: value,
+                );
+              });
+            },
+          ),
         ),
       ),
     );

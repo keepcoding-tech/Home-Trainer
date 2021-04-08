@@ -3,13 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/restTimeCard.dart';
 import 'package:home_trainer/app/utilities/selectableCard.dart';
 import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:home_trainer/database/utilities/exercises.dart';
 
-enum UnitInput { distance, intervals, restTime }
+enum UnitInput { distance, intervals, minutes, seconds }
 enum Intensity { easy, normal, intens }
 
 class RunFormController extends StatefulWidget {
@@ -31,8 +32,8 @@ class _RunFormControllerState extends State<RunFormController> {
         distance: distance.toString(),
         intervals: intervals.toString(),
         intensity: intensity,
-        restTimeMin: restTimeMin.toString(),
-        restTimeSec: restTimeSec.toString(),
+        restTimeMin: minutesLabelText.toString(),
+        restTimeSec: secondsLabelText.toString(),
       );
       routine.add(newRoutine);
 
@@ -48,12 +49,17 @@ class _RunFormControllerState extends State<RunFormController> {
           distance += 0.5;
         } else if (input == UnitInput.intervals) {
           intervals++;
-        } else if (input == UnitInput.restTime && restTimeMin < 60) {
-          if (restTimeSec == 30) {
-            restTimeSec = 0;
-            restTimeMin++;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText < 59) {
+            minutesLabelText++;
           } else {
-            restTimeSec = 30;
+            minutesLabelText = 0;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText < 59) {
+            secondsLabelText++;
+          } else {
+            secondsLabelText = 0;
           }
         }
       });
@@ -67,23 +73,25 @@ class _RunFormControllerState extends State<RunFormController> {
           distance -= 0.5;
         } else if (input == UnitInput.intervals && intervals > 1) {
           intervals--;
-        } else if (input == UnitInput.restTime &&
-            (restTimeMin > 0 || restTimeSec > 0)) {
-          if (restTimeSec == 0) {
-            restTimeSec = 30;
-            restTimeMin--;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText > 0) {
+            minutesLabelText--;
           } else {
-            restTimeSec = 0;
+            minutesLabelText = 59;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText > 0) {
+            secondsLabelText--;
+          } else {
+            secondsLabelText = 59;
           }
         }
       });
     };
   }
 
-  int intervals = 1;
-  int runSession = 1;
-  int restTimeMin = 0;
-  int restTimeSec = 0;
+  int minutesLabelText = 0, secondsLabelText = 0;
+  int runSession = 1, intervals = 1;
 
   double distance = 0.0;
   String intensity = 'NORMAL RUN';
@@ -97,7 +105,7 @@ class _RunFormControllerState extends State<RunFormController> {
     return Column(
       children: <Widget>[
         // title text form filed
-        Expanded(child: _titleForm),
+        _titleForm,
         // distance and intervals unit inputs
         Expanded(
           flex: 2,
@@ -107,7 +115,7 @@ class _RunFormControllerState extends State<RunFormController> {
                 child: UnitInputCard(
                   labelText: 'DISTANCE',
                   inputText: Text(
-                    distance.toString(),
+                    '${distance.toString()} Km',
                     style: kTitleLabelTextStyle,
                   ),
                   cardColor: kActiveCardColor,
@@ -132,18 +140,16 @@ class _RunFormControllerState extends State<RunFormController> {
         ),
         Expanded(
           flex: 2,
-          child: UnitInputCard(
+          child: RestTimeCard(
             labelText: 'REST TIME',
-            inputText: Text(
-              restTimeMin > 9
-                  ? '$restTimeMin : $restTimeSec'
-                  : '0$restTimeMin : $restTimeSec',
-              style: kTitleLabelTextStyle,
-            ),
             cardColor: kActiveCardColor,
-            sizedBoxHeight: 20.0,
-            onPressedMinus: decrease(UnitInput.restTime),
-            onPressedPlus: increase(UnitInput.restTime),
+            sizedBoxHeight: 15.0,
+            minutesLabelText: minutesLabelText,
+            secondsLabelText: secondsLabelText,
+            onPressedMinusMin: decrease(UnitInput.minutes),
+            onPressedPlusMin: increase(UnitInput.minutes),
+            onPressedMinusSec: decrease(UnitInput.seconds),
+            onPressedPlusSec: increase(UnitInput.seconds),
           ),
         ),
         Expanded(
