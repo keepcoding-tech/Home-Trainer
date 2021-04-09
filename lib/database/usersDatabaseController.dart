@@ -31,21 +31,46 @@ class UserDatabaseController {
     }
   }
 
-  Future createUserData(String email) async {
+  Future createUserData({
+    String email,
+    String name,
+    String gender,
+    String height,
+    String weight,
+    String age,
+    List<double> analyticData,
+  }) async {
     createWeekDaysDatabase();
     return await usersCollection.doc(uid).set({
       'email': email,
-      'info': false,
+      'name': name,
+      'gender': gender,
+      'height': height,
+      'weight': weight,
+      'age': age,
+      'analyticData': analyticData,
     });
   }
 
-  Future updateUserData(
+  Future updateUserInfoData(
       String gender, String height, String weight, String age) async {
     return await usersCollection.doc(uid).update({
       'gender': gender,
       'height': height,
       'weight': weight,
       'age': age,
+    });
+  }
+
+  Future updateUserInfoGeneticsData(double analyticData) async {
+    return await usersCollection.doc(uid).update({
+      'analyticData': FieldValue.arrayUnion([analyticData]),
+    });
+  }
+
+  Future deleteUserInfoGeneticsData(List<dynamic> analyticData) async {
+    return await usersCollection.doc(uid).update({
+      'analyticData': analyticData,
     });
   }
 

@@ -1,9 +1,6 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:home_trainer/authentication/screens/createUserInfo/createUserInfoPage.dart';
 
-import 'package:home_trainer/authentication/services/authenticationController.dart';
-import 'package:home_trainer/authentication/screens/signUp/utilities/emailVerificationMessage.dart';
 import 'package:home_trainer/authentication/screens/signUp/utilities/termsAndConditions.dart';
 import 'package:home_trainer/authentication/screens/signUp/utilities/createAccountButton.dart';
 import 'package:home_trainer/authentication/screens/signUp/utilities/signUpTextFormFields.dart';
@@ -65,27 +62,16 @@ class SignUpController extends StatelessWidget {
                 if (_emailForm.formKey.currentState.validate()) {
                   if (_passwordForm.formKey.currentState.validate()) {
                     if (_confirmPasswordForm.formKey.currentState.validate()) {
-                      UserCredential userCredential =
-                          await context.read<AuthenticationController>().signUp(
-                                email: _emailForm.controller.text.trim(),
-                                password: _passwordForm.controller.text.trim(),
-                                context: context,
-                              );
-
-                      context
-                          .read<AuthenticationController>()
-                          .signUp(
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CreateUserInfoPage(
                             email: _emailForm.controller.text.trim(),
                             password: _passwordForm.controller.text.trim(),
-                            context: context,
-                          )
-                          .then((_) {
-                        if (userCredential != null) {
-                          Navigator.of(context).pop();
-                          showEmailVerificationMessage(
-                              context, _emailForm.controller.text.trim());
-                        }
-                      });
+                            authMethod: 'email & password',
+                          ),
+                        ),
+                      );
                     }
                   }
                 }

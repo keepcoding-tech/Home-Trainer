@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'package:home_trainer/authentication/screens/signIn/utilities/signInTexts.dart';
@@ -74,12 +74,27 @@ class SignInController extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               SocialMediaLogin(
-                icon: FontAwesomeIcons.facebook,
+                icon: FontAwesomeIcons.facebookF,
                 buttonColor: Color(0xFF1773EA),
                 onPressed: () {
-                  context
-                      .read<AuthenticationController>()
-                      .signInWithFacebook(context);
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => CreateUserInfoPage(
+                  //       email: '',
+                  //       password: '',
+                  //       authMethod: 'facebook',
+                  //     ),
+                  //   ),
+                  // );
+                  context.read<AuthenticationController>().signInWithFacebook(
+                        context,
+                        name: 'undefined',
+                        gender: 'undefined',
+                        height: 'undefined',
+                        weight: 'undefined',
+                        age: 'undefined',
+                      );
                 },
               ),
               // sign in with google
@@ -87,7 +102,23 @@ class SignInController extends StatelessWidget {
                 icon: FontAwesomeIcons.google,
                 buttonColor: Color(0xFFDD3D2B),
                 onPressed: () {
-                  context.read<AuthenticationController>().signInWithGoogle();
+                  // Navigator.push(
+                  //   context,
+                  //   MaterialPageRoute(
+                  //     builder: (context) => CreateUserInfoPage(
+                  //       email: '',
+                  //       password: '',
+                  //       authMethod: 'google',
+                  //     ),
+                  //   ),
+                  // );
+                  context.read<AuthenticationController>().signInWithGoogle(
+                        name: 'undefined',
+                        gender: 'undefined',
+                        height: 'undefined',
+                        weight: 'undefined',
+                        age: 'undefined',
+                      );
                 },
               ),
             ],

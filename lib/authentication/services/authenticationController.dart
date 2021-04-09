@@ -40,8 +40,17 @@ class AuthenticationController {
     }
   }
 
-  Future<UserCredential> signUp(
-      {String email, String password, BuildContext context}) async {
+  Future<UserCredential> signUp({
+    String email,
+    String password,
+    String name,
+    String gender,
+    String height,
+    String weight,
+    String age,
+    List<double> analyticData,
+    BuildContext context,
+  }) async {
     UserCredential userCredential;
     try {
       userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
@@ -49,8 +58,15 @@ class AuthenticationController {
         password: password,
       );
 
-      await UserDatabaseController(uid: userCredential.user.uid)
-          .createUserData(email);
+      await UserDatabaseController(uid: userCredential.user.uid).createUserData(
+        email: email,
+        name: name,
+        gender: gender,
+        height: height,
+        weight: weight,
+        age: age,
+        analyticData: analyticData,
+      );
 
       _firebaseAuth.currentUser.sendEmailVerification();
 
@@ -80,7 +96,14 @@ class AuthenticationController {
   }
 
   // Authentification with Facebook
-  Future<UserCredential> signInWithFacebook(BuildContext context) async {
+  Future<UserCredential> signInWithFacebook(
+    BuildContext context, {
+    String name,
+    String gender,
+    String height,
+    String weight,
+    String age,
+  }) async {
     try {
       final FacebookLogin _facebookLogin = new FacebookLogin();
       final FacebookLoginResult result = await _facebookLogin.logIn(['email']);
@@ -92,7 +115,14 @@ class AuthenticationController {
           .signInWithCredential(facebookAuthCredential);
 
       await UserDatabaseController(uid: _userCrediential.user.uid)
-          .createUserData('ceva');
+          .createUserData(
+        email: 'fecebook email',
+        name: name,
+        gender: gender,
+        height: height,
+        weight: weight,
+        age: age,
+      );
 
       return await FirebaseAuth.instance
           .signInWithCredential(facebookAuthCredential);
@@ -110,7 +140,13 @@ class AuthenticationController {
   }
 
   // Authentification with Google
-  Future<UserCredential> signInWithGoogle() async {
+  Future<UserCredential> signInWithGoogle({
+    String name,
+    String gender,
+    String height,
+    String weight,
+    String age,
+  }) async {
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
     final GoogleSignInAuthentication googleAuth =
@@ -124,8 +160,14 @@ class AuthenticationController {
     final UserCredential _userCrediential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-    await UserDatabaseController(uid: _userCrediential.user.uid)
-        .createUserData(googleUser.email);
+    await UserDatabaseController(uid: _userCrediential.user.uid).createUserData(
+      email: googleUser.email,
+      name: name,
+      gender: gender,
+      height: height,
+      weight: weight,
+      age: age,
+    );
 
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }

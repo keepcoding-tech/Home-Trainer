@@ -1,8 +1,10 @@
-import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:flutter/material.dart';
+
+import 'package:home_trainer/app/screens/profile/services/updateUserInfoGeneticsData.dart';
+import 'package:home_trainer/app/screens/profile/utilities/userCredentialData.dart';
 import 'package:home_trainer/app/screens/profile/utilities/profileImage.dart';
 import 'package:home_trainer/app/screens/profile/utilities/signOutButton.dart';
-import 'package:home_trainer/app/screens/profile/utilities/userCredentialData.dart';
 import 'package:home_trainer/app/screens/profile/utilities/userData.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
@@ -33,20 +35,60 @@ class MainScreensDrawer extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 10.0),
-              UserCredentialData(
-                userCredentialData: Text(
-                  'STOPWATCH',
-                  style: kSubtitleLabelTextStyle,
+              GestureDetector(
+                onTap: () {
+                  print('stopwach');
+                },
+                child: Container(
+                  color: kActiveCardColor,
+                  child: ListTile(
+                    leading: Icon(
+                      FontAwesomeIcons.stopwatch,
+                      color: kIconColor,
+                    ),
+                    title: Text(
+                      'STOPWATCH',
+                      style: kSubtitleLabelTextStyle,
+                    ),
+                  ),
                 ),
-                icon: FontAwesomeIcons.stopwatch,
               ),
               SizedBox(height: 10.0),
-              UserCredentialData(
-                userCredentialData: Text(
-                  'TIMER',
-                  style: kSubtitleLabelTextStyle,
+              GestureDetector(
+                onTap: () {
+                  print('timer');
+                },
+                child: Container(
+                  color: kActiveCardColor,
+                  child: ListTile(
+                    leading: Icon(
+                      FontAwesomeIcons.solidClock,
+                      color: kIconColor,
+                    ),
+                    title: Text('TIMER', style: kSubtitleLabelTextStyle),
+                  ),
                 ),
-                icon: FontAwesomeIcons.solidClock,
+              ),
+              SizedBox(height: 10.0),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UpdateUserInfoGeneticsData(),
+                    ),
+                  );
+                },
+                child: Container(
+                  color: kActiveCardColor,
+                  child: ListTile(
+                    leading: Icon(
+                      FontAwesomeIcons.solidFileAlt,
+                      color: kIconColor,
+                    ),
+                    title: Text('UPDATE INFO', style: kSubtitleLabelTextStyle),
+                  ),
+                ),
               ),
               Expanded(child: SizedBox()),
               Align(
