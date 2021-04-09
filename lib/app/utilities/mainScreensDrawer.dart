@@ -6,6 +6,8 @@ import 'package:home_trainer/app/screens/profile/utilities/userCredentialData.da
 import 'package:home_trainer/app/screens/profile/utilities/profileImage.dart';
 import 'package:home_trainer/app/screens/profile/utilities/signOutButton.dart';
 import 'package:home_trainer/app/screens/profile/utilities/userData.dart';
+import 'package:home_trainer/app/screens/timer/stopwatchPage.dart';
+import 'package:home_trainer/app/screens/timer/timerPage.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class MainScreensDrawer extends StatelessWidget {
@@ -37,7 +39,12 @@ class MainScreensDrawer extends StatelessWidget {
               SizedBox(height: 10.0),
               GestureDetector(
                 onTap: () {
-                  print('stopwach');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => StopwatchPage(),
+                    ),
+                  );
                 },
                 child: Container(
                   color: kActiveCardColor,
@@ -56,7 +63,12 @@ class MainScreensDrawer extends StatelessWidget {
               SizedBox(height: 10.0),
               GestureDetector(
                 onTap: () {
-                  print('timer');
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TimerPage(),
+                    ),
+                  );
                 },
                 child: Container(
                   color: kActiveCardColor,

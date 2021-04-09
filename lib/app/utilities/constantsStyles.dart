@@ -29,8 +29,14 @@ const kBoldContentLabelTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
-const kTimerLabelTextStyle = TextStyle(
+// Timer constants styles
+const kRestTimeLabelTextStyle = TextStyle(
   fontSize: 40.0,
+  color: Color(0xFFCBD7F6),
+);
+
+const kTimerLabelTextStyle = TextStyle(
+  fontSize: 80.0,
   color: Color(0xFFCBD7F6),
 );
 

@@ -58,7 +58,7 @@ class RestTimeCard extends StatelessWidget {
                       minutesLabelText < 10
                           ? '0${minutesLabelText.toString()}'
                           : minutesLabelText.toString(),
-                      style: kTimerLabelTextStyle,
+                      style: kRestTimeLabelTextStyle,
                     ),
                     SizedBox(height: sizedBoxHeight),
                     Row(
@@ -102,7 +102,7 @@ class RestTimeCard extends StatelessWidget {
                       secondsLabelText < 10
                           ? '0${secondsLabelText.toString()}'
                           : secondsLabelText.toString(),
-                      style: kTimerLabelTextStyle,
+                      style: kRestTimeLabelTextStyle,
                     ),
                     SizedBox(height: sizedBoxHeight),
                     Row(
