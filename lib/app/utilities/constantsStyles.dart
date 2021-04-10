@@ -40,6 +40,11 @@ const kTimerLabelTextStyle = TextStyle(
   color: Color(0xFFCBD7F6),
 );
 
+const kTimerButtonLabelTextStyle = TextStyle(
+  fontSize: 30.0,
+  color: Color(0xFFCBD7F6),
+);
+
 // button style
 const kBottomNavigationIconColor = Color(0xFF02BDFB);
 const kButtonColor = Color(0xFF02BDFB);

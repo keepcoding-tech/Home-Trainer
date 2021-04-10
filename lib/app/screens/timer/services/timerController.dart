@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/roundIconButtone.dart';
-import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
+import 'package:home_trainer/app/screens/timer/utilities/timerButtone.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 enum TimeInput { minutes, seconds }
@@ -165,7 +165,7 @@ class _TimerControllerState extends State<TimerController> {
           ),
           Expanded(
             child: !timeStarted
-                ? RoutineButton(
+                ? TimerButton(
                     labelName: 'START',
                     color: kButtonColor,
                     onPressed: minutesLabelText == 0 && secondsLabelText == 0
@@ -182,7 +182,7 @@ class _TimerControllerState extends State<TimerController> {
                     children: <Widget>[
                       Expanded(
                         child: !timerPaused
-                            ? RoutineButton(
+                            ? TimerButton(
                                 labelName: 'PAUSE',
                                 color: kButtonColor,
                                 onPressed: () {
@@ -192,7 +192,7 @@ class _TimerControllerState extends State<TimerController> {
                                   });
                                 },
                               )
-                            : RoutineButton(
+                            : TimerButton(
                                 labelName: 'RESUME',
                                 color: kButtonColor,
                                 onPressed: () {
@@ -204,7 +204,7 @@ class _TimerControllerState extends State<TimerController> {
                               ),
                       ),
                       Expanded(
-                        child: RoutineButton(
+                        child: TimerButton(
                           labelName: 'STOP',
                           color: kButtonColor,
                           onPressed: () {

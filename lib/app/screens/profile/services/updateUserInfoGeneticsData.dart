@@ -4,25 +4,67 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/services/loadingScreen.dart';
 
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 import 'package:home_trainer/app/utilities/selectableCard.dart';
 import 'package:home_trainer/app/utilities/unitInputCard.dart';
 import 'package:home_trainer/database/usersDatabaseController.dart';
 
+class UserInfoGeneticsData extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(currentUser.uid).get(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data.data();
+          return UpdateUserInfoGeneticsData(
+            weight: int.parse(data['weight']),
+            age: int.parse(data['age']),
+            height: int.parse(data['height']),
+            gender: data['gender'],
+          );
+        }
+
+        return LoadingAnimation(loadingSize: 50.0);
+      },
+    );
+  }
+}
+
 enum Gender { male, female }
 
 class UpdateUserInfoGeneticsData extends StatefulWidget {
+  final int weight, age, height;
+  final String gender;
+  UpdateUserInfoGeneticsData({this.weight, this.age, this.height, this.gender});
+
   @override
   _UpdateUserInfoGeneticsDataState createState() =>
-      _UpdateUserInfoGeneticsDataState();
+      _UpdateUserInfoGeneticsDataState(
+        weight: weight,
+        age: age,
+        height: height,
+        gender: gender,
+      );
 }
 
 class _UpdateUserInfoGeneticsDataState
     extends State<UpdateUserInfoGeneticsData> {
-  int weight = 65, age = 18, height = 170;
+  _UpdateUserInfoGeneticsDataState({
+    this.weight,
+    this.age,
+    this.height,
+    this.gender,
+  });
 
-  String gender = 'MALE';
+  int weight, age, height;
+  String gender;
+
   Gender selectedGender = Gender.male;
 
   final currentUser = FirebaseAuth.instance.currentUser;

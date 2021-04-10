@@ -1,10 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:home_trainer/app/utilities/constantsStyles.dart';
-import 'package:home_trainer/database/routineDatabaseController.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 import 'package:home_trainer/database/utilities/routine.dart';
 
 class AddRoutineToScheduleController extends StatefulWidget {
@@ -27,7 +26,7 @@ class _AddRoutineToScheduleControllerState
     final _scheduledRoutinesCollection = FirebaseFirestore.instance
         .collection('users')
         .doc(currentUser.uid)
-        .collection('weekdays');
+        .collection('scheduledRoutines');
 
     return Container(
       child: Stack(
@@ -108,10 +107,6 @@ class _RoutineSelectableTileState extends State<RoutineSelectableTile> {
             onChanged: (value) {
               setState(() {
                 routine.isSelected = !routine.isSelected;
-                RoutineDatabaseController().updateIsSelectedRoutine(
-                  title: routine.title,
-                  isSelected: value,
-                );
               });
             },
           ),

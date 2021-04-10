@@ -163,7 +163,19 @@ class _SwimFormControllerState extends State<SwimFormController> {
                   onPressed: () async {
                     if (addExercise()) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Exercise added to routine')));
+                        SnackBar(
+                          content: Text('Exercise added to routine'),
+                        ),
+                      );
+
+                      setState(() {
+                        _swimStyleForm.controller.clear();
+                        swimSession = 1;
+                        sessions = 1;
+                        distance = 25;
+                        minutesLabelText = 0;
+                        secondsLabelText = 0;
+                      });
                     }
                   },
                 ),

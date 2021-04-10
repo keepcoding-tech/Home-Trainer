@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:home_trainer/app/services/loadingScreen.dart';
 
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 import 'package:home_trainer/database/usersDatabaseController.dart';
@@ -47,38 +48,56 @@ class _AnalyticsControllerState extends State<AnalyticsController> {
             margin: EdgeInsets.only(left: 15.0, top: 15.0, right: 15.0),
             height: double.infinity,
             width: double.infinity,
-            child: LineChart(
-              LineChartData(
-                minX: 0,
-                maxX: 10,
-                minY: 0,
-                maxY: 35,
-                gridData: FlGridData(show: false),
-                titlesData: FlTitlesData(show: false),
-                borderData: FlBorderData(show: false),
-                lineBarsData: [
-                  LineChartBarData(
-                    isCurved: true,
-                    barWidth: 3.5,
-                    colors: <Color>[kButtonColor],
-                    dotData: FlDotData(show: true),
-                    belowBarData: BarAreaData(
-                      show: true,
-                      colors: <Color>[kButtonColor]
-                          .map((color) => color.withOpacity(0.2))
-                          .toList(),
-                    ),
-                    spots: analyticsDataList.length == 0
-                        ? <FlSpot>[FlSpot(0, 17.5)]
-                        : analyticsDataList,
+            child: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Text(
+                    'OVERWEIGHT',
+                    style: kSubtitleLabelTextStyle,
                   ),
-                ],
-              ),
+                ),
+                LineChart(
+                  LineChartData(
+                    minX: 0,
+                    maxX: 10,
+                    minY: 0,
+                    maxY: 35,
+                    titlesData: FlTitlesData(show: false),
+                    gridData: FlGridData(show: false),
+                    borderData: FlBorderData(show: false),
+                    lineBarsData: [
+                      LineChartBarData(
+                        isCurved: true,
+                        barWidth: 3.5,
+                        colors: <Color>[kButtonColor],
+                        dotData: FlDotData(show: true),
+                        belowBarData: BarAreaData(
+                          show: true,
+                          colors: <Color>[kButtonColor]
+                              .map((color) => color.withOpacity(0.2))
+                              .toList(),
+                        ),
+                        spots: analyticsDataList.length == 0
+                            ? <FlSpot>[FlSpot(0, 17.5)]
+                            : analyticsDataList,
+                      ),
+                    ],
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Text(
+                    'UNDERWEIGHT',
+                    style: kSubtitleLabelTextStyle,
+                  ),
+                ),
+              ],
             ),
           );
         }
 
-        return Text("loading");
+        return LoadingAnimation(loadingSize: 50.0);
       },
     );
   }

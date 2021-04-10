@@ -9,6 +9,7 @@ import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessa
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class StaticExerciseTile extends StatelessWidget {
+  final bool isModifiable;
   final String routine,
       exercise,
       muscle,
@@ -18,6 +19,7 @@ class StaticExerciseTile extends StatelessWidget {
       restTimeMin,
       restTimeSec;
   StaticExerciseTile({
+    this.isModifiable,
     this.routine,
     this.exercise,
     this.muscle,
@@ -36,7 +38,10 @@ class StaticExerciseTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
-      color: kInactiveCardColor,
+      decoration: BoxDecoration(
+        color: kInactiveCardColor,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -51,56 +56,60 @@ class StaticExerciseTile extends StatelessWidget {
                   ),
                 ),
               ),
-              DetailExerciseCard(
-                cardChild: IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.pencilAlt,
-                    color: kIconColor,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditStaticExercisePage(
-                          routineTitle: routine,
-                          exerciseTitle: exercise,
-                          muscle: muscle,
-                          sets: sets,
-                          reps: reps,
-                          weight: weight,
-                          restTimeMin: restTimeMin,
-                          restTimeSec: restTimeSec,
+              isModifiable
+                  ? DetailExerciseCard(
+                      cardChild: IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.pencilAlt,
+                          color: kIconColor,
                         ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => EditStaticExercisePage(
+                                routineTitle: routine,
+                                exerciseTitle: exercise,
+                                muscle: muscle,
+                                sets: sets,
+                                reps: reps,
+                                weight: weight,
+                                restTimeMin: restTimeMin,
+                                restTimeSec: restTimeSec,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-              DetailExerciseCard(
-                cardChild: IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.trash,
-                    color: kIconColor,
-                  ),
-                  onPressed: () {
-                    showAlertDialogMessage(
-                      context: context,
-                      messageTitle: 'Delete Exercise',
-                      messageDetails:
-                          'Are you sure you want to delate the exercise?',
-                      onPressed: () {
-                        _routineColection
-                            .doc(_currentUser.uid)
-                            .collection('routines')
-                            .doc(routine)
-                            .collection('exercises')
-                            .doc(exercise)
-                            .delete();
-                      },
-                    );
-                  },
-                ),
-              ),
+                    )
+                  : Text(''),
+              isModifiable
+                  ? DetailExerciseCard(
+                      cardChild: IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.trash,
+                          color: kIconColor,
+                        ),
+                        onPressed: () {
+                          showAlertDialogMessage(
+                            context: context,
+                            messageTitle: 'Delete Exercise',
+                            messageDetails:
+                                'Are you sure you want to delate the exercise?',
+                            onPressed: () {
+                              _routineColection
+                                  .doc(_currentUser.uid)
+                                  .collection('routines')
+                                  .doc(routine)
+                                  .collection('exercises')
+                                  .doc(exercise)
+                                  .delete();
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  : Text(''),
             ],
           ),
           DetailExerciseCard(

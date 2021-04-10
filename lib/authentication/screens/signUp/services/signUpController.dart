@@ -62,7 +62,7 @@ class SignUpController extends StatelessWidget {
                 if (_emailForm.formKey.currentState.validate()) {
                   if (_passwordForm.formKey.currentState.validate()) {
                     if (_confirmPasswordForm.formKey.currentState.validate()) {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CreateUserInfoPage(
@@ -70,6 +70,7 @@ class SignUpController extends StatelessWidget {
                             password: _passwordForm.controller.text.trim(),
                             authMethod: 'email & password',
                           ),
+                          fullscreenDialog: true,
                         ),
                       );
                     }

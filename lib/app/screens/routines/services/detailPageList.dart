@@ -38,6 +38,7 @@ class _DetailPageListState extends State<DetailPageList> {
             itemBuilder: (context, index) {
               if (widget.sport == 'RUN' || widget.sport == 'CYCLING') {
                 return LongDistanceExerciseTile(
+                  isModifiable: true,
                   routine: widget.routineTitle,
                   exercise: snapshot.data.docs[index].data()['exercise'],
                   distance: snapshot.data.docs[index].data()['distance'],
@@ -49,6 +50,7 @@ class _DetailPageListState extends State<DetailPageList> {
                 );
               } else if (widget.sport == 'SWIM') {
                 return ShortDistanceExerciseTile(
+                  isModifiable: true,
                   routine: widget.routineTitle,
                   exerciseTitle: snapshot.data.docs[index].data()['exercise'],
                   distance: snapshot.data.docs[index].data()['distance'],
@@ -59,6 +61,7 @@ class _DetailPageListState extends State<DetailPageList> {
                 );
               } else {
                 return StaticExerciseTile(
+                  isModifiable: true,
                   routine: widget.routineTitle,
                   exercise: snapshot.data.docs[index].data()['exercise'],
                   muscle: snapshot.data.docs[index].data()['muscle'],

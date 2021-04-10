@@ -19,39 +19,28 @@ class RoutineDatabaseController {
     return await routineCollection().doc(title).set({
       'title': title,
       'sport': sport,
-      'isSelected': false,
     });
   }
 
-  Future updateIsSelectedRoutine({String title, bool isSelected}) async {
-    return await routineCollection().doc(title).update({
-      'isSelected': isSelected,
+  Future updateScheduledRoutineList(
+      {String weekday, List<String> scheduledRoutines}) async {
+    final CollectionReference updateScheduledRoutineList = FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(_currentUser.uid)
+        .collection('scheduledRoutines');
+
+    return await updateScheduledRoutineList.doc('scheduledRoutines').update({
+      '$weekday': scheduledRoutines,
     });
   }
-
-  // CollectionReference weekDaysCollection() {
-  //   final CollectionReference _weekDaysCollection = FirebaseFirestore.instance
-  //       .collection('users')
-  //       .doc(_currentUser.uid)
-  //       .collection('week days');
-
-  //   return _weekDaysCollection;
-  // }
-
-  // Future createScheduleRoutine(
-  //     {String weekDay, String routineTitle, String sport}) async {
-  //   return await weekDaysCollection().doc(routineTitle).set({
-  //     'title': routineTitle,
-  //     'sport': sport,
-  //   });
-  // }
 
   List<Routine> _routinesList(QuerySnapshot snapshot) {
     return snapshot.docs.map((doc) {
       return Routine(
         title: doc.data()['title'] ?? '',
         sport: doc.data()['sport'] ?? '',
-        isSelected: doc.data()['isSelected'] ?? false,
+        isSelected: false,
       );
     }).toList();
   }

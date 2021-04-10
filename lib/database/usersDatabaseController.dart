@@ -7,9 +7,15 @@ class UserDatabaseController {
   final CollectionReference usersCollection =
       FirebaseFirestore.instance.collection('users');
 
-  Future createWeekDaysDatabase() async {
+  Future createScheduledRoutinesDatabase() async {
+    final CollectionReference scheduledRoutinesCollection = FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('scheduledRoutines');
+
     List<String> scheduledRoutines = <String>[];
-    List<String> weekDays = [
+    List<String> weekdays = <String>[
       'Monday',
       'Tuesday',
       'Wednesday',
@@ -19,13 +25,8 @@ class UserDatabaseController {
       'Sunday',
     ];
 
-    for (int i = 0; i < weekDays.length; i++) {
-      await usersCollection
-          .doc(uid)
-          .collection('weekdays')
-          .doc(weekDays[i])
-          .set({
-        'title': weekDays[i],
+    for (int i = 0; i < weekdays.length; i++) {
+      scheduledRoutinesCollection.doc(weekdays[i]).set({
         'scheduledRoutines': scheduledRoutines,
       });
     }
@@ -40,7 +41,7 @@ class UserDatabaseController {
     String age,
     List<double> analyticData,
   }) async {
-    createWeekDaysDatabase();
+    createScheduledRoutinesDatabase();
     return await usersCollection.doc(uid).set({
       'email': email,
       'name': name,

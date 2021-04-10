@@ -226,7 +226,19 @@ class _RunFormControllerState extends State<RunFormController> {
                   onPressed: () async {
                     if (addExercise()) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Exercise added to routine')));
+                        SnackBar(
+                          content: Text('Exercise added to routine'),
+                        ),
+                      );
+                      setState(() {
+                        minutesLabelText = 0;
+                        secondsLabelText = 0;
+                        runSession = 1;
+                        intervals = 1;
+                        distance = 0.0;
+                        intensity = 'NORMAL RUN';
+                        selectedGender = Intensity.normal;
+                      });
                     }
                   },
                 ),

@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
+import 'package:home_trainer/app/screens/timer/utilities/timerButtone.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class StopwatchController extends StatefulWidget {
@@ -50,36 +50,30 @@ class _StopwatchControllerState extends State<StopwatchController> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Center(
-                    child: Expanded(
-                      child: Text(
-                        minutesLabelText < 10
-                            ? '0${minutesLabelText.toString()}'
-                            : minutesLabelText.toString(),
-                        style: kTimerLabelTextStyle,
+                    child: Text(
+                      minutesLabelText < 10
+                          ? '0${minutesLabelText.toString()}'
+                          : minutesLabelText.toString(),
+                      style: kTimerLabelTextStyle,
+                    ),
+                  ),
+                  SizedBox(width: 20.0),
+                  Center(
+                    child: Text(
+                      ':',
+                      style: TextStyle(
+                        fontSize: 80.0,
+                        color: Color(0xFFCBD7F6),
                       ),
                     ),
                   ),
                   SizedBox(width: 20.0),
                   Center(
-                    child: Expanded(
-                      child: Text(
-                        ':',
-                        style: TextStyle(
-                          fontSize: 80.0,
-                          color: Color(0xFFCBD7F6),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 20.0),
-                  Center(
-                    child: Expanded(
-                      child: Text(
-                        secondsLabelText < 10
-                            ? '0${secondsLabelText.toString()}'
-                            : secondsLabelText.toString(),
-                        style: kTimerLabelTextStyle,
-                      ),
+                    child: Text(
+                      secondsLabelText < 10
+                          ? '0${secondsLabelText.toString()}'
+                          : secondsLabelText.toString(),
+                      style: kTimerLabelTextStyle,
                     ),
                   ),
                 ],
@@ -88,7 +82,7 @@ class _StopwatchControllerState extends State<StopwatchController> {
           ),
           Expanded(
             child: !timeStarted
-                ? RoutineButton(
+                ? TimerButton(
                     labelName: 'START',
                     color: kButtonColor,
                     onPressed: () {
@@ -103,7 +97,7 @@ class _StopwatchControllerState extends State<StopwatchController> {
                     children: <Widget>[
                       Expanded(
                         child: !timerPaused
-                            ? RoutineButton(
+                            ? TimerButton(
                                 labelName: 'PAUSE',
                                 color: kButtonColor,
                                 onPressed: () {
@@ -113,7 +107,7 @@ class _StopwatchControllerState extends State<StopwatchController> {
                                   });
                                 },
                               )
-                            : RoutineButton(
+                            : TimerButton(
                                 labelName: 'RESUME',
                                 color: kButtonColor,
                                 onPressed: () {
@@ -125,8 +119,8 @@ class _StopwatchControllerState extends State<StopwatchController> {
                               ),
                       ),
                       Expanded(
-                        child: RoutineButton(
-                          labelName: 'STOP',
+                        child: TimerButton(
+                          labelName: 'RESET',
                           color: kButtonColor,
                           onPressed: () {
                             setState(() {

@@ -39,7 +39,8 @@ class _CreateUserInfoGeneticsDataState
 
   double calculateBMI() {
     double _bmi = weight / pow(height / 100, 2);
-    return _bmi;
+    double mod = pow(10.0, 1);
+    return ((_bmi * mod).round().toDouble() / mod);
   }
 
   @override

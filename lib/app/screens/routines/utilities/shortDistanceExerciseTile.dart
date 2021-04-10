@@ -9,6 +9,7 @@ import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessa
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class ShortDistanceExerciseTile extends StatelessWidget {
+  final bool isModifiable;
   final String routine,
       exerciseTitle,
       distance,
@@ -17,6 +18,7 @@ class ShortDistanceExerciseTile extends StatelessWidget {
       restTimeMin,
       restTimeSec;
   ShortDistanceExerciseTile({
+    this.isModifiable,
     this.routine,
     this.exerciseTitle,
     this.distance,
@@ -34,7 +36,10 @@ class ShortDistanceExerciseTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
-      color: kInactiveCardColor,
+      decoration: BoxDecoration(
+        color: kInactiveCardColor,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -51,58 +56,63 @@ class ShortDistanceExerciseTile extends StatelessWidget {
                   ),
                 ),
               ),
-              DetailExerciseCard(
-                cardChild: Center(
-                  child: IconButton(
-                    icon: Icon(
-                      FontAwesomeIcons.pencilAlt,
-                      color: kIconColor,
-                    ),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EditShortDistanceExercisePage(
-                            routineTitle: routine,
-                            exerciseTitle: exerciseTitle,
-                            distance: distance,
-                            style: style,
-                            sessions: sessions,
-                            restTimeMin: restTimeMin,
-                            restTimeSec: restTimeSec,
+              isModifiable
+                  ? DetailExerciseCard(
+                      cardChild: Center(
+                        child: IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.pencilAlt,
+                            color: kIconColor,
                           ),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                    EditShortDistanceExercisePage(
+                                  routineTitle: routine,
+                                  exerciseTitle: exerciseTitle,
+                                  distance: distance,
+                                  style: style,
+                                  sessions: sessions,
+                                  restTimeMin: restTimeMin,
+                                  restTimeSec: restTimeSec,
+                                ),
+                              ),
+                            );
+                          },
                         ),
-                      );
-                    },
-                  ),
-                ),
-              ),
-              DetailExerciseCard(
-                cardChild: Center(
-                  child: IconButton(
-                    icon: Icon(
-                      FontAwesomeIcons.trash,
-                      color: kIconColor,
-                    ),
-                    onPressed: () {
-                      showAlertDialogMessage(
-                        context: context,
-                        messageTitle: 'Delete Routine',
-                        messageDetails: 'Are you sure?',
-                        onPressed: () {
-                          _routineColection
-                              .doc(_currentUser.uid)
-                              .collection('routines')
-                              .doc(routine)
-                              .collection('exercises')
-                              .doc(exerciseTitle)
-                              .delete();
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
+                      ),
+                    )
+                  : Text(''),
+              isModifiable
+                  ? DetailExerciseCard(
+                      cardChild: Center(
+                        child: IconButton(
+                          icon: Icon(
+                            FontAwesomeIcons.trash,
+                            color: kIconColor,
+                          ),
+                          onPressed: () {
+                            showAlertDialogMessage(
+                              context: context,
+                              messageTitle: 'Delete Routine',
+                              messageDetails: 'Are you sure?',
+                              onPressed: () {
+                                _routineColection
+                                    .doc(_currentUser.uid)
+                                    .collection('routines')
+                                    .doc(routine)
+                                    .collection('exercises')
+                                    .doc(exerciseTitle)
+                                    .delete();
+                              },
+                            );
+                          },
+                        ),
+                      ),
+                    )
+                  : Text(''),
             ],
           ),
           Row(

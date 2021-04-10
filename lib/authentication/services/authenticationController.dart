@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:home_trainer/app/services/loadingScreen.dart';
 import 'package:home_trainer/database/usersDatabaseController.dart';
 
 class AuthenticationController {
@@ -23,14 +24,10 @@ class AuthenticationController {
     } on FirebaseAuthException catch (e) {
       // show no user found message
       if (e.code == 'user-not-found') {
-        print('No user found for that email.');
-
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('No user found with this email')));
         // show wrong password message
       } else if (e.code == 'wrong-password') {
-        print('Wrong password provided for that user.');
-
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Wrong password provided for that user')));
       }
@@ -74,14 +71,10 @@ class AuthenticationController {
     } on FirebaseAuthException catch (e) {
       // show weak password message
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
-
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('The password provided is too weak')));
         // show email already in use message
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
-
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text('The account already exists for that email')));
       }

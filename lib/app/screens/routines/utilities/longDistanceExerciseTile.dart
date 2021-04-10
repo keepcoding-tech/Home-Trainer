@@ -9,6 +9,7 @@ import 'package:home_trainer/app/screens/routines/utilities/showAlertDialogMessa
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class LongDistanceExerciseTile extends StatelessWidget {
+  final bool isModifiable;
   final String routine,
       exercise,
       distance,
@@ -18,6 +19,7 @@ class LongDistanceExerciseTile extends StatelessWidget {
       restTimeSec,
       intensityTextLabel;
   LongDistanceExerciseTile({
+    this.isModifiable,
     this.routine,
     this.exercise,
     this.distance,
@@ -36,7 +38,10 @@ class LongDistanceExerciseTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(10.0),
-      color: kInactiveCardColor,
+      decoration: BoxDecoration(
+        color: kInactiveCardColor,
+        borderRadius: BorderRadius.circular(5.0),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
@@ -51,56 +56,61 @@ class LongDistanceExerciseTile extends StatelessWidget {
                   ),
                 ),
               ),
-              DetailExerciseCard(
-                cardChild: IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.pencilAlt,
-                    color: kIconColor,
-                  ),
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => EditLongDistanceExercisePage(
-                          routineTitle: routine,
-                          exerciseTitle: exercise,
-                          distance: distance,
-                          intervals: intervals,
-                          intensity: intensity,
-                          restTimeMin: restTimeMin,
-                          restTimeSec: restTimeSec,
-                          intensityTextLabe: intensityTextLabel,
+              isModifiable
+                  ? DetailExerciseCard(
+                      cardChild: IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.pencilAlt,
+                          color: kIconColor,
                         ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  EditLongDistanceExercisePage(
+                                routineTitle: routine,
+                                exerciseTitle: exercise,
+                                distance: distance,
+                                intervals: intervals,
+                                intensity: intensity,
+                                restTimeMin: restTimeMin,
+                                restTimeSec: restTimeSec,
+                                intensityTextLabe: intensityTextLabel,
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-              DetailExerciseCard(
-                cardChild: IconButton(
-                  icon: Icon(
-                    FontAwesomeIcons.trash,
-                    color: kIconColor,
-                  ),
-                  onPressed: () {
-                    showAlertDialogMessage(
-                      context: context,
-                      messageTitle: 'Delete exercise',
-                      messageDetails:
-                          'Are you sure you want to delete the exercise?',
-                      onPressed: () {
-                        _routineColection
-                            .doc(_currentUser.uid)
-                            .collection('routines')
-                            .doc(routine)
-                            .collection('exercises')
-                            .doc(exercise)
-                            .delete();
-                      },
-                    );
-                  },
-                ),
-              ),
+                    )
+                  : Text(''),
+              isModifiable
+                  ? DetailExerciseCard(
+                      cardChild: IconButton(
+                        icon: Icon(
+                          FontAwesomeIcons.trash,
+                          color: kIconColor,
+                        ),
+                        onPressed: () {
+                          showAlertDialogMessage(
+                            context: context,
+                            messageTitle: 'Delete exercise',
+                            messageDetails:
+                                'Are you sure you want to delete the exercise?',
+                            onPressed: () {
+                              _routineColection
+                                  .doc(_currentUser.uid)
+                                  .collection('routines')
+                                  .doc(routine)
+                                  .collection('exercises')
+                                  .doc(exercise)
+                                  .delete();
+                            },
+                          );
+                        },
+                      ),
+                    )
+                  : Text(''),
             ],
           ),
           Row(
@@ -116,7 +126,9 @@ class LongDistanceExerciseTile extends StatelessWidget {
               Expanded(
                 child: DetailExerciseCard(
                   cardChild: Text(
-                    'REST TIME: $restTimeMin : $restTimeSec',
+                    int.parse(restTimeSec) < 10
+                        ? 'REST TIME: $restTimeMin : 0$restTimeSec'
+                        : 'REST TIME: $restTimeMin : $restTimeSec',
                     style: kSubtitleLabelTextStyle,
                   ),
                 ),

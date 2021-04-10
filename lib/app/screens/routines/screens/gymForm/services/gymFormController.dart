@@ -191,15 +191,20 @@ class _GymFormControllerState extends State<GymFormController> {
                   onPressed: () async {
                     if (addExercise()) {
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Exercise added to routine')));
+                        SnackBar(
+                          content: Text('Exercise added to routine'),
+                        ),
+                      );
 
-                      _exerciseForm.controller.clear();
-                      _muscleForm.controller.clear();
-                      sets = 1;
-                      reps = 1;
-                      weight = 0.0;
-                      minutesLabelText = 0;
-                      secondsLabelText = 0;
+                      setState(() {
+                        _exerciseForm.controller.clear();
+                        _muscleForm.controller.clear();
+                        sets = 1;
+                        reps = 1;
+                        weight = 0.0;
+                        minutesLabelText = 0;
+                        secondsLabelText = 0;
+                      });
                     }
                   },
                 ),

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/services/loadingScreen.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class UserName extends StatelessWidget {
@@ -17,7 +18,9 @@ class UserName extends StatelessWidget {
           Map<String, dynamic> data = snapshot.data.data();
           return Text(data['name'], style: kSubtitleLabelTextStyle);
         }
-        return Text('');
+        return LoadingAnimation(
+          loadingSize: 20.0,
+        );
       },
     );
   }
@@ -37,7 +40,9 @@ class UserEmail extends StatelessWidget {
           Map<String, dynamic> data = snapshot.data.data();
           return Text(data['email'], style: kSubtitleLabelTextStyle);
         }
-        return Text('');
+        return LoadingAnimation(
+          loadingSize: 20.0,
+        );
       },
     );
   }

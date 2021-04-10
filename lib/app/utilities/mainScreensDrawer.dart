@@ -87,7 +87,7 @@ class MainScreensDrawer extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => UpdateUserInfoGeneticsData(),
+                      builder: (context) => UserInfoGeneticsData(),
                     ),
                   );
                 },
