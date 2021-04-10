@@ -8,24 +8,24 @@ import 'package:home_trainer/authentication/screens/signUp/utilities/signUpTexts
 import 'package:home_trainer/authentication/utilities/validation.dart';
 
 class SignUpController extends StatelessWidget {
-  final SignUpTextFormFields _emailForm = new SignUpTextFormFields(
-    labelText: 'email',
-    inputType: TextInputType.emailAddress,
-    obscureText: false,
-    validator: Validation().emailValidator(),
-  );
-
-  final SignUpTextFormFields _passwordForm = new SignUpTextFormFields(
-    labelText: 'password',
-    inputType: TextInputType.text,
-    obscureText: true,
-    validator: Validation().passwordValidator(),
-  );
-  final SignUpTexts _signUpTexts = new SignUpTexts();
-
   @override
   Widget build(BuildContext context) {
     final TermsAndConditions _termsAndConditions = new TermsAndConditions();
+    final SignUpTexts _signUpTexts = new SignUpTexts();
+
+    final SignUpTextFormFields _emailForm = new SignUpTextFormFields(
+      labelText: 'email',
+      inputType: TextInputType.emailAddress,
+      obscureText: false,
+      validator: Validation().createAccountEmailValidator(context),
+    );
+
+    final SignUpTextFormFields _passwordForm = new SignUpTextFormFields(
+      labelText: 'password',
+      inputType: TextInputType.text,
+      obscureText: true,
+      validator: Validation().passwordValidator(),
+    );
 
     final SignUpTextFormFields _confirmPasswordForm = new SignUpTextFormFields(
       labelText: 'confirm password',
@@ -62,7 +62,7 @@ class SignUpController extends StatelessWidget {
                 if (_emailForm.formKey.currentState.validate()) {
                   if (_passwordForm.formKey.currentState.validate()) {
                     if (_confirmPasswordForm.formKey.currentState.validate()) {
-                      Navigator.pushReplacement(
+                      Navigator.push(
                         context,
                         MaterialPageRoute(
                           builder: (context) => CreateUserInfoPage(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 Future<void> showEmailVerificationMessage(
@@ -8,12 +9,13 @@ Future<void> showEmailVerificationMessage(
     builder: (BuildContext context) {
       return AlertDialog(
         backgroundColor: kActiveCardColor,
-        title: Text(
-          'Verify your email',
-          style: kSubtitleLabelTextStyle,
+        title: Icon(
+          FontAwesomeIcons.envelope,
+          size: 50.0,
+          color: kIconColor,
         ),
         content: Text(
-          'An email has bean sent to:\n   "$email",   \n' +
+          'An email has bean sent to:\n   "$email", ' +
               'click the link provided to complete registration.',
           style: kContentLabelTextStyle,
         ),
