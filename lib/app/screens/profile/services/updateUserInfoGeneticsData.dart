@@ -27,6 +27,7 @@ class UserInfoGeneticsData extends StatelessWidget {
             age: int.parse(data['age']),
             height: int.parse(data['height']),
             gender: data['gender'],
+            context: context,
           );
         }
 
@@ -41,7 +42,9 @@ enum Gender { male, female }
 class UpdateUserInfoGeneticsData extends StatefulWidget {
   final int weight, age, height;
   final String gender;
-  UpdateUserInfoGeneticsData({this.weight, this.age, this.height, this.gender});
+  final BuildContext context;
+  UpdateUserInfoGeneticsData(
+      {this.weight, this.age, this.height, this.gender, this.context});
 
   @override
   _UpdateUserInfoGeneticsDataState createState() =>
@@ -73,7 +76,7 @@ class _UpdateUserInfoGeneticsDataState
 
   double calculateBMI() {
     double _bmi = weight / pow(height / 100, 2);
-    double mod = pow(10.0, 1);
+    double mod = pow(10.0, 2);
     return ((_bmi * mod).round().toDouble() / mod);
   }
 
@@ -295,8 +298,8 @@ class _UpdateUserInfoGeneticsDataState
                   await UserDatabaseController(uid: currentUser.uid)
                       .updateUserInfoGeneticsData(calculateBMI());
 
-                  Navigator.pop(context);
-                  Navigator.pop(context);
+                  Navigator.pop(widget.context);
+                  Navigator.pop(widget.context);
                 },
               ),
             ],

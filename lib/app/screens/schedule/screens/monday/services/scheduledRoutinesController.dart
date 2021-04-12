@@ -45,7 +45,7 @@ class _ScheduledRoutinesControllerState
             stream: scheduledRoutinesStreamData.snapshots(),
             builder: (context, snapshot) {
               if (!snapshot.hasData) {
-                return Text('loading . . .');
+                return LoadingAnimation(loadingSize: 30.0);
               }
 
               List<dynamic> scheduledRoutineList = data['scheduledRoutines'];
