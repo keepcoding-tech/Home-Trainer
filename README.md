@@ -10,7 +10,7 @@
 # Contents
 
 - [Authentication](#authentication)
-- [Profile page](#profile page)
+- [Profile page](#profilepage)
 - [Routine](#routine)
 - [Scheduled](#scheduled)
 - [Analytics](#analytics)
