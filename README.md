@@ -46,9 +46,10 @@
  - Although right now you'll be able to choose only between four types of sports, those sports cover almost all types of sports. More option will be implemented later.
 
  <p>
-    <img src = 'assets/presentationImage/routinesPage.png' alt = "routines page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/createRoutine.png' alt = "create routine page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/detailsPage.png' alt = "details page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/routinesPage.png' alt = "routines page", width = "200", height = "330">
+    <img src = 'assets/presentationImage/chooseSport.png' alt = "choose sport", width = "200", height = "330">
+    <img src = 'assets/presentationImage/createRoutine.png' alt = "create routine page", width = "200", height = "330">
+    <img src = 'assets/presentationImage/detailsPage.png' alt = "details page", width = "200", height = "330">
 </p>
 
 ### Scheduled page
