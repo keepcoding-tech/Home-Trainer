@@ -10,10 +10,10 @@
 # Contents
 
 - [Authentication](#authentication)
-- [Profile page](#profilepage)
-- [Routine](#routine)
-- [Scheduled](#scheduled)
-- [Analytics](#analytics)
+- [Profile page](#profile-page)
+- [Routine page](#routine-page)
+- [Scheduled page](#scheduled-page)
+- [Analytics page](#analytics-page)
 
 ### Authentication
 signin
@@ -21,11 +21,11 @@ signin
 ### Profile page
 profile page
 
-### Routine
+### Routine page
 routine page
 
-### Scheduled
+### Scheduled page
 scheduled page
 
-### Analytics
+### Analytics page
 analytics page
