@@ -11,23 +11,23 @@
 
 # Contents
 
-[Authentication](#authentication)
-[Profile page](#profile page)
-[Routine page](#routine page)
-[Scheduled page](#scheduled page)
-[Analytics page](#analytics page)
+- [Authentication](#authentication)
+- [Profile](#profile)
+- [Routine](#routine)
+- [Scheduled](#scheduled)
+- [Analytics](#analytics)
 
 ### Authentication
 signin
 
-### Profile page
+### Profile
 profile page
 
-### Routine page
+### Routine
 routine page
 
-### Scheduled page
+### Scheduled
 scheduled page
 
-### Analytics page
+### Analytics
 analytics page
