@@ -2,7 +2,14 @@ import 'package:flutter/material.dart';
 
 import 'package:home_trainer/app/screens/routines/utilities/routineTextFormField.dart';
 import 'package:home_trainer/app/screens/routines/utilities/routineButton.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
+import 'package:home_trainer/app/utilities/restTimeCard.dart';
+import 'package:home_trainer/app/utilities/unitInputCard.dart';
+import 'package:home_trainer/database/exerciseDatabaseController.dart';
 import 'package:home_trainer/database/routineDatabaseController.dart';
+import 'package:home_trainer/database/utilities/exercises.dart';
+
+enum UnitInput { distance, sessions, restTime, minutes, seconds }
 
 class SwimFormController extends StatefulWidget {
   @override
@@ -11,52 +18,83 @@ class SwimFormController extends StatefulWidget {
 
 class _SwimFormControllerState extends State<SwimFormController> {
   RoutineTextFormField _titleForm = new RoutineTextFormField(
-    labelText: 'title',
+    labelText: 'Routie title',
   );
-  RoutineTextFormField _exerciseForm = new RoutineTextFormField(
-    labelText: 'exercise',
-  );
-  RoutineTextFormField _muscleForm = new RoutineTextFormField(
-    labelText: 'muscle group',
-  );
-  RoutineTextFormField _setsForm = new RoutineTextFormField(
-    labelText: 'sets',
-  );
-  RoutineTextFormField _repsForm = new RoutineTextFormField(
-    labelText: 'reps',
-  );
-  RoutineTextFormField _weightForm = new RoutineTextFormField(
-    labelText: 'kg',
+  RoutineTextFormField _swimStyleForm = new RoutineTextFormField(
+    labelText: 'Swim style',
   );
 
-  List<Map> routines = <Map>[];
+  List<ShortDistanceExercise> routine = <ShortDistanceExercise>[];
 
   // add new exercise to the routine
   bool addExercise() {
     if (_titleForm.formKey.currentState.validate()) {
-      if (_exerciseForm.formKey.currentState.validate()) {
-        if (_muscleForm.formKey.currentState.validate()) {
-          if (_setsForm.formKey.currentState.validate()) {
-            if (_repsForm.formKey.currentState.validate()) {
-              if (_weightForm.formKey.currentState.validate()) {
-                Map newRoutine = {
-                  "exercise": _exerciseForm.controller.text.trim(),
-                  "muscle": _muscleForm.controller.text.trim(),
-                  "sets": _setsForm.controller.text.trim(),
-                  "reps": _repsForm.controller.text.trim(),
-                  "kg": _weightForm.controller.text.trim(),
-                };
-                routines.add(newRoutine);
+      if (_swimStyleForm.formKey.currentState.validate()) {
+        ShortDistanceExercise newRoutine = new ShortDistanceExercise(
+          distance: distance.toString(),
+          style: _swimStyleForm.controller.text.trim(),
+          sessions: sessions.toString(),
+          restTimeMin: minutesLabelText.toString(),
+          restTimeSec: secondsLabelText.toString(),
+        );
+        routine.add(newRoutine);
 
-                return true;
-              }
-            }
-          }
-        }
+        return true;
       }
     }
     return false;
   }
+
+  Function increase(UnitInput input) {
+    return () {
+      setState(() {
+        if (input == UnitInput.distance) {
+          distance += 5;
+        } else if (input == UnitInput.sessions) {
+          sessions++;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText < 59) {
+            minutesLabelText++;
+          } else {
+            minutesLabelText = 0;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText < 59) {
+            secondsLabelText++;
+          } else {
+            secondsLabelText = 0;
+          }
+        }
+      });
+    };
+  }
+
+  Function decrease(UnitInput input) {
+    return () {
+      setState(() {
+        if (input == UnitInput.distance && distance > 1) {
+          distance -= 5;
+        } else if (input == UnitInput.sessions && sessions > 1) {
+          sessions--;
+        } else if (input == UnitInput.minutes) {
+          if (minutesLabelText > 0) {
+            minutesLabelText--;
+          } else {
+            minutesLabelText = 59;
+          }
+        } else if (input == UnitInput.seconds) {
+          if (secondsLabelText > 0) {
+            secondsLabelText--;
+          } else {
+            secondsLabelText = 59;
+          }
+        }
+      });
+    };
+  }
+
+  int swimSession = 1, sessions = 1, distance = 25;
+  int minutesLabelText = 0, secondsLabelText = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -66,54 +104,117 @@ class _SwimFormControllerState extends State<SwimFormController> {
       children: <Widget>[
         // title text form filed
         _titleForm,
-        // exercise text form field
-        _exerciseForm,
-        // muscle text form field
-        _muscleForm,
-        // sets, reps and weight fields
-        Container(
-          margin: EdgeInsets.all(10.0),
-          color: Colors.blueGrey[600],
+        // swim style form field
+        _swimStyleForm,
+        // distance and intervals unit inputs
+        Expanded(
+          flex: 2,
           child: Row(
-            children: <Widget>[
-              Expanded(child: _setsForm),
-              Expanded(child: _repsForm),
-              Expanded(child: _weightForm),
+            children: [
+              Expanded(
+                child: UnitInputCard(
+                  labelText: 'DISTANCE',
+                  inputText: Text(
+                    '${distance.toString()} m',
+                    style: kTitleLabelTextStyle,
+                  ),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
+                  onPressedMinus: decrease(UnitInput.distance),
+                  onPressedPlus: increase(UnitInput.distance),
+                ),
+              ),
+              Expanded(
+                child: UnitInputCard(
+                  labelText: 'SESSIONS',
+                  inputText:
+                      Text(sessions.toString(), style: kTitleLabelTextStyle),
+                  cardColor: kActiveCardColor,
+                  sizedBoxHeight: 20.0,
+                  onPressedMinus: decrease(UnitInput.sessions),
+                  onPressedPlus: increase(UnitInput.sessions),
+                ),
+              ),
             ],
           ),
         ),
-        // add new exercise button
-        CreateRoutineButton(
-          labelName: 'ADD NEW EXERCISE',
-          onPressed: () async {
-            if (addExercise()) {
-              ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Exercise added to routine')));
-
-              _exerciseForm.controller.clear();
-              _muscleForm.controller.clear();
-              _setsForm.controller.clear();
-              _repsForm.controller.clear();
-              _weightForm.controller.clear();
-            }
-          },
+        Expanded(
+          flex: 2,
+          child: RestTimeCard(
+            labelText: 'REST TIME',
+            cardColor: kActiveCardColor,
+            sizedBoxHeight: 15.0,
+            minutesLabelText: minutesLabelText,
+            secondsLabelText: secondsLabelText,
+            onPressedMinusMin: decrease(UnitInput.minutes),
+            onPressedPlusMin: increase(UnitInput.minutes),
+            onPressedMinusSec: decrease(UnitInput.seconds),
+            onPressedPlusSec: increase(UnitInput.seconds),
+          ),
         ),
-        // create routine button
-        CreateRoutineButton(
-          labelName: 'CREATE ROUTINE',
-          onPressed: () async {
-            if (addExercise()) {
-              // create new routine
-              await RoutineDatabaseController().updateRoutineData(
-                title: _titleForm.controller.text.trim(),
-                routines: routines,
-                sport: sport,
-              );
+        // add new exercise button
+        Expanded(
+          child: Row(
+            children: [
+              Expanded(
+                child: RoutineButton(
+                  labelName: 'ADD NEW EXERCISE',
+                  color: kButtonColor,
+                  onPressed: () async {
+                    if (addExercise()) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text('Exercise added to routine'),
+                        ),
+                      );
 
-              Navigator.of(context).pop();
-              Navigator.of(context).pop();
-            }
-          },
+                      setState(() {
+                        _swimStyleForm.controller.clear();
+                        swimSession = 1;
+                        sessions = 1;
+                        distance = 25;
+                        minutesLabelText = 0;
+                        secondsLabelText = 0;
+                      });
+                    }
+                  },
+                ),
+              ),
+              // create routine button
+              Expanded(
+                child: RoutineButton(
+                  labelName: 'CREATE ROUTINE',
+                  color: kButtonColor,
+                  onPressed: () async {
+                    if (addExercise()) {
+                      // create new routine
+                      await RoutineDatabaseController().createRoutineData(
+                        title: _titleForm.controller.text.trim(),
+                        sport: sport,
+                      );
+
+                      for (int i = 0; i < routine.length; i++) {
+                        await ExerciseDatabaseController(
+                          routineTitle: _titleForm.controller.text.trim(),
+                        ).createShortDistanceExerciseData(
+                          exercise: 'swim session $swimSession',
+                          distance: routine[i].distance,
+                          style: routine[i].style,
+                          sessions: routine[i].sessions,
+                          restTimeMin: routine[i].restTimeMin,
+                          restTimeSec: routine[i].restTimeSec,
+                        );
+                        swimSession++;
+                      }
+
+                      Navigator.pop(context);
+                      Navigator.pop(context);
+                    }
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

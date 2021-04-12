@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
-import 'package:home_trainer/authentication/screens/signIn/utilities/resetPassword.dart';
 
+import 'package:home_trainer/authentication/screens/signIn/utilities/resetPassword.dart';
 import 'package:home_trainer/authentication/screens/signUp/signUpPage.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class SignInTexts {
+  Widget signInTitle() {
+    return Text(
+      'SIGN IN',
+      style: kTitleLabelTextStyle,
+    );
+  }
+
   Widget forgotPassword(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        showResetPassword(context);
+        showResetPassword(
+          context,
+        );
       },
       child: Text(
         'Forgot password?',
-        style: TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-        ),
+        style: kContentLabelTextStyle,
       ),
     );
   }
@@ -26,10 +33,7 @@ class SignInTexts {
         children: [
           Text(
             'Don\'t have an account? ',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 15.0,
-            ),
+            style: kContentLabelTextStyle,
           ),
           GestureDetector(
             onTap: () {
@@ -37,12 +41,8 @@ class SignInTexts {
                   MaterialPageRoute(builder: (context) => SignUpPage()));
             },
             child: Text(
-              'Sign Up',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
-                fontSize: 15.0,
-              ),
+              'SIGN UP',
+              style: kBoldContentLabelTextStyle,
             ),
           )
         ],

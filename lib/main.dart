@@ -29,8 +29,8 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Home Trainer',
         theme: ThemeData(
-          primaryColor: Colors.blueGrey[800],
-          scaffoldBackgroundColor: Colors.blueGrey,
+          primaryColor: Color(0xFF1D283C),
+          scaffoldBackgroundColor: Color(0xFF2B3953),
         ),
         home: AuthenticationWrapper(),
       ),

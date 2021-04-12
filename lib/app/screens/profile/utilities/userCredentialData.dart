@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class UserCredentialData extends StatelessWidget {
   final userCredentialData;
-  UserCredentialData({this.userCredentialData});
+  final IconData icon;
+  UserCredentialData({this.userCredentialData, this.icon});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 500,
-      color: Colors.blueGrey[600],
-      margin: EdgeInsets.only(left: MediaQuery.of(context).size.width / 4.5),
+      color: kActiveCardColor,
       child: ListTile(
-        leading: Icon(Icons.person, color: Colors.blueGrey[800]),
+        leading: Icon(icon, color: kIconColor),
         title: userCredentialData,
       ),
     );

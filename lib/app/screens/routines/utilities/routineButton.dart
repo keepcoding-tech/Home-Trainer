@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
-class CreateRoutineButton extends StatelessWidget {
+class RoutineButton extends StatelessWidget {
+  RoutineButton({this.onPressed, this.labelName, this.color});
+  final Color color;
   final String labelName;
   final Function onPressed;
-  CreateRoutineButton({this.onPressed, this.labelName});
 
   @override
   Widget build(BuildContext context) {
-    return MaterialButton(
-      color: Colors.white,
-      child: Text(
-        labelName,
-        style: TextStyle(
-          color: Colors.black,
-          fontWeight: FontWeight.bold,
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        margin: EdgeInsets.all(3.0),
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(5.0),
+        ),
+        child: Center(
+          child: Text(
+            labelName,
+            style: kRoutineButtonLabelTextStyle,
+          ),
         ),
       ),
-      onPressed: onPressed,
     );
   }
 }

@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
 import 'package:home_trainer/database/usersDatabaseController.dart';
 
 class AuthenticationController {
@@ -21,12 +22,12 @@ class AuthenticationController {
       );
       return userCredential;
     } on FirebaseAuthException catch (e) {
+      // show no user found message
       if (e.code == 'user-not-found') {
-        // show no user found message
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('No user found with this email')));
-      } else if (e.code == 'wrong-password') {
         // show wrong password message
+      } else if (e.code == 'wrong-password') {
         ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text('Wrong password provided for that user')));
       }
@@ -37,37 +38,28 @@ class AuthenticationController {
   }
 
   Future<UserCredential> signUp({
-    String name,
     String email,
     String password,
+    String name,
     BuildContext context,
   }) async {
+    UserCredential userCredential;
     try {
-      UserCredential userCredential =
-          await _firebaseAuth.createUserWithEmailAndPassword(
+      userCredential = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
 
-      await UserDatabaseController(uid: userCredential.user.uid)
-          .updateUserData(name, email);
+      await UserDatabaseController(uid: userCredential.user.uid).createUserData(
+        email: email,
+        name: name,
+      );
 
       _firebaseAuth.currentUser.sendEmailVerification();
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      // show email already in use message
-      if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('The account already exists for that email')));
 
-        // show weak password message
-      } else if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('The password provided is too weak')));
-      }
-      return null;
+      return userCredential;
     } catch (e) {
-      return null;
+      return userCredential;
     }
   }
 
@@ -88,10 +80,12 @@ class AuthenticationController {
           .signInWithCredential(facebookAuthCredential);
 
       await UserDatabaseController(uid: _userCrediential.user.uid)
-          .updateUserData('ceva', 'ceva');
+          .createUserData(
+        email: 'facebook@gmail.com',
+        name: 'facebook',
+      );
 
-      return await FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
+      return _userCrediential;
     } on FirebaseAuthException catch (e) {
       // show account already exists message
       if (e.code == 'account-exists-with-different-credential') {
@@ -120,10 +114,12 @@ class AuthenticationController {
     final UserCredential _userCrediential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
-    await UserDatabaseController(uid: _userCrediential.user.uid)
-        .updateUserData(googleUser.email, googleUser.email);
+    await UserDatabaseController(uid: _userCrediential.user.uid).createUserData(
+      email: googleUser.email,
+      name: googleUser.displayName,
+    );
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return _userCrediential;
   }
 
   // Reset password

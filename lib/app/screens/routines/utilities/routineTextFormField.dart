@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class RoutineTextFormField extends StatelessWidget {
   final TextEditingController controller = new TextEditingController();
@@ -10,29 +11,46 @@ class RoutineTextFormField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.all(15.0),
-      child: Form(
-        key: formKey,
-        child: TextFormField(
-          controller: controller,
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20.0,
-          ),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.only(left: 10.0),
-            labelText: labelText,
-            labelStyle: TextStyle(
-              color: Colors.white,
-              fontSize: 20.0,
+      margin: EdgeInsets.all(5.0),
+      decoration: BoxDecoration(
+        color: kActiveCardColor,
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Center(
+        child: Form(
+          key: formKey,
+          child: Padding(
+            padding: EdgeInsets.all(5.0),
+            child: TextFormField(
+              controller: controller,
+              cursorColor: kTextFieldBorderColor,
+              style: kRoutineTextFormFieldStyle,
+              decoration: InputDecoration(
+                contentPadding: EdgeInsets.only(left: 15.0),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide:
+                      BorderSide(color: kTextFieldBorderColor, width: 2),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  borderSide:
+                      BorderSide(color: kTextFieldBorderColor, width: 2),
+                ),
+                labelStyle: kRoutineTextFormFieldStyle,
+                labelText: labelText,
+              ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'a $labelText is requaierd';
+                }
+                if (value.length > 15) {
+                  return 'the $labelText can be at max 15 characters';
+                }
+                return null;
+              },
             ),
           ),
-          validator: (value) {
-            if (value.isEmpty) {
-              return 'a $labelText is requaierd';
-            }
-            return null;
-          },
         ),
       ),
     );

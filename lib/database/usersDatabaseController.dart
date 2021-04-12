@@ -4,14 +4,67 @@ class UserDatabaseController {
   final String uid;
   UserDatabaseController({this.uid});
 
-  Future updateUserData(String name, String email) async {
-    final CollectionReference usersColection =
-        FirebaseFirestore.instance.collection(uid);
+  final CollectionReference usersCollection =
+      FirebaseFirestore.instance.collection('users');
 
-    return await usersColection.doc('user data').set({
-      'name': name,
+  Future createScheduledRoutinesDatabase() async {
+    final CollectionReference scheduledRoutinesCollection = FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(uid)
+        .collection('scheduledRoutines');
+
+    List<String> scheduledRoutines = <String>[];
+    List<String> weekdays = <String>[
+      'Monday',
+      'Tuesday',
+      'Wednesday',
+      'Thursday',
+      'Friday',
+      'Saturday',
+      'Sunday',
+    ];
+
+    for (int i = 0; i < weekdays.length; i++) {
+      scheduledRoutinesCollection.doc(weekdays[i]).set({
+        'scheduledRoutines': scheduledRoutines,
+      });
+    }
+  }
+
+  Future createUserData({String email, String name}) async {
+    createScheduledRoutinesDatabase();
+    return await usersCollection.doc(uid).set({
+      'hasData': false,
       'email': email,
-      'title': 'user data',
+      'name': name,
     });
+  }
+
+  Future updateUserInfoData(
+      String gender, String height, String weight, String age) async {
+    return await usersCollection.doc(uid).update({
+      'gender': gender,
+      'height': height,
+      'weight': weight,
+      'age': age,
+      'hasData': true,
+    });
+  }
+
+  Future updateUserInfoGeneticsData(double analyticData) async {
+    return await usersCollection.doc(uid).update({
+      'analyticData': FieldValue.arrayUnion([analyticData]),
+    });
+  }
+
+  Future deleteUserInfoGeneticsData(List<dynamic> analyticData) async {
+    return await usersCollection.doc(uid).update({
+      'analyticData': analyticData,
+    });
+  }
+
+  Stream<QuerySnapshot> get userData {
+    return usersCollection.snapshots();
   }
 }

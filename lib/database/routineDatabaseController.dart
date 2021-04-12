@@ -4,20 +4,34 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:home_trainer/database/utilities/routine.dart';
 
 class RoutineDatabaseController {
-  CollectionReference routineCollection() {
-    final _currentUser = FirebaseAuth.instance.currentUser;
+  final _currentUser = FirebaseAuth.instance.currentUser;
 
-    final CollectionReference _routineCollection =
-        FirebaseFirestore.instance.collection(_currentUser.uid);
+  CollectionReference routineCollection() {
+    final CollectionReference _routineCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(_currentUser.uid)
+        .collection('routines');
 
     return _routineCollection;
   }
 
-  Future updateRoutineData({String title, String sport, List routines}) async {
+  Future createRoutineData({String title, String sport}) async {
     return await routineCollection().doc(title).set({
       'title': title,
       'sport': sport,
-      'routines': routines,
+    });
+  }
+
+  Future updateScheduledRoutineList(
+      {String weekday, List<String> scheduledRoutines}) async {
+    final CollectionReference updateScheduledRoutineList = FirebaseFirestore
+        .instance
+        .collection('users')
+        .doc(_currentUser.uid)
+        .collection('scheduledRoutines');
+
+    return await updateScheduledRoutineList.doc('scheduledRoutines').update({
+      '$weekday': scheduledRoutines,
     });
   }
 
@@ -26,6 +40,7 @@ class RoutineDatabaseController {
       return Routine(
         title: doc.data()['title'] ?? '',
         sport: doc.data()['sport'] ?? '',
+        isSelected: false,
       );
     }).toList();
   }
