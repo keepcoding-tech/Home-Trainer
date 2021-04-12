@@ -35,10 +35,10 @@
  - The profile page is also the only page with a drawer where you can benefit of a timer and a stopwatch, here you'll also find the sign out button, but most importantlly, the button that will take you to the "update user info" where you update your physicla confition to keep track of your evolution.
 
  <p>
-    <img src = 'assets/presentationImage/profilePage.png' alt = "profile page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/drawer.png' alt = "drawer", width = "230", height = "400">
-    <img src = 'assets/presentationImage/timer.png' alt = "timer", width = "230", height = "400">
-    <img src = 'assets/presentationImage/stopwatch.png' alt = "stopwatch", width = "230", height = "400">
+    <img src = 'assets/presentationImage/profilePage.png' alt = "profile page", width = "220", height = "380">
+    <img src = 'assets/presentationImage/drawer.png' alt = "drawer", width = "220", height = "380">
+    <img src = 'assets/presentationImage/timer.png' alt = "timer", width = "220", height = "380">
+    <img src = 'assets/presentationImage/stopwatch.png' alt = "stopwatch", width = "220", height = "380">
 </p>
 
 ### Routine page
