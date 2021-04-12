@@ -22,10 +22,10 @@
  - And you are done, you can now navigate between the screens, create your own sport routine and schedule them for your weekly routine programs.
 
  <p>
-    <img src = 'assets/presentationImage/signInPage.png' alt = "sign in page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/signUpCompletForm.png' alt = "sign up page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/emailVerification.png' alt = "email verification", width = "360", height = "660">
-    <img src = 'assets/presentationImage/createUserInfoPage.png' alt = "email verification", width = "360", height = "660">
+    <img src = 'assets/presentationImage/signInPage.png' alt = "sign in page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/signUpCompletForm.png' alt = "sign up page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/emailVerification.png' alt = "email verification", width = "230", height = "400">
+    <img src = 'assets/presentationImage/createUserInfoPage.png' alt = "email verification", width = "230", height = "400">
 </p>
 
 ### Profile page
@@ -34,10 +34,10 @@
  - The profile page is also the only page with a drawer where you can benefit of a timer and a stopwatch, here you'll also find the sign out button, but most importantlly, the button that will take you to the "update user info" where you update your physicla confition to keep track of your evolution.
 
  <p>
-    <img src = 'assets/presentationImage/profilePage.png' alt = "sign in page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/drawer.png' alt = "sign up page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/timer.png' alt = "email verification", width = "360", height = "660">
-    <img src = 'assets/presentationImage/stopwatch.png' alt = "email verification", width = "360", height = "660">
+    <img src = 'assets/presentationImage/profilePage.png' alt = "sign in page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/drawer.png' alt = "sign up page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/timer.png' alt = "email verification", width = "230", height = "400">
+    <img src = 'assets/presentationImage/stopwatch.png' alt = "email verification", width = "230", height = "400">
 </p>
 
 ### Routine page
@@ -45,9 +45,9 @@
  - Although right now you'll be able to choose only between four types of sports, those sports cover almost all types of sports. More option will be implemented later.
 
  <p>
-    <img src = 'assets/presentationImage/routinesPage.png' alt = "sign in page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/createRoutine.png' alt = "sign up page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/detailsPage.png' alt = "email verification", width = "360", height = "660">
+    <img src = 'assets/presentationImage/routinesPage.png' alt = "sign in page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/createRoutine.png' alt = "sign up page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/detailsPage.png' alt = "email verification", width = "230", height = "400">
 </p>
 
 ### Scheduled page
@@ -56,9 +56,9 @@
  - Now the real fun begins, you can see the routines you scheduled for that specific day, so you can start to actually doing sport.
 
  <p>
-    <img src = 'assets/presentationImage/schedulePage.png' alt = "sign in page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/addScheduledRoutinePage.png' alt = "sign up page", width = "360", height = "660">
-    <img src = 'assets/presentationImage/scheduleDay.png' alt = "sign up page", width = "360", height = "660">
+    <img src = 'assets/presentationImage/schedulePage.png' alt = "sign in page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/addScheduledRoutinePage.png' alt = "sign up page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/scheduleDay.png' alt = "sign up page", width = "230", height = "400">
 </p>
 
 ### Analytics page
@@ -66,5 +66,5 @@
  - If you updated your physical condition data press the refresh button on the top right screen to see your new poit on the graphic.
 
  <p>
-    <img src = 'assets/presentationImage/analyticsPage.png' alt = "sign in page", width = "360", height = "660">
+    <img src = 'assets/presentationImage/analyticsPage.png' alt = "sign in page", width = "230", height = "400">
 </p>
