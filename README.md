@@ -23,10 +23,10 @@
  - And you are done, you can now navigate between the screens, create your own sport routine and schedule them for your weekly routine programs.
 
  <p>
-    <img src = 'assets/presentationImage/signInPage.png' alt = "sign in page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/signUpCompletForm.png' alt = "sign up page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/emailVerification.png' alt = "email verification", width = "230", height = "400">
-    <img src = 'assets/presentationImage/createUserInfoPage.png' alt = "create user info page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/signInPage.png' alt = "sign in page", width = "220", height = "380">
+    <img src = 'assets/presentationImage/signUpCompletForm.png' alt = "sign up page", width = "220", height = "380">
+    <img src = 'assets/presentationImage/emailVerification.png' alt = "email verification", width = "220", height = "380">
+    <img src = 'assets/presentationImage/createUserInfoPage.png' alt = "create user info page", width = "220", height = "380">
 </p>
 
 ### Profile page
