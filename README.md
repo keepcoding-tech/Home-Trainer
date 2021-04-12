@@ -1,16 +1,33 @@
-# home_trainer
+# Home Trainer
 
-A new Flutter project.
+# Description
 
-## Getting Started
+  - Is a mobile application in which you can build a well-structured sports program. The user will be able to connect from any device (phone, tablet, laptop).
+  - The main idea is that based on selected activities you can build complex and customized sports programs that you can add to your weekly schedule.
+  - Each category of sport will have different characteristics, for example, "Going to the gym" will have characteristics such as muscle group, exercise, sets, repetitions, etc; and an activity such as "running" will have characteristics such as distance, intensity, break time, etc.
+  - After building the sports program, the user will be able to add it to one or more days of the week where he will be able to add a reminder for a specific time of day.
+  - When the user executes the sports program, it will benefit from other services such as set counter, stopwatch for breaks, interval timer, water drink reminder, etc. An activity such as: running, cycling, walking, will have a map that records the entire route, the number of calories burned, maximum speed reached, average speed, etc.
+  - The user will also benefit from sports programs already built, but not only, but there will also be available programs such as meditation, stretching for correct posture, white noise for sleeping, etc
 
-This project is a starting point for a Flutter application.
+# Contents
 
-A few resources to get you started if this is your first Flutter project:
+[Authentication](#authentication)
+[Profile page](#profile page)
+[Routine page](#routine page)
+[Scheduled page](#scheduled page)
+[Analytics page](#analytics page)
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+### Authentication
+signin
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+### Profile page
+profile page
+
+### Routine page
+routine page
+
+### Scheduled page
+scheduled page
+
+### Analytics page
+analytics page
