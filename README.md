@@ -45,9 +45,9 @@
  - Although right now you'll be able to choose only between four types of sports, those sports cover almost all types of sports. More option will be implemented later.
 
  <p>
-    <img src = 'assets/presentationImage/routinesPage.png' alt = "sign in page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/createRoutine.png' alt = "sign up page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/detailsPage.png' alt = "email verification", width = "230", height = "400">
+    <img src = 'assets/presentationImage/routinesPage.png' alt = "sign in page", width = "300", height = "560">
+    <img src = 'assets/presentationImage/createRoutine.png' alt = "sign up page", width = "300", height = "560">
+    <img src = 'assets/presentationImage/detailsPage.png' alt = "email verification", width = "300", height = "560">
 </p>
 
 ### Scheduled page
@@ -56,9 +56,9 @@
  - Now the real fun begins, you can see the routines you scheduled for that specific day, so you can start to actually doing sport.
 
  <p>
-    <img src = 'assets/presentationImage/schedulePage.png' alt = "sign in page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/addScheduledRoutinePage.png' alt = "sign up page", width = "230", height = "400">
-    <img src = 'assets/presentationImage/scheduleDay.png' alt = "sign up page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/schedulePage.png' alt = "sign in page", width = "300", height = "560">
+    <img src = 'assets/presentationImage/addScheduledRoutinePage.png' alt = "sign up page", width = "300", height = "560">
+    <img src = 'assets/presentationImage/scheduleDay.png' alt = "sign up page", width = "300", height = "560">
 </p>
 
 ### Analytics page
@@ -66,5 +66,5 @@
  - If you updated your physical condition data press the refresh button on the top right screen to see your new poit on the graphic.
 
  <p>
-    <img src = 'assets/presentationImage/analyticsPage.png' alt = "sign in page", width = "230", height = "400">
+    <img src = 'assets/presentationImage/analyticsPage.png' alt = "sign in page", width = "300", height = "560">
 </p>
