@@ -23,6 +23,12 @@ const kContentLabelTextStyle = TextStyle(
   color: Color(0xFFDDDFEB),
 );
 
+const kContentSubtitleLabelTextStyle = TextStyle(
+  fontSize: 15.0,
+  color: Color(0xFFDDDFEB),
+  fontWeight: FontWeight.bold,
+);
+
 const kBoldContentLabelTextStyle = TextStyle(
   fontSize: 15.0,
   color: Color(0xFFDDDFEB),
