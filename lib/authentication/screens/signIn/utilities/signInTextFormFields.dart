@@ -26,6 +26,7 @@ class SignInTextFormFields extends StatelessWidget {
           controller: controller,
           keyboardType: inputType,
           obscureText: obscureText,
+          cursorColor: kTextFieldBorderColor,
           style: kAuthenticationTextFormFieldStyle,
           decoration: InputDecoration(
             contentPadding: EdgeInsets.only(left: 15.0),

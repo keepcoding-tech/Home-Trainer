@@ -8,6 +8,9 @@ class Validation {
       if (value.isEmpty) {
         return 'A name is required';
       }
+      if (value.length > 15) {
+        return 'Name can be at max 15 characters';
+      }
       return null;
     };
   }
@@ -58,17 +61,4 @@ class Validation {
       return null;
     };
   }
-
-  // String Function(String) confirmPasswordValidator(String password) {
-  //   print(password);
-  //   return (String value) {
-  //     if (value.isEmpty) {
-  //       return 'A password is required';
-  //     }
-  //     if (value != password) {
-  //       return 'The passwords doesn\'t mach';
-  //     }
-  //     return null;
-  //   };
-  // }
 }

@@ -41,11 +41,6 @@ class AuthenticationController {
     String email,
     String password,
     String name,
-    String gender,
-    String height,
-    String weight,
-    String age,
-    List<double> analyticData,
     BuildContext context,
   }) async {
     UserCredential userCredential;
@@ -58,26 +53,10 @@ class AuthenticationController {
       await UserDatabaseController(uid: userCredential.user.uid).createUserData(
         email: email,
         name: name,
-        gender: gender,
-        height: height,
-        weight: weight,
-        age: age,
-        analyticData: analyticData,
       );
 
       _firebaseAuth.currentUser.sendEmailVerification();
 
-      return userCredential;
-    } on FirebaseAuthException catch (e) {
-      // show weak password message
-      if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('The password provided is too weak')));
-        // show email already in use message
-      } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text('The account already exists for that email')));
-      }
       return userCredential;
     } catch (e) {
       return userCredential;
@@ -89,14 +68,7 @@ class AuthenticationController {
   }
 
   // Authentification with Facebook
-  Future<UserCredential> signInWithFacebook(
-    BuildContext context, {
-    String name,
-    String gender,
-    String height,
-    String weight,
-    String age,
-  }) async {
+  Future<UserCredential> signInWithFacebook(BuildContext context) async {
     try {
       final FacebookLogin _facebookLogin = new FacebookLogin();
       final FacebookLoginResult result = await _facebookLogin.logIn(['email']);
@@ -109,16 +81,11 @@ class AuthenticationController {
 
       await UserDatabaseController(uid: _userCrediential.user.uid)
           .createUserData(
-        email: 'fecebook email',
-        name: name,
-        gender: gender,
-        height: height,
-        weight: weight,
-        age: age,
+        email: 'facebook@gmail.com',
+        name: 'facebook',
       );
 
-      return await FirebaseAuth.instance
-          .signInWithCredential(facebookAuthCredential);
+      return _userCrediential;
     } on FirebaseAuthException catch (e) {
       // show account already exists message
       if (e.code == 'account-exists-with-different-credential') {
@@ -133,13 +100,7 @@ class AuthenticationController {
   }
 
   // Authentification with Google
-  Future<UserCredential> signInWithGoogle({
-    String name,
-    String gender,
-    String height,
-    String weight,
-    String age,
-  }) async {
+  Future<UserCredential> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = await GoogleSignIn().signIn();
 
     final GoogleSignInAuthentication googleAuth =
@@ -155,14 +116,10 @@ class AuthenticationController {
 
     await UserDatabaseController(uid: _userCrediential.user.uid).createUserData(
       email: googleUser.email,
-      name: name,
-      gender: gender,
-      height: height,
-      weight: weight,
-      age: age,
+      name: googleUser.displayName,
     );
 
-    return await FirebaseAuth.instance.signInWithCredential(credential);
+    return _userCrediential;
   }
 
   // Reset password

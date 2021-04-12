@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
+import 'package:home_trainer/authentication/services/createUserInfoData.dart';
 import 'package:home_trainer/app/services/navigationController.dart';
 import 'package:home_trainer/authentication/screens/signIn/signInPage.dart';
+import 'package:home_trainer/app/services/loadingScreen.dart';
 
 class AuthenticationWrapper extends StatefulWidget {
   @override
@@ -48,10 +51,26 @@ class AuthenticationWrapperState extends State<AuthenticationWrapper> {
   @override
   Widget build(BuildContext context) {
     final firebaseUser = context.watch<User>();
+    final currentUser = FirebaseAuth.instance.currentUser;
+    final CollectionReference users =
+        FirebaseFirestore.instance.collection('users');
 
     if (firebaseUser != null) {
       if (firebaseUser.emailVerified) {
-        return NavigationController();
+        return StreamBuilder<DocumentSnapshot>(
+          stream: users.doc(currentUser.uid).snapshots(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return LoadingScreen();
+            }
+
+            Map<String, dynamic> data = snapshot.data.data();
+            if (!data['hasData']) {
+              return CreateUserInfoData(uid: currentUser.uid);
+            }
+            return NavigationController();
+          },
+        );
       }
     }
     return SignInPage();

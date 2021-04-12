@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:home_trainer/app/screens/schedule/screens/monday/scheduledRoutinesPage.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
@@ -63,7 +64,13 @@ class _AddRoutineToScheduleControllerState
                 _scheduledRoutinesCollection.doc(widget.weekday).update({
                   'scheduledRoutines': _scheduledRoutines,
                 });
-                Navigator.pop(context);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        ScheduledRoutinesPage(weekday: widget.weekday),
+                  ),
+                );
               },
             ),
           ),

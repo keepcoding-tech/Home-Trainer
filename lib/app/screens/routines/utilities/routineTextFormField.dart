@@ -23,6 +23,7 @@ class RoutineTextFormField extends StatelessWidget {
             padding: EdgeInsets.all(5.0),
             child: TextFormField(
               controller: controller,
+              cursorColor: kTextFieldBorderColor,
               style: kRoutineTextFormFieldStyle,
               decoration: InputDecoration(
                 contentPadding: EdgeInsets.only(left: 15.0),
@@ -42,6 +43,9 @@ class RoutineTextFormField extends StatelessWidget {
               validator: (value) {
                 if (value.isEmpty) {
                   return 'a $labelText is requaierd';
+                }
+                if (value.length > 15) {
+                  return 'the $labelText can be at max 15 characters';
                 }
                 return null;
               },

@@ -3,9 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 
 class LoadingScreen extends StatefulWidget {
-  final double loadingSize;
-  LoadingScreen({this.loadingSize});
-
   @override
   _LoadingScreenState createState() => _LoadingScreenState();
 }

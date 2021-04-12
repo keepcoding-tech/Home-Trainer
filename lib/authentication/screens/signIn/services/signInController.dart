@@ -82,24 +82,9 @@ class _SignInControllerState extends State<SignInController> {
                 icon: FontAwesomeIcons.facebookF,
                 buttonColor: Color(0xFF1773EA),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => CreateUserInfoPage(
-                  //       email: '',
-                  //       password: '',
-                  //       authMethod: 'facebook',
-                  //     ),
-                  //   ),
-                  // );
-                  context.read<AuthenticationController>().signInWithFacebook(
-                        context,
-                        name: 'undefined',
-                        gender: 'undefined',
-                        height: 'undefined',
-                        weight: 'undefined',
-                        age: 'undefined',
-                      );
+                  context
+                      .read<AuthenticationController>()
+                      .signInWithFacebook(context);
                 },
               ),
               // sign in with google
@@ -107,23 +92,7 @@ class _SignInControllerState extends State<SignInController> {
                 icon: FontAwesomeIcons.google,
                 buttonColor: Color(0xFFDD3D2B),
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => CreateUserInfoPage(
-                  //       email: '',
-                  //       password: '',
-                  //       authMethod: 'google',
-                  //     ),
-                  //   ),
-                  // );
-                  context.read<AuthenticationController>().signInWithGoogle(
-                        name: 'undefined',
-                        gender: 'undefined',
-                        height: 'undefined',
-                        weight: 'undefined',
-                        age: 'undefined',
-                      );
+                  context.read<AuthenticationController>().signInWithGoogle();
                 },
               ),
             ],

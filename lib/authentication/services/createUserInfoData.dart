@@ -3,30 +3,25 @@ import 'dart:math';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:home_trainer/app/services/loadingScreen.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 
-import 'package:home_trainer/authentication/screens/signUp/utilities/emailVerificationMessage.dart';
-import 'package:home_trainer/authentication/services/authenticationController.dart';
+import 'package:home_trainer/app/services/loadingScreen.dart';
+import 'package:home_trainer/database/usersDatabaseController.dart';
 import 'package:home_trainer/app/utilities/constantsStyles.dart';
 import 'package:home_trainer/app/utilities/selectableCard.dart';
 import 'package:home_trainer/app/utilities/unitInputCard.dart';
 
 enum Gender { male, female }
 
-class CreateUserInfoGeneticsData extends StatefulWidget {
-  final String fullName, email, password, authMethod;
-  CreateUserInfoGeneticsData(
-      {this.fullName, this.email, this.password, this.authMethod});
+class CreateUserInfoData extends StatefulWidget {
+  CreateUserInfoData({this.uid});
+  final String uid;
 
   @override
-  _CreateUserInfoGeneticsDataState createState() =>
-      _CreateUserInfoGeneticsDataState();
+  _CreateUserInfoDataState createState() => _CreateUserInfoDataState();
 }
 
-class _CreateUserInfoGeneticsDataState
-    extends State<CreateUserInfoGeneticsData> {
+class _CreateUserInfoDataState extends State<CreateUserInfoData> {
   int weight = 65, age = 18, height = 170;
 
   String gender = 'MALE';
@@ -49,21 +44,14 @@ class _CreateUserInfoGeneticsDataState
   @override
   Widget build(BuildContext context) {
     return isLoading
-        ? LoadingScreen(loadingSize: 50.0)
+        ? LoadingScreen()
         : Scaffold(
             appBar: AppBar(
-              title: Text(
-                'CREATE USER INFO',
-                style: kTitleLabelTextStyle,
-              ),
-              leading: IconButton(
-                icon: Icon(
-                  FontAwesomeIcons.arrowLeft,
-                  color: kIconColor,
+              title: Center(
+                child: Text(
+                  'CREATE USER INFO',
+                  style: kTitleLabelTextStyle,
                 ),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
               ),
             ),
             body: SafeArea(
@@ -255,62 +243,18 @@ class _CreateUserInfoGeneticsDataState
                       height: 80.0,
                     ),
                     onTap: () async {
-                      if (widget.authMethod == 'email & password') {
-                        setState(() => isLoading = true);
+                      setState(() => isLoading = true);
+                      UserDatabaseController(uid: widget.uid)
+                          .updateUserInfoGeneticsData(calculateBMI());
 
-                        context
-                            .read<AuthenticationController>()
-                            .signUp(
-                              email: widget.email,
-                              password: widget.password,
-                              name: widget.fullName,
-                              gender: gender,
-                              height: height.toString(),
-                              weight: weight.toString(),
-                              age: age.toString(),
-                              analyticData: <double>[calculateBMI()],
-                              context: context,
-                            )
-                            .then((_) {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-
-                          showEmailVerificationMessage(context, widget.email);
-                          isLoading = false;
-                        });
-                      } else if (widget.authMethod == 'facebook') {
-                        context
-                            .read<AuthenticationController>()
-                            .signInWithFacebook(
-                              context,
-                              name: widget.fullName,
-                              gender: gender,
-                              height: height.toString(),
-                              weight: weight.toString(),
-                              age: age.toString(),
-                            )
-                            .then((_) {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        });
-                      } else if (widget.authMethod == 'google') {
-                        context
-                            .read<AuthenticationController>()
-                            .signInWithGoogle(
-                              name: widget.fullName,
-                              gender: gender,
-                              height: height.toString(),
-                              weight: weight.toString(),
-                              age: age.toString(),
-                            )
-                            .then((_) {
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                          Navigator.of(context).pop();
-                        });
-                      }
+                      UserDatabaseController(uid: widget.uid)
+                          .updateUserInfoData(
+                            gender,
+                            height.toString(),
+                            weight.toString(),
+                            age.toString(),
+                          )
+                          .then((value) => isLoading = false);
                     },
                   ),
                 ],

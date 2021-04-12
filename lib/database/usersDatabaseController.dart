@@ -32,24 +32,12 @@ class UserDatabaseController {
     }
   }
 
-  Future createUserData({
-    String email,
-    String name,
-    String gender,
-    String height,
-    String weight,
-    String age,
-    List<double> analyticData,
-  }) async {
+  Future createUserData({String email, String name}) async {
     createScheduledRoutinesDatabase();
     return await usersCollection.doc(uid).set({
+      'hasData': false,
       'email': email,
       'name': name,
-      'gender': gender,
-      'height': height,
-      'weight': weight,
-      'age': age,
-      'analyticData': analyticData,
     });
   }
 
@@ -60,6 +48,7 @@ class UserDatabaseController {
       'height': height,
       'weight': weight,
       'age': age,
+      'hasData': true,
     });
   }
 

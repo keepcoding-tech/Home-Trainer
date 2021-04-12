@@ -35,7 +35,7 @@ class _ScheduledRoutinesPageState extends State<ScheduledRoutinesPage> {
       ),
       floatingActionButton: ActionButton(
         onPressed: () {
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
               builder: (context) =>
