@@ -1,7 +1,5 @@
 # Home Trainer
 
-# Description
-
   - Is a mobile application in which you can build a well-structured sports program. The user will be able to connect from any device (phone, tablet, laptop).
   - The main idea is that based on selected activities you can build complex and customized sports programs that you can add to your weekly schedule.
   - Each category of sport will have different characteristics, for example, "Going to the gym" will have characteristics such as muscle group, exercise, sets, repetitions, etc; and an activity such as "running" will have characteristics such as distance, intensity, break time, etc.
@@ -12,7 +10,7 @@
 # Contents
 
 - [Authentication](#authentication)
-- [Profile](#profile)
+- [Profile page](#profile)
 - [Routine](#routine)
 - [Scheduled](#scheduled)
 - [Analytics](#analytics)
@@ -20,7 +18,7 @@
 ### Authentication
 signin
 
-### Profile
+### Profile page
 profile page
 
 ### Routine
