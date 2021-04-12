@@ -16,6 +16,7 @@
 - [Analytics page](#analytics-page)
 
 ### Authentication
+
  - The login page is the first page you will encounter, you can authenticate with email and password if you have already created an account or you can authenticate using Google or Facebook
  - If you decide to create an account using email and password, you'll be redirected to another page with a small form to fill out. After the registration is completed a confirmation email will be sent to verify the user email.
  - After you logged in for the first time, you'll have to complete the last and more fun form about your physical condition, this form is required for the computer to start calculating the progress of your physical condition.
